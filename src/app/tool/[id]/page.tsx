@@ -8,19 +8,20 @@ export async function generateStaticParams() {
   return getAllTools().map((tool) => ({ id: tool.id }));
 }
 
-export default function ToolDetailPage({
+export default async function ToolDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const tool = getToolById(params.id);
+  const { id } = await params;
+  const tool = getToolById(id);
 
   if (!tool) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900">工具未找到</h1>
-          <p className="mt-2 text-gray-500">没有找到 ID 为「{params.id}」的工具</p>
+          <p className="mt-2 text-gray-500">没有找到 ID 为「{id}」的工具</p>
           <Link href="/" className="mt-4 inline-block text-blue-600 hover:underline">
             返回首页
           </Link>

@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import SearchBar from '@/components/SearchBar';
 import FilterPanel from '@/components/FilterPanel';
 import ToolCard from '@/components/ToolCard';
+import RecommendModal from '@/components/RecommendModal';
 import { filterTools, getAllTools } from '@/lib/tools';
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
   const [category, setCategory] = useState('');
   const [difficulty, setDifficulty] = useState<number | null>(null);
   const [targetUser, setTargetUser] = useState('');
+  const [showRecommend, setShowRecommend] = useState(false);
 
   const allTools = useMemo(() => getAllTools(), []);
   const filteredTools = useMemo(
@@ -110,10 +112,24 @@ export default function Home() {
               <p className="mt-1">
                 收录标准：Star ≥ 1000 · 有明确使用场景 · 有可用文档
               </p>
+              <button
+                onClick={() => setShowRecommend(true)}
+                className="mt-4 inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-medium hover:bg-blue-700 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                推荐工具
+              </button>
             </footer>
           </div>
         </div>
       </main>
+
+      <RecommendModal
+        open={showRecommend}
+        onClose={() => setShowRecommend(false)}
+      />
     </>
   );
 }
