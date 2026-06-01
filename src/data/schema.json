@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://awesome-toolkit.dev/schemas/tool.schema.json",
+  "title": "Tool Entry",
+  "description": "单个工具条目的数据结构定义",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "github_url",
+    "category",
+    "tags",
+    "description_plain",
+    "target_users",
+    "difficulty",
+    "quick_start"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*[a-z0-9]$",
+      "description": "工具唯一标识符，英文小写+数字+连字符"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "description": "工具名称（保持原样，大小写敏感）"
+    },
+    "github_url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://github\\.com/[a-zA-Z0-9._-]+/[a-zA-Z0-9._-]+$",
+      "description": "GitHub 仓库完整 URL"
+    },
+    "stars": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 0,
+      "description": "GitHub Star 数量"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "AI & 自动化",
+        "开发效率工具",
+        "数据处理 & 可视化",
+        "安全 & 隐私",
+        "网络 & 爬虫",
+        "创意 & 媒体处理",
+        "文件 & 知识管理",
+        "自部署 & 家庭服务器"
+      ],
+      "description": "所属一级分类"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "description": "标签列表，用于辅助搜索和筛选"
+    },
+    "description_plain": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 200,
+      "description": "一句话描述，非技术语言，让普通人能理解这个工具是做什么的"
+    },
+    "target_users": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["技术小白", "普通用户", "开发者"]
+      },
+      "minItems": 1,
+      "description": "适合的目标人群"
+    },
+    "difficulty": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "安装使用难度：1=下载即用, 2=需命令行, 3=需修改配置, 4=需理解技术概念, 5=需编程经验"
+    },
+    "quick_start": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 5 },
+      "minItems": 2,
+      "maxItems": 5,
+      "description": "普通人使用方法，用「如何做」格式，步骤不超过5步"
+    },
+    "alternatives": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "同类替代工具名称列表"
+    },
+    "has_web_ui": {
+      "type": "boolean",
+      "default": false,
+      "description": "是否有 Web 界面"
+    },
+    "has_desktop_app": {
+      "type": "boolean",
+      "default": false,
+      "description": "是否有桌面应用"
+    },
+    "has_cli": {
+      "type": "boolean",
+      "default": false,
+      "description": "是否以命令行方式使用"
+    },
+    "license": {
+      "type": "string",
+      "description": "开源许可证类型，如 MIT, Apache-2.0, GPL-3.0 等"
+    },
+    "added_date": {
+      "type": "string",
+      "format": "date",
+      "description": "收录日期，ISO 8601 格式"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date",
+      "description": "最后更新日期"
+    }
+  }
+}
