@@ -115,9 +115,10 @@ export default async function DeployDetailPage({
             <div className="flex items-start gap-3">
               <div className="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold mt-0.5">2</div>
               <div>
-                <div className="font-medium text-gray-900">有 SSH 登录权限</div>
+                <div className="font-medium text-gray-900">安装部署 Agent</div>
                 <div className="text-sm text-gray-500">
-                  Windows 用户推荐用 Xshell 或 PuTTY，Mac 用户用自带终端输入 <code className="bg-gray-100 px-1 py-0.5 rounded text-xs">ssh root@你的服务器IP</code>
+                  在服务器终端执行一行命令即可安装：<br />
+                  <code className="bg-gray-100 px-1 py-0.5 rounded text-xs">curl -fsSL https://awesome-toolkit.pages.dev/agent/install-agent.sh | bash</code>
                 </div>
               </div>
             </div>
@@ -145,7 +146,7 @@ export default async function DeployDetailPage({
                 <span className="text-xl">⚡</span> 一键部署到你的服务器
               </h2>
               <p className="mt-1 text-sm text-blue-100">
-                在网页上填写服务器信息，自动完成：检测系统 → 安装 Docker → 启动服务
+                在网页上填写服务器 IP 和 Agent Token，自动完成：检测系统 → 拉取镜像 → 启动服务
               </p>
             </div>
             <Link
@@ -164,27 +165,41 @@ export default async function DeployDetailPage({
         <details className="mt-4 group">
           <summary className="bg-white rounded-xl border border-gray-200 p-4 cursor-pointer hover:border-gray-300 transition-colors">
             <span className="text-sm font-medium text-gray-600">
-              💻 或者手动复制命令到服务器终端（高级用户）
+              💻 或者手动使用 Agent 命令行（高级用户）
             </span>
           </summary>
           <div className="mt-4 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-6 text-white">
           <h3 className="text-lg font-semibold flex items-center gap-2">
-            <span className="text-xl">🚀</span> 一键部署命令
+            <span className="text-xl">🤖</span> 通过 Agent 部署
           </h3>
           <p className="mt-1 text-sm text-gray-400">
-            复制下面这条命令，粘贴到你的服务器终端里，然后按回车
+            先安装 Agent，然后通过它一键部署。Agent 会帮你管理所有部署的工具。
           </p>
 
-          {/* 命令框 */}
-          <div className="mt-4 bg-black/50 rounded-lg p-4 border border-gray-700 relative group">
-            <pre className="text-green-400 text-sm font-mono break-all whitespace-pre-wrap select-all">
-              {deployCmd}
-            </pre>
-            <CopyButton text={deployCmd} />
+          {/* Install agent cmd */}
+          <div className="mt-4">
+            <p className="text-xs text-gray-400 mb-1">步骤 1：安装 Agent</p>
+            <div className="bg-black/50 rounded-lg p-4 border border-gray-700 relative">
+              <pre className="text-green-400 text-sm font-mono break-all whitespace-pre-wrap select-all">
+                curl -fsSL https://awesome-toolkit.pages.dev/agent/install-agent.sh | bash
+              </pre>
+              <CopyButton text="curl -fsSL https://awesome-toolkit.pages.dev/agent/install-agent.sh | bash" />
+            </div>
+          </div>
+
+          {/* Deploy cmd */}
+          <div className="mt-3">
+            <p className="text-xs text-gray-400 mb-1">步骤 2：部署工具</p>
+            <div className="bg-black/50 rounded-lg p-4 border border-gray-700 relative group">
+              <pre className="text-green-400 text-sm font-mono break-all whitespace-pre-wrap select-all">
+                {deployCmd}
+              </pre>
+              <CopyButton text={deployCmd} />
+            </div>
           </div>
 
           <p className="mt-3 text-xs text-gray-500">
-            脚本会自动完成：检测系统 → 安装 Docker → 下载配置 → 启动服务，整个过程 3-5 分钟
+            Agent 会自动完成：检测 Docker → 拉取镜像 → 启动服务，整个过程 3-5 分钟
           </p>
         </div>
 

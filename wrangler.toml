@@ -1,0 +1,18 @@
+name = "awesome-toolkit"
+compatibility_date = "2025-06-02"
+pages_build_output_dir = "out"
+
+# KV namespace bindings — create these before first deploy:
+# wrangler kv:namespace create WAITLIST_KV
+# wrangler kv:namespace create DEPLOY_KV
+[[kv_namespaces]]
+binding = "WAITLIST_KV"
+id = "WAITLIST_KV_PLACEHOLDER"
+
+[[kv_namespaces]]
+binding = "DEPLOY_KV"
+id = "DEPLOY_KV_PLACEHOLDER"
+
+# Environment variables
+[vars]
+BASE_URL = "https://awesome-toolkit.pages.dev"

@@ -3,7 +3,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  serverExternalPackages: ['node-ssh', 'ssh2'],
+  output: 'export',
 };
 
 export default nextConfig;

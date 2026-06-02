@@ -2,15 +2,34 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getAuthState, setAuthState, removeServer, type UserState, type DeployedToolInfo } from '@/lib/auth';
+import { getAuthState, setAuthState, removeServer, type UserState, type DeployedToolInfo, type ServerInfo } from '@/lib/auth';
+
+interface DeployRecord {
+  userEmail: string;
+  toolId: string;
+  host: string;
+  timestamp: number;
+  status: string;
+}
 
 export default function DashboardPage() {
   const [auth, setAuth] = useState<UserState | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [remoteHistory, setRemoteHistory] = useState<DeployRecord[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setAuth(getAuthState());
     setMounted(true);
+
+    // Try to fetch remote deploy history
+    fetch('/api/deploy/history')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.deployments) setRemoteHistory(data.deployments);
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
   if (!mounted || !auth) {
@@ -53,8 +72,7 @@ export default function DashboardPage() {
                 <div className="text-sm text-yellow-600">一键部署功能需要 Pro 或 Team 方案</div>
               </div>
             </div>
-            <Link
-              href="/pricing"
+            <Link href="/pricing"
               className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 text-sm font-medium"
             >
               升级方案
@@ -92,6 +110,34 @@ export default function DashboardPage() {
             ))}
           </div>
         )}
+
+        {/* Deploy history from KV */}
+        {remoteHistory.length > 0 && (
+          <div className="mt-8">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">部署历史</h2>
+            <div className="bg-white rounded-xl border border-gray-200 divide-y divide-gray-100">
+              {remoteHistory.slice(0, 20).map((record, i) => (
+                <div key={i} className="flex items-center justify-between px-5 py-3">
+                  <div className="flex items-center gap-3">
+                    <span className="w-2 h-2 rounded-full bg-green-500" />
+                    <div>
+                      <Link href={`/deploy/${record.toolId}`} className="text-sm font-medium text-blue-600 hover:underline">
+                        {record.toolId}
+                      </Link>
+                      <p className="text-xs text-gray-400">{record.host}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-xs text-gray-500">
+                      {new Date(record.timestamp).toLocaleDateString()}
+                    </span>
+                    <p className="text-xs text-green-500">{record.status}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
@@ -106,7 +152,7 @@ function StatCard({ label, value }: { label: string; value: string }) {
   );
 }
 
-function ServerCard({ server, onRemove }: { server: import('@/lib/auth').ServerInfo; onRemove: () => void }) {
+function ServerCard({ server, onRemove }: { server: ServerInfo; onRemove: () => void }) {
   const [expanded, setExpanded] = useState(false);
 
   return (

@@ -28,6 +28,26 @@ export interface DeployedToolInfo {
   status: 'running' | 'stopped' | 'unknown';
 }
 
+// Try to get user email from Cloudflare Access header (production)
+// Falls back to localStorage (local dev)
+export async function getCurrentUserEmail(): Promise<string> {
+  if (typeof window === 'undefined') return 'anonymous';
+  try {
+    // In production, CF Access injects this via a dedicated endpoint or cookie
+    // We try to fetch the current user info from our API
+    const res = await fetch('/api/auth/upgrade');
+    const data = await res.json();
+    return data.email || getLocalEmail();
+  } catch {
+    return getLocalEmail();
+  }
+}
+
+function getLocalEmail(): string {
+  const state = getAuthState();
+  return state.email || 'anonymous';
+}
+
 function getDefaultState(): UserState {
   return {
     email: '',
