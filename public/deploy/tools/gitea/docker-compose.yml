@@ -1,0 +1,20 @@
+# POST_DEPLOY_URL=http://你的服务器IP:3000
+# POST_DEPLOY_MSG=浏览器访问完成初始设置，注册管理员账号，即可创建和管理Git仓库。
+version: "3.8"
+services:
+  gitea:
+    image: gitea/gitea:latest
+    container_name: gitea
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+      - "2222:22"
+    volumes:
+      - ./data:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__database__DB_TYPE=sqlite3
+      - TZ=Asia/Shanghai

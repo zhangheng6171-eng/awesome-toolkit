@@ -1,0 +1,14 @@
+# POST_DEPLOY_URL=https://你的服务器IP:9443
+# POST_DEPLOY_MSG=浏览器访问创建管理员账号，连接本地Docker后就能在网页上管理所有容器。
+version: "3.8"
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    ports:
+      - "9443:9443"
+      - "8000:8000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/data

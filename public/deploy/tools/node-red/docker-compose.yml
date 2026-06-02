@@ -1,0 +1,14 @@
+# POST_DEPLOY_URL=http://你的服务器IP:1880
+# POST_DEPLOY_MSG=浏览器访问可视化编辑器，拖节点连线创建自动化流程，点部署生效。
+version: "3.8"
+services:
+  node-red:
+    image: nodered/node-red:latest
+    container_name: node-red
+    restart: unless-stopped
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./data:/data
+    environment:
+      - TZ=Asia/Shanghai

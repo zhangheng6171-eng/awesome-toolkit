@@ -21,6 +21,19 @@ export default function DeployPage() {
     metabase: { icon: '📊', name: '数据分析' },
     grafana: { icon: '📈', name: '数据可视化' },
     'apache-superset': { icon: '📉', name: '数据看板' },
+    homebridge: { icon: '🏡', name: '智能家居桥接' },
+    'node-red': { icon: '🔗', name: '流程自动化' },
+    netdata: { icon: '📡', name: '系统监控' },
+    beszel: { icon: '🖥️', name: '轻量监控' },
+    jellyfin: { icon: '🎬', name: '媒体服务器' },
+    navidrome: { icon: '🎵', name: '音乐服务器' },
+    audiobookshelf: { icon: '🎧', name: '有声书/播客' },
+    'nginx-proxy-manager': { icon: '🌐', name: '反向代理' },
+    portainer: { icon: '🐳', name: 'Docker管理' },
+    gitea: { icon: '📦', name: '代码托管' },
+    nextcloud: { icon: '☁️', name: '私有云盘' },
+    duplicati: { icon: '💾', name: '自动备份' },
+    actual: { icon: '💰', name: '个人理财' },
   };
 
   function getMemoryText(mb: number): string {

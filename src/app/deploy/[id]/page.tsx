@@ -8,6 +8,9 @@ export async function generateStaticParams() {
     'uptime-kuma', 'n8n', 'immich', 'stirling-pdf', 'vaultwarden',
     'adguard-home', 'changedetection-io', 'paperless-ngx', 'home-assistant',
     'open-webui', 'dify', 'langflow', 'metabase', 'grafana', 'apache-superset',
+    'homebridge', 'node-red', 'netdata', 'beszel', 'jellyfin', 'navidrome',
+    'audiobookshelf', 'nginx-proxy-manager', 'portainer', 'gitea', 'nextcloud',
+    'duplicati', 'actual',
   ];
   return tools.map((id) => ({ id }));
 }

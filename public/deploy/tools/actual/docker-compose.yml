@@ -1,0 +1,16 @@
+# POST_DEPLOY_URL=http://你的服务器IP:5006
+# POST_DEPLOY_MSG=浏览器访问创建管理员账号和加密密码，建立预算分类开始记账，手机可通过浏览器添加到主屏幕使用。
+version: "3.8"
+services:
+  actual-server:
+    image: actualbudget/actual-server:latest
+    container_name: actual-server
+    restart: unless-stopped
+    ports:
+      - "5006:5006"
+    volumes:
+      - ./data:/data
+    environment:
+      - ACTUAL_UPLOAD_FILE_SYNC_SIZE_LIMIT_MB=100
+      - ACTUAL_HTTPS=false
+      - TZ=Asia/Shanghai

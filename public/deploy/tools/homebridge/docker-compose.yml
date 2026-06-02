@@ -1,0 +1,13 @@
+# POST_DEPLOY_URL=http://你的服务器IP:8581
+# POST_DEPLOY_MSG=浏览器访问管理页面，安装对应品牌插件，然后在iPhone家庭App中扫描二维码添加设备。
+version: "3.8"
+services:
+  homebridge:
+    image: homebridge/homebridge:latest
+    container_name: homebridge
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./data:/homebridge
+    environment:
+      - TZ=Asia/Shanghai

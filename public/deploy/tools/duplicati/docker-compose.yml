@@ -1,0 +1,17 @@
+# POST_DEPLOY_URL=http://你的服务器IP:8200
+# POST_DEPLOY_MSG=浏览器访问设置密码，添加备份任务（选择文件夹→设置目标→设定计划），自动执行加密备份。
+version: "3.8"
+services:
+  duplicati:
+    image: duplicati/duplicati:latest
+    container_name: duplicati
+    restart: unless-stopped
+    ports:
+      - "8200:8200"
+    volumes:
+      - ./data:/data
+      - ./backups:/backups
+      - ./source:/source:ro
+    environment:
+      - TZ=Asia/Shanghai
+      - SETTINGS_ENCRYPTION_KEY=${ENCRYPTION_KEY:-}

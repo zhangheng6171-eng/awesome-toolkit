@@ -1,0 +1,17 @@
+# POST_DEPLOY_URL=http://你的服务器IP:8096
+# POST_DEPLOY_MSG=浏览器访问完成初始化，添加电影/音乐文件夹，在手机或电视上装Jellyfin客户端登录即可播放。
+version: "3.8"
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    ports:
+      - "8096:8096"
+    volumes:
+      - ./data/config:/config
+      - ./data/cache:/cache
+      - ./media:/media:ro
+    environment:
+      - TZ=Asia/Shanghai
+      - JELLYFIN_PublishedServerUrl=http://你的服务器IP:8096

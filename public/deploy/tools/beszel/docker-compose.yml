@@ -1,0 +1,14 @@
+# POST_DEPLOY_URL=http://你的服务器IP:8090
+# POST_DEPLOY_MSG=打开网页创建管理员账号，在需要监控的每台服务器上运行Agent，即可在主页看到所有服务器状态。
+version: "3.8"
+services:
+  beszel:
+    image: henrygd/beszel:latest
+    container_name: beszel
+    restart: unless-stopped
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./data:/beszel_data
+    environment:
+      - TZ=Asia/Shanghai

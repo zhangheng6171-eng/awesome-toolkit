@@ -1,0 +1,18 @@
+# POST_DEPLOY_URL=http://你的服务器IP:4533
+# POST_DEPLOY_MSG=浏览器访问创建管理员账号，指定音乐文件夹，自动扫描建库后用兼容客户端听歌。
+version: "3.8"
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    restart: unless-stopped
+    ports:
+      - "4533:4533"
+    volumes:
+      - ./data:/data
+      - ./music:/music:ro
+    environment:
+      - ND_MUSICFOLDER=/music
+      - ND_DATAFOLDER=/data
+      - ND_LOGLEVEL=info
+      - TZ=Asia/Shanghai

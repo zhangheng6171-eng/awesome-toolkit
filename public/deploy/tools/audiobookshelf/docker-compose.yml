@@ -1,0 +1,17 @@
+# POST_DEPLOY_URL=http://你的服务器IP:13378
+# POST_DEPLOY_MSG=浏览器访问创建管理员账号，添加有声书文件夹，用手机App登录即可收听。
+version: "3.8"
+services:
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    container_name: audiobookshelf
+    restart: unless-stopped
+    ports:
+      - "13378:80"
+    volumes:
+      - ./data/config:/config
+      - ./data/metadata:/metadata
+      - ./audiobooks:/audiobooks:ro
+      - ./podcasts:/podcasts:ro
+    environment:
+      - TZ=Asia/Shanghai

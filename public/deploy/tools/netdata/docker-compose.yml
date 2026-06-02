@@ -1,0 +1,26 @@
+# POST_DEPLOY_URL=http://你的服务器IP:19999
+# POST_DEPLOY_MSG=浏览器访问即可看到实时监控仪表盘，无需任何额外配置。
+version: "3.8"
+services:
+  netdata:
+    image: netdata/netdata:latest
+    container_name: netdata
+    restart: unless-stopped
+    hostname: netdata
+    ports:
+      - "19999:19999"
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - ./data/netdata-config:/etc/netdata
+      - ./data/netdata-lib:/var/lib/netdata
+      - ./data/netdata-cache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+    environment:
+      - TZ=Asia/Shanghai

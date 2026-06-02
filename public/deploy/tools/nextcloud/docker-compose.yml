@@ -1,0 +1,17 @@
+# POST_DEPLOY_URL=http://你的服务器IP:8080
+# POST_DEPLOY_MSG=浏览器访问创建管理员账号，下载电脑/手机客户端填入服务器地址登录，即可开始文件同步。
+version: "3.8"
+services:
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./data:/var/www/html
+    environment:
+      - NEXTCLOUD_ADMIN_USER=${ADMIN_USER:-admin}
+      - NEXTCLOUD_ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeMe123!}
+      - NEXTCLOUD_TRUSTED_DOMAINS=localhost 你的服务器IP
+      - TZ=Asia/Shanghai

@@ -1,0 +1,17 @@
+# POST_DEPLOY_URL=http://你的服务器IP:81
+# POST_DEPLOY_MSG=浏览器访问管理页面（默认admin@example.com/changeme），添加域名和申请免费SSL证书。
+version: "3.8"
+services:
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "81:81"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    environment:
+      - TZ=Asia/Shanghai

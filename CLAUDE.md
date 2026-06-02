@@ -116,7 +116,7 @@
 - 当前阶段：Phase 3（进行中）
 - 线上地址：https://awesome-toolkit.pages.dev
 - 部署平台：Cloudflare Pages（静态导出）
-- 已录入工具数：30（8 个分类全覆盖）
+- 已录入工具数：50（8 个分类全覆盖）
 
 ### 已完成任务
 - [x] A：GitHub Actions 每日自动更新 Star 数
@@ -139,12 +139,17 @@
   - 工具详情页集成「一键部署」CTA 入口
   - 变现钩子：服务器推荐链接（阿里云/腾讯云/Vultr）
 
+### 2026-06-02 更新（第三次）
+- [x] **工具库扩充到 50 个**：新增 20 个工具，覆盖家庭自动化/网络监控/密码管理/媒体服务器/笔记知识库
+- [x] 新增 13 个工具的部署配置 + docker-compose.yml，部署列表扩充到 28 个
+- [x] 部署上线验证通过（83 页，9/9 关键页面 200 OK）
+
 ### 明天待续
-- [ ] 注册阿里云/腾讯云/Vultr Affiliate，替换占位链接为真实推广链接
-- [ ] 运行 AI 描述生成脚本改进短描述：`ANTHROPIC_API_KEY=xxx node scripts/generate-descriptions.mjs --with-steps --force`
-- [ ] 部署到 Cloudflare Pages（配置 GitHub Secrets 后推送触发）
+- [ ] 注册阿里云/腾讯云/Vultr Affiliate，替换占位链接
+- [ ] 运行 AI 描述生成脚本：`ANTHROPIC_API_KEY=xxx node scripts/generate-descriptions.mjs --with-steps --force`
 - [ ] Phase 6：付费功能（自动备份/监控告警/版本更新提醒）
 - [ ] 接入自定义域名（可选）
+- [ ] 继续扩充到 100 个工具
 
 ---
 
