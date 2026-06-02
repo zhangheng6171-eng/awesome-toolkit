@@ -137,11 +137,40 @@ export default async function DeployDetailPage({
           </div>
         </div>
 
-        {/* 部署命令卡片（核心） */}
-        <div className="mt-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-6 text-white">
-          <h2 className="text-lg font-semibold flex items-center gap-2">
+        {/* Wizard CTA - Primary */}
+        <div className="mt-6 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl p-6 text-white">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <h2 className="text-lg font-semibold flex items-center gap-2">
+                <span className="text-xl">⚡</span> 一键部署到你的服务器
+              </h2>
+              <p className="mt-1 text-sm text-blue-100">
+                在网页上填写服务器信息，自动完成：检测系统 → 安装 Docker → 启动服务
+              </p>
+            </div>
+            <Link
+              href={`/deploy/${config.id}/wizard`}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-blue-600 rounded-xl hover:bg-blue-50 transition-colors font-semibold text-sm shadow-lg"
+            >
+              开始部署向导
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+
+        {/* 部署命令卡片（手动模式，折叠） */}
+        <details className="mt-4 group">
+          <summary className="bg-white rounded-xl border border-gray-200 p-4 cursor-pointer hover:border-gray-300 transition-colors">
+            <span className="text-sm font-medium text-gray-600">
+              💻 或者手动复制命令到服务器终端（高级用户）
+            </span>
+          </summary>
+          <div className="mt-4 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-6 text-white">
+          <h3 className="text-lg font-semibold flex items-center gap-2">
             <span className="text-xl">🚀</span> 一键部署命令
-          </h2>
+          </h3>
           <p className="mt-1 text-sm text-gray-400">
             复制下面这条命令，粘贴到你的服务器终端里，然后按回车
           </p>
@@ -191,7 +220,8 @@ export default async function DeployDetailPage({
               </div>
             )}
           </div>
-        </div>
+          </div>
+        </details>
 
         {/* 资源需求 */}
         <div className="mt-6 bg-white rounded-xl border border-gray-200 p-6">

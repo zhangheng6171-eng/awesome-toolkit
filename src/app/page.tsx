@@ -113,6 +113,17 @@ export default function Home() {
               <p className="mt-1">
                 收录标准：Star ≥ 1000 · 有明确使用场景 · 有可用文档
               </p>
+              {/* Pro waitlist */}
+              <div className="mt-6 bg-blue-50 rounded-xl p-5 max-w-md mx-auto">
+                <p className="text-sm font-medium text-blue-900">
+                  ⚡ Pro 版即将上线：一键部署到你的服务器
+                </p>
+                <p className="text-xs text-blue-600 mt-1">
+                  留下邮箱，上线第一时间通知你，享早鸟价
+                </p>
+                <WaitlistForm />
+              </div>
+
               <button
                 onClick={() => setShowRecommend(true)}
                 className="mt-4 inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-medium hover:bg-blue-700 transition-colors"
@@ -143,5 +154,46 @@ function StatCard({ label, value }: { label: string; value: string }) {
       <div className="text-2xl font-bold text-gray-900">{value}</div>
       <div className="text-xs text-gray-500 mt-0.5">{label}</div>
     </div>
+  );
+}
+
+function WaitlistForm() {
+  'use client';
+  const [email, setEmail] = useState('');
+  const [done, setDone] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email.trim()) return;
+    try {
+      await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), source: 'homepage' }),
+      });
+    } catch {}
+    setDone(true);
+  }
+
+  if (done) {
+    return <p className="mt-2 text-sm text-green-600 font-medium">✅ 已登记，上线时通知你!</p>;
+  }
+
+  return (
+    <form className="mt-2 flex gap-2" onSubmit={handleSubmit}>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="your@email.com"
+        required
+        className="flex-1 px-3 py-2 border border-blue-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <button type="submit"
+        className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700"
+      >
+        登记
+      </button>
+    </form>
   );
 }
