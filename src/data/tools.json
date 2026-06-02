@@ -3,11 +3,19 @@
     "id": "ollama",
     "name": "Ollama",
     "github_url": "https://github.com/ollama/ollama",
-    "stars": 110000,
+    "stars": 172861,
     "category": "AI & 自动化",
-    "tags": ["本地AI", "大语言模型", "隐私", "离线使用"],
+    "tags": [
+      "本地AI",
+      "大语言模型",
+      "隐私",
+      "离线使用"
+    ],
     "description_plain": "让你在自己的电脑上运行 AI 大模型，不需要联网、不需要付费、聊天记录只存在你电脑上，谁也拿不走",
-    "target_users": ["普通用户", "技术小白"],
+    "target_users": [
+      "普通用户",
+      "技术小白"
+    ],
     "difficulty": 2,
     "quick_start": [
       "打开 ollama.com，点 Download 下载适合你电脑的版本（Windows / Mac / Linux 都有）",
@@ -15,7 +23,11 @@
       "安装完后，打开电脑的「终端」（Mac）或「命令提示符」（Windows），输入：ollama run qwen3，然后按回车",
       "等它自动下载模型（第一次大约 4-8GB，喝杯咖啡的时间），下载完就能直接在终端里和 AI 聊天了"
     ],
-    "alternatives": ["LM Studio", "Jan", "GPT4All"],
+    "alternatives": [
+      "LM Studio",
+      "Jan",
+      "GPT4All"
+    ],
     "has_web_ui": false,
     "has_desktop_app": true,
     "has_cli": true,
@@ -26,11 +38,19 @@
     "id": "n8n",
     "name": "n8n",
     "github_url": "https://github.com/n8n-io/n8n",
-    "stars": 55000,
+    "stars": 190655,
     "category": "开发效率工具",
-    "tags": ["自动化", "工作流", "无代码", "API集成"],
+    "tags": [
+      "自动化",
+      "工作流",
+      "无代码",
+      "API集成"
+    ],
     "description_plain": "像搭积木一样把不同软件串起来干活，比如「收到邮件 → 自动存到表格 → 再发条微信通知」，整个过程不用写一行代码",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 3,
     "quick_start": [
       "在终端输入一行命令就能启动：npx n8n（前提是你电脑已装 Node.js）",
@@ -39,7 +59,10 @@
       "再从左边拖一个「操作」节点（比如「发送邮件」「写入Google表格」），用线把两个连起来",
       "点右上角「执行工作流」测试，确认没问题后点「激活」，它就会自动帮你干活了"
     ],
-    "alternatives": ["Zapier", "Make (Integromat)"],
+    "alternatives": [
+      "Zapier",
+      "Make (Integromat)"
+    ],
     "has_web_ui": true,
     "has_desktop_app": true,
     "has_cli": true,
@@ -50,11 +73,19 @@
     "id": "immich",
     "name": "Immich",
     "github_url": "https://github.com/immich-app/immich",
-    "stars": 60000,
+    "stars": 102466,
     "category": "自部署 & 家庭服务器",
-    "tags": ["照片备份", "自托管", "AI识别", "手机同步"],
+    "tags": [
+      "照片备份",
+      "自托管",
+      "AI识别",
+      "手机同步"
+    ],
     "description_plain": "搭建属于你自己的「谷歌相册」，照片和视频都存在你自己家里，不上传到任何云服务，还有 AI 帮你自动识别人脸和分类",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 4,
     "quick_start": [
       "准备一台一直开机的电脑或 NAS，先装好 Docker（去网上搜「Docker 安装教程」，跟着做就行）",
@@ -63,7 +94,10 @@
       "在手机上下载 Immich App（iOS 和安卓都有），用刚才的账号登录",
       "在 App 设置里打开「自动备份」，以后你拍的照片就会自动存到自己家里的设备上了"
     ],
-    "alternatives": ["PhotoPrism", "Nextcloud"],
+    "alternatives": [
+      "PhotoPrism",
+      "Nextcloud"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": true,
@@ -74,11 +108,19 @@
     "id": "bitwarden",
     "name": "Bitwarden",
     "github_url": "https://github.com/bitwarden/server",
-    "stars": 16000,
+    "stars": 19039,
     "category": "安全 & 隐私",
-    "tags": ["密码管理", "跨平台", "自动填充", "安全"],
+    "tags": [
+      "密码管理",
+      "跨平台",
+      "自动填充",
+      "安全"
+    ],
     "description_plain": "记住你所有网站和 App 的密码，你只需要记住一个主密码就行了。打开什么网站都能自动帮你填账号密码，手机电脑全同步",
-    "target_users": ["技术小白", "普通用户"],
+    "target_users": [
+      "技术小白",
+      "普通用户"
+    ],
     "difficulty": 1,
     "quick_start": [
       "用手机或电脑浏览器打开 bitwarden.com，点右上角「创建免费账户」，用你的邮箱注册",
@@ -86,7 +128,11 @@
       "登录后，先把你最重要的几个账号密码手动输进去（点「+」按钮添加）",
       "以后登录任何网站，点一下浏览器地址栏旁边的 Bitwarden 图标，它就会自动帮你填好账号密码"
     ],
-    "alternatives": ["1Password", "LastPass", "KeePass"],
+    "alternatives": [
+      "1Password",
+      "LastPass",
+      "KeePass"
+    ],
     "has_web_ui": true,
     "has_desktop_app": true,
     "has_cli": true,
@@ -97,11 +143,19 @@
     "id": "stirling-pdf",
     "name": "Stirling PDF",
     "github_url": "https://github.com/Stirling-Tools/Stirling-PDF",
-    "stars": 50000,
+    "stars": 80026,
     "category": "文件 & 知识管理",
-    "tags": ["PDF", "文件处理", "格式转换", "合并拆分"],
+    "tags": [
+      "PDF",
+      "文件处理",
+      "格式转换",
+      "合并拆分"
+    ],
     "description_plain": "一个网页就能搞定你遇到的所有 PDF 需求——合并、拆分、压缩、旋转、加密、加水印、转格式，总共 50 多种操作，不用装任何软件",
-    "target_users": ["普通用户", "技术小白"],
+    "target_users": [
+      "普通用户",
+      "技术小白"
+    ],
     "difficulty": 3,
     "quick_start": [
       "访问 Stirling PDF 官方提供的在线版（stirlingpdf.io），或者自己用 Docker 一键部署到自己电脑上",
@@ -110,7 +164,11 @@
       "根据需要调一下参数（比如压缩的话拖一下质量滑条），然后点「处理」按钮",
       "等一两秒处理完，点「下载」就把处理好的文件保存到你电脑上了"
     ],
-    "alternatives": ["Smallpdf", "iLovePDF", "PDF24"],
+    "alternatives": [
+      "Smallpdf",
+      "iLovePDF",
+      "PDF24"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -121,11 +179,19 @@
     "id": "photoprism",
     "name": "PhotoPrism",
     "github_url": "https://github.com/photoprism/photoprism",
-    "stars": 37000,
+    "stars": 39731,
     "category": "自部署 & 家庭服务器",
-    "tags": ["照片管理", "AI识别", "人脸识别", "自托管"],
+    "tags": [
+      "照片管理",
+      "AI识别",
+      "人脸识别",
+      "自托管"
+    ],
     "description_plain": "用 AI 自动整理你散落在各处的照片，能识别人脸、判断照片里是什么东西、在哪里拍的，像一个专业的照片图书管理员",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 3,
     "quick_start": [
       "在你的电脑或 NAS 上装好 Docker，然后在终端执行 PhotoPrism 官方提供的一键安装命令",
@@ -134,7 +200,11 @@
       "扫描完成后，AI 会自动给照片打标签——谁的脸、什么物体、什么地点，你搜「海边」就能找到所有海边照片",
       "以后加了新照片到那个文件夹，它会自动检测并处理，不用你手动操作"
     ],
-    "alternatives": ["Immich", "Google Photos", "Apple Photos"],
+    "alternatives": [
+      "Immich",
+      "Google Photos",
+      "Apple Photos"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": true,
@@ -145,11 +215,20 @@
     "id": "excalidraw",
     "name": "Excalidraw",
     "github_url": "https://github.com/excalidraw/excalidraw",
-    "stars": 93000,
+    "stars": 124426,
     "category": "创意 & 媒体处理",
-    "tags": ["绘图", "白板", "手绘风格", "协作"],
+    "tags": [
+      "绘图",
+      "白板",
+      "手绘风格",
+      "协作"
+    ],
     "description_plain": "一个打开浏览器就能用的画图工具，画出来的图有手绘的温暖感觉，不像电脑画的那么死板。适合做示意图、流程图、思维导图、会议白板",
-    "target_users": ["技术小白", "普通用户", "开发者"],
+    "target_users": [
+      "技术小白",
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 1,
     "quick_start": [
       "打开浏览器，输入 excalidraw.com，什么都不用装就能开始用",
@@ -157,7 +236,11 @@
       "双击图形可以在上面写字，右边面板可以改颜色、粗细、填充、字体",
       "画完后，点左上角菜单 →「导出为 PNG」，一张高清图片就保存到你电脑上了"
     ],
-    "alternatives": ["Miro", "Microsoft Whiteboard", "Draw.io"],
+    "alternatives": [
+      "Miro",
+      "Microsoft Whiteboard",
+      "Draw.io"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -168,11 +251,18 @@
     "id": "appwrite",
     "name": "Appwrite",
     "github_url": "https://github.com/appwrite/appwrite",
-    "stars": 48000,
+    "stars": 56194,
     "category": "开发效率工具",
-    "tags": ["后端服务", "用户认证", "数据库", "文件存储"],
+    "tags": [
+      "后端服务",
+      "用户认证",
+      "数据库",
+      "文件存储"
+    ],
     "description_plain": "给开发者准备的一站式「后端工具箱」——用户注册登录、数据库、文件上传、消息推送这些每个 App 都要用的功能，它全帮你做好了，直接拿来用就行",
-    "target_users": ["开发者"],
+    "target_users": [
+      "开发者"
+    ],
     "difficulty": 3,
     "quick_start": [
       "在你的服务器或本地电脑上装好 Docker，运行 Appwrite 官方的一键安装命令",
@@ -181,7 +271,11 @@
       "在项目设置里找到 API 密钥和项目 ID，把它们填入你的应用代码里",
       "用 Appwrite 提供的 SDK（支持网页、iOS、安卓、Flutter、Python 等），在代码里直接调用这些功能，不用自己写后端"
     ],
-    "alternatives": ["Supabase", "Firebase", "PocketBase"],
+    "alternatives": [
+      "Supabase",
+      "Firebase",
+      "PocketBase"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": true,
@@ -192,11 +286,19 @@
     "id": "nocodb",
     "name": "NocoDB",
     "github_url": "https://github.com/nocodb/nocodb",
-    "stars": 53000,
+    "stars": 63205,
     "category": "数据处理 & 可视化",
-    "tags": ["电子表格", "数据库", "协作", "无代码"],
+    "tags": [
+      "电子表格",
+      "数据库",
+      "协作",
+      "无代码"
+    ],
     "description_plain": "把枯燥的数据库表格变成好看的协作平台，能像 Excel 一样编辑数据，还能一键切换成看板视图（像 Trello）、日历视图、表单视图，团队一起用很方便",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 3,
     "quick_start": [
       "在终端输入 npx nocodb 一行命令就能启动（需要电脑有 Node.js）",
@@ -205,7 +307,11 @@
       "点上方的视图切换按钮，可以在「表格」「看板」「日历」「画廊」「表单」五种视图间切换",
       "点右上角「分享」按钮，生成一个链接发给同事或家人，大家就能一起来编辑了"
     ],
-    "alternatives": ["Airtable", "Baserow", "SeaTable"],
+    "alternatives": [
+      "Airtable",
+      "Baserow",
+      "SeaTable"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": true,
@@ -216,11 +322,19 @@
     "id": "penpot",
     "name": "Penpot",
     "github_url": "https://github.com/penpot/penpot",
-    "stars": 38000,
+    "stars": 48768,
     "category": "创意 & 媒体处理",
-    "tags": ["UI设计", "原型设计", "协作", "矢量绘图"],
+    "tags": [
+      "UI设计",
+      "原型设计",
+      "协作",
+      "矢量绘图"
+    ],
     "description_plain": "开源版的 Figma，用来画 App 界面、网页设计图、产品原型。在浏览器里直接用，完全免费，设计师和产品经理的必备工具",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 3,
     "quick_start": [
       "打开浏览器访问 penpot.app，点「免费注册」创建一个账号，或者用 Docker 部署到自己电脑上",
@@ -229,7 +343,11 @@
       "选中任意图形，右边面板可以调整颜色、大小、阴影、圆角、透明度等",
       "设计完成后，点右上角「分享」生成一个链接，发给同事或客户，他们可以直接在浏览器里查看、评论甚至协作修改"
     ],
-    "alternatives": ["Figma", "Sketch", "Lunacy"],
+    "alternatives": [
+      "Figma",
+      "Sketch",
+      "Lunacy"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": true,
@@ -240,11 +358,19 @@
     "id": "changedetection-io",
     "name": "changedetection.io",
     "github_url": "https://github.com/dgtlmoon/changedetection.io",
-    "stars": 22000,
+    "stars": 31839,
     "category": "网络 & 爬虫",
-    "tags": ["网页监控", "变化检测", "自动化", "通知"],
+    "tags": [
+      "网页监控",
+      "变化检测",
+      "自动化",
+      "通知"
+    ],
     "description_plain": "帮你盯着任意网页的变化——商品降价了、考试出分了、官网发新公告了，一旦有变化立刻发邮件或消息通知你，再也不用自己一遍遍刷新",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 3,
     "quick_start": [
       "用 Docker 一键部署：打开终端，执行 changedetection.io 官方提供的一行 docker run 命令",
@@ -253,7 +379,11 @@
       "设置通知方式：支持邮件、企业微信机器人、Telegram、Slack、Discord 等十几种方式",
       "保存后它就会按你设定的时间自动检查，网页有变化时第一时间通知你"
     ],
-    "alternatives": ["Visualping", "Distill Web Monitor", "WebSite-Watcher"],
+    "alternatives": [
+      "Visualping",
+      "Distill Web Monitor",
+      "WebSite-Watcher"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": true,
@@ -264,11 +394,20 @@
     "id": "hoppscotch",
     "name": "Hoppscotch",
     "github_url": "https://github.com/hoppscotch/hoppscotch",
-    "stars": 67000,
+    "stars": 79373,
     "category": "网络 & 爬虫",
-    "tags": ["API测试", "HTTP", "WebSocket", "接口调试", "轻量"],
+    "tags": [
+      "API测试",
+      "HTTP",
+      "WebSocket",
+      "接口调试",
+      "轻量"
+    ],
     "description_plain": "在浏览器里就能测试 API 接口的轻量工具，打开网页直接用，不用装软件、不用注册。发送请求、查看返回结果、保存测试集合，开发调试必备",
-    "target_users": ["开发者", "普通用户"],
+    "target_users": [
+      "开发者",
+      "普通用户"
+    ],
     "difficulty": 1,
     "quick_start": [
       "打开浏览器访问 hoppscotch.io，不用注册就能直接使用",
@@ -277,7 +416,11 @@
       "点击橙色的「Send」按钮发送请求，下方会立刻显示服务器返回的结果和状态码",
       "点击「Collections」可以把常用的请求保存起来，分类管理，方便以后一键复用"
     ],
-    "alternatives": ["Postman", "Insomnia", "Bruno"],
+    "alternatives": [
+      "Postman",
+      "Insomnia",
+      "Bruno"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -288,11 +431,19 @@
     "id": "dify",
     "name": "Dify",
     "github_url": "https://github.com/langgenius/dify",
-    "stars": 55000,
+    "stars": 143454,
     "category": "AI & 自动化",
-    "tags": ["AI应用", "聊天机器人", "可视化", "知识库"],
+    "tags": [
+      "AI应用",
+      "聊天机器人",
+      "可视化",
+      "知识库"
+    ],
     "description_plain": "不用写代码就能搭一个AI聊天机器人，画流程图一样把AI功能拼起来，还能喂它你自己的文档资料，让它回答更准",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 3,
     "quick_start": [
       "访问 dify.ai 注册免费账号",
@@ -300,7 +451,10 @@
       "在知识库上传你的文档",
       "点「发布」得到AI聊天链接"
     ],
-    "alternatives": ["LangFlow", "Flowise"],
+    "alternatives": [
+      "LangFlow",
+      "Flowise"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -311,11 +465,19 @@
     "id": "open-webui",
     "name": "Open WebUI",
     "github_url": "https://github.com/open-webui/open-webui",
-    "stars": 45000,
+    "stars": 139573,
     "category": "AI & 自动化",
-    "tags": ["聊天界面", "LLM", "本地AI", "自托管"],
+    "tags": [
+      "聊天界面",
+      "LLM",
+      "本地AI",
+      "自托管"
+    ],
     "description_plain": "把Ollama等本地AI模型变成一个像ChatGPT一样好看的聊天网页，对话记录、文件上传、联网搜索全都有",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 2,
     "quick_start": [
       "电脑上先装好Ollama并启动",
@@ -323,7 +485,10 @@
       "浏览器打开 localhost:3000",
       "选一个模型，直接开始对话"
     ],
-    "alternatives": ["Lobe Chat", "ChatGPT"],
+    "alternatives": [
+      "Lobe Chat",
+      "ChatGPT"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -334,11 +499,19 @@
     "id": "it-tools",
     "name": "IT-Tools",
     "github_url": "https://github.com/CorentinTh/it-tools",
-    "stars": 25000,
+    "stars": 39078,
     "category": "开发效率工具",
-    "tags": ["在线工具", "编码转换", "生成器", "开发辅助"],
+    "tags": [
+      "在线工具",
+      "编码转换",
+      "生成器",
+      "开发辅助"
+    ],
     "description_plain": "一个网页装了几十种常用小工具，生成随机密码、格式化代码、时间戳转换、Base64编解码，全是打开就能用的，不用装任何东西",
-    "target_users": ["开发者", "普通用户"],
+    "target_users": [
+      "开发者",
+      "普通用户"
+    ],
     "difficulty": 1,
     "quick_start": [
       "打开 it-tools.tech 网站",
@@ -346,7 +519,10 @@
       "输入内容，结果实时显示",
       "点复制按钮拿走结果"
     ],
-    "alternatives": ["DevToys", "CyberChef"],
+    "alternatives": [
+      "DevToys",
+      "CyberChef"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -357,11 +533,19 @@
     "id": "cyberchef",
     "name": "CyberChef",
     "github_url": "https://github.com/gchq/CyberChef",
-    "stars": 30000,
+    "stars": 34968,
     "category": "网络 & 爬虫",
-    "tags": ["数据转换", "编码解码", "加密", "格式转换"],
+    "tags": [
+      "数据转换",
+      "编码解码",
+      "加密",
+      "格式转换"
+    ],
     "description_plain": "一个网页工具，把看不懂的乱码或加密数据贴进去，选择几种处理方式，就能还原成正常文字或你想要的格式。安全研究、找回乱码文件都能用",
-    "target_users": ["开发者", "普通用户"],
+    "target_users": [
+      "开发者",
+      "普通用户"
+    ],
     "difficulty": 2,
     "quick_start": [
       "打开浏览器访问 CyberChef 官网",
@@ -369,7 +553,10 @@
       "右上方粘贴你要处理的数据",
       "右下立刻显示处理完的结果"
     ],
-    "alternatives": ["IT-Tools", "DevToys"],
+    "alternatives": [
+      "IT-Tools",
+      "DevToys"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -380,11 +567,19 @@
     "id": "metabase",
     "name": "Metabase",
     "github_url": "https://github.com/metabase/metabase",
-    "stars": 40000,
+    "stars": 47534,
     "category": "数据处理 & 可视化",
-    "tags": ["数据分析", "图表", "BI", "报表"],
+    "tags": [
+      "数据分析",
+      "图表",
+      "BI",
+      "报表"
+    ],
     "description_plain": "不用写代码就能做数据分析。连上数据库或导入Excel表格，点点鼠标就能生成漂亮的柱状图、饼图、折线图，还能做成实时更新的数据大屏",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 3,
     "quick_start": [
       "用Docker一键装好Metabase",
@@ -393,7 +588,10 @@
       "点「提问」拖字段生成图表",
       "保存到仪表盘，分享链接"
     ],
-    "alternatives": ["Grafana", "Apache Superset"],
+    "alternatives": [
+      "Grafana",
+      "Apache Superset"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -404,11 +602,19 @@
     "id": "grafana",
     "name": "Grafana",
     "github_url": "https://github.com/grafana/grafana",
-    "stars": 65000,
+    "stars": 74079,
     "category": "数据处理 & 可视化",
-    "tags": ["监控", "仪表盘", "可视化", "数据展示"],
+    "tags": [
+      "监控",
+      "仪表盘",
+      "可视化",
+      "数据展示"
+    ],
     "description_plain": "把服务器、网站、传感器等各种数据变成实时刷新的图表大屏，随时掌握所有关键指标，超过阈值自动发警报通知",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 3,
     "quick_start": [
       "用Docker一键装好Grafana",
@@ -417,7 +623,10 @@
       "创建仪表盘，拖拽图表组件",
       "设自动刷新，投大屏展示"
     ],
-    "alternatives": ["Metabase", "Datadog"],
+    "alternatives": [
+      "Metabase",
+      "Datadog"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -428,11 +637,19 @@
     "id": "vaultwarden",
     "name": "Vaultwarden",
     "github_url": "https://github.com/dani-garcia/vaultwarden",
-    "stars": 40000,
+    "stars": 61707,
     "category": "安全 & 隐私",
-    "tags": ["密码管理", "自托管", "轻量", "安全"],
+    "tags": [
+      "密码管理",
+      "自托管",
+      "轻量",
+      "安全"
+    ],
     "description_plain": "自己部署一个密码保险箱在家里，所有账号密码只存在你的设备上。配合手机App自动填充密码，再也不用记一堆密码，也不用担心密码存在别人服务器上",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 3,
     "quick_start": [
       "用Docker一键装好Vaultwarden",
@@ -441,7 +658,10 @@
       "App设置里填你的服务器地址",
       "开始添加密码，自动填充"
     ],
-    "alternatives": ["Bitwarden", "1Password"],
+    "alternatives": [
+      "Bitwarden",
+      "1Password"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -452,11 +672,19 @@
     "id": "adguard-home",
     "name": "AdGuard Home",
     "github_url": "https://github.com/AdguardTeam/AdGuardHome",
-    "stars": 27000,
+    "stars": 34555,
     "category": "安全 & 隐私",
-    "tags": ["广告拦截", "隐私保护", "DNS", "家庭网络"],
+    "tags": [
+      "广告拦截",
+      "隐私保护",
+      "DNS",
+      "家庭网络"
+    ],
     "description_plain": "装在你家路由器或NAS上，全家所有设备的广告和追踪器都会被自动挡掉，网页变快，省流量，还能设置不让小孩看不良网站",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 3,
     "quick_start": [
       "用Docker一键装好AdGuard",
@@ -464,7 +692,10 @@
       "把路由器DNS改成它的地址",
       "全家设备自动拦截广告"
     ],
-    "alternatives": ["Pi-hole", "NextDNS"],
+    "alternatives": [
+      "Pi-hole",
+      "NextDNS"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -475,11 +706,19 @@
     "id": "paperless-ngx",
     "name": "Paperless-ngx",
     "github_url": "https://github.com/paperless-ngx/paperless-ngx",
-    "stars": 25000,
+    "stars": 41832,
     "category": "文件 & 知识管理",
-    "tags": ["文档管理", "OCR", "扫描", "标签分类"],
+    "tags": [
+      "文档管理",
+      "OCR",
+      "扫描",
+      "标签分类"
+    ],
     "description_plain": "把家里堆积的纸质文件、发票、合同、说明书统统扫描进去，AI会自动认出上面的文字并帮你分类打标签，以后搜一两个字就能找到想要的那张纸",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 4,
     "quick_start": [
       "用Docker一键装好Paperless",
@@ -488,7 +727,10 @@
       "AI自动识别文字并分类",
       "搜索任意关键词找到文件"
     ],
-    "alternatives": ["Docspell", "Mayan EDMS"],
+    "alternatives": [
+      "Docspell",
+      "Mayan EDMS"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -499,11 +741,19 @@
     "id": "trilium-notes",
     "name": "Trilium Notes",
     "github_url": "https://github.com/zadam/trilium",
-    "stars": 28000,
+    "stars": 36289,
     "category": "文件 & 知识管理",
-    "tags": ["笔记", "知识管理", "思维导图", "自托管"],
+    "tags": [
+      "笔记",
+      "知识管理",
+      "思维导图",
+      "自托管"
+    ],
     "description_plain": "一个可以无限创建子笔记的知识管理软件，像文件夹套文件夹一样整理知识，也能一键生成思维导图。所有数据存自己电脑上，不经过任何云端",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 3,
     "quick_start": [
       "官网下载桌面版安装",
@@ -512,7 +762,11 @@
       "拖拽节点调整层级关系",
       "用搜索快速定位任何笔记"
     ],
-    "alternatives": ["Obsidian", "Joplin", "Logseq"],
+    "alternatives": [
+      "Obsidian",
+      "Joplin",
+      "Logseq"
+    ],
     "has_web_ui": true,
     "has_desktop_app": true,
     "has_cli": false,
@@ -523,11 +777,19 @@
     "id": "obs-studio",
     "name": "OBS Studio",
     "github_url": "https://github.com/obsproject/obs-studio",
-    "stars": 63000,
+    "stars": 72883,
     "category": "创意 & 媒体处理",
-    "tags": ["录屏", "直播", "视频制作", "画面合成"],
+    "tags": [
+      "录屏",
+      "直播",
+      "视频制作",
+      "画面合成"
+    ],
     "description_plain": "免费又专业的录屏和直播软件，做视频博主、游戏主播、网课老师都在用。能把电脑画面、摄像头画面、麦克风声音合成在一起录下来或直播出去",
-    "target_users": ["普通用户", "技术小白"],
+    "target_users": [
+      "普通用户",
+      "技术小白"
+    ],
     "difficulty": 2,
     "quick_start": [
       "去官网下载安装OBS",
@@ -536,7 +798,10 @@
       "拖动调整画面大小位置",
       "点「开始录制」或「开始直播」"
     ],
-    "alternatives": ["Streamlabs", "Bandicam"],
+    "alternatives": [
+      "Streamlabs",
+      "Bandicam"
+    ],
     "has_web_ui": false,
     "has_desktop_app": true,
     "has_cli": false,
@@ -547,11 +812,19 @@
     "id": "home-assistant",
     "name": "Home Assistant",
     "github_url": "https://github.com/home-assistant/core",
-    "stars": 76000,
+    "stars": 87454,
     "category": "自部署 & 家庭服务器",
-    "tags": ["智能家居", "自动化", "IoT", "家庭控制"],
+    "tags": [
+      "智能家居",
+      "自动化",
+      "IoT",
+      "家庭控制"
+    ],
     "description_plain": "把家里不同品牌的智能设备（灯、空调、门锁、摄像头）统一管起来，设置「出门自动关灯关空调」「检测到漏水发警报」这样的自动化，一个App控制全家",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 4,
     "quick_start": [
       "用Docker或树莓派安装",
@@ -560,7 +833,10 @@
       "创建自动化：如果A就做B",
       "手机装App随时远程控制"
     ],
-    "alternatives": ["openHAB", "Domoticz"],
+    "alternatives": [
+      "openHAB",
+      "Domoticz"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -571,11 +847,19 @@
     "id": "langflow",
     "name": "LangFlow",
     "github_url": "https://github.com/langflow-ai/langflow",
-    "stars": 40000,
+    "stars": 149037,
     "category": "AI & 自动化",
-    "tags": ["AI流程", "LLM", "可视化", "低代码"],
+    "tags": [
+      "AI流程",
+      "LLM",
+      "可视化",
+      "低代码"
+    ],
     "description_plain": "像画流程图一样搭建AI应用。把对话、搜索、记忆这些AI能力像积木一样拖到画布上连起来，就能做出一个能聊能搜的AI助手",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 3,
     "quick_start": [
       "用Docker一键装好LangFlow",
@@ -583,7 +867,10 @@
       "拖AI模块到画布连线",
       "输入问题测试你的AI流程"
     ],
-    "alternatives": ["Dify", "Flowise"],
+    "alternatives": [
+      "Dify",
+      "Flowise"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -594,11 +881,19 @@
     "id": "apache-superset",
     "name": "Apache Superset",
     "github_url": "https://github.com/apache/superset",
-    "stars": 64000,
+    "stars": 73113,
     "category": "数据处理 & 可视化",
-    "tags": ["BI", "数据分析", "图表", "仪表盘"],
+    "tags": [
+      "BI",
+      "数据分析",
+      "图表",
+      "仪表盘"
+    ],
     "description_plain": "公司或个人都能用的数据看板工具，把 Excel 表格或数据库里的数据变成图表，拖拖拽拽就能做出好看的数据报告",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 3,
     "quick_start": [
       "用Docker一键装好Superset",
@@ -607,7 +902,10 @@
       "创建图表拖字段生成",
       "组仪表盘投大屏展示"
     ],
-    "alternatives": ["Metabase", "Grafana"],
+    "alternatives": [
+      "Metabase",
+      "Grafana"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -618,11 +916,19 @@
     "id": "pi-hole",
     "name": "Pi-hole",
     "github_url": "https://github.com/pi-hole/pi-hole",
-    "stars": 50000,
+    "stars": 59092,
     "category": "安全 & 隐私",
-    "tags": ["广告拦截", "DNS", "隐私保护", "网络安全"],
+    "tags": [
+      "广告拦截",
+      "DNS",
+      "隐私保护",
+      "网络安全"
+    ],
     "description_plain": "在你家网络入口装一个「广告过滤器」，所有连WiFi的设备自动过滤广告和追踪器，网页打开更快，App也不会偷偷上传你的隐私数据",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 4,
     "quick_start": [
       "准备一台树莓派或老旧电脑",
@@ -631,7 +937,10 @@
       "把路由器DNS指向Pi-hole",
       "打开管理页看拦截统计"
     ],
-    "alternatives": ["AdGuard Home", "NextDNS"],
+    "alternatives": [
+      "AdGuard Home",
+      "NextDNS"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
@@ -642,11 +951,19 @@
     "id": "joplin",
     "name": "Joplin",
     "github_url": "https://github.com/laurent22/joplin",
-    "stars": 50000,
+    "stars": 55052,
     "category": "文件 & 知识管理",
-    "tags": ["笔记", "Markdown", "同步", "知识管理"],
+    "tags": [
+      "笔记",
+      "Markdown",
+      "同步",
+      "知识管理"
+    ],
     "description_plain": "一个完全由你掌控数据的笔记软件，手机电脑都能用。笔记通过你自己的网盘同步，不经过任何第三方，支持手写、录音、从网页剪藏内容",
-    "target_users": ["技术小白", "普通用户"],
+    "target_users": [
+      "技术小白",
+      "普通用户"
+    ],
     "difficulty": 1,
     "quick_start": [
       "官网下载安装Joplin",
@@ -655,7 +972,11 @@
       "手机装同款App登录",
       "两端自动同步，随时查看"
     ],
-    "alternatives": ["Obsidian", "Notion", "Trilium Notes"],
+    "alternatives": [
+      "Obsidian",
+      "Notion",
+      "Trilium Notes"
+    ],
     "has_web_ui": false,
     "has_desktop_app": true,
     "has_cli": true,
@@ -666,11 +987,19 @@
     "id": "lossless-cut",
     "name": "LosslessCut",
     "github_url": "https://github.com/mifi/lossless-cut",
-    "stars": 30000,
+    "stars": 40834,
     "category": "创意 & 媒体处理",
-    "tags": ["视频剪辑", "无损", "裁剪", "合并"],
+    "tags": [
+      "视频剪辑",
+      "无损",
+      "裁剪",
+      "合并"
+    ],
     "description_plain": "一个极简的视频剪切工具，只干一件事——快速裁掉视频里不想要的片段或把几段拼起来，画质不损失，速度飞快，从长视频里截取精彩部分特别好用",
-    "target_users": ["技术小白", "普通用户"],
+    "target_users": [
+      "技术小白",
+      "普通用户"
+    ],
     "difficulty": 1,
     "quick_start": [
       "官网下载安装LosslessCut",
@@ -678,7 +1007,10 @@
       "拖动选择要保留的片段",
       "点「导出」保存新视频"
     ],
-    "alternatives": ["Avidemux", "QuickTime Player"],
+    "alternatives": [
+      "Avidemux",
+      "QuickTime Player"
+    ],
     "has_web_ui": false,
     "has_desktop_app": true,
     "has_cli": true,
@@ -689,11 +1021,19 @@
     "id": "uptime-kuma",
     "name": "Uptime Kuma",
     "github_url": "https://github.com/louislam/uptime-kuma",
-    "stars": 63000,
+    "stars": 87532,
     "category": "自部署 & 家庭服务器",
-    "tags": ["监控", "网站监控", "通知", "自托管"],
+    "tags": [
+      "监控",
+      "网站监控",
+      "通知",
+      "自托管"
+    ],
     "description_plain": "帮你盯着网站或服务是否正常运行的监控神器。出了问题第一时间通过微信、邮件、钉钉通知你，界面清爽好看，占用资源极少",
-    "target_users": ["普通用户", "开发者"],
+    "target_users": [
+      "普通用户",
+      "开发者"
+    ],
     "difficulty": 2,
     "quick_start": [
       "用Docker一键装好",
@@ -702,7 +1042,10 @@
       "设置通知方式如微信邮件",
       "出问题自动发消息提醒你"
     ],
-    "alternatives": ["Better Uptime", "Statping"],
+    "alternatives": [
+      "Better Uptime",
+      "Statping"
+    ],
     "has_web_ui": true,
     "has_desktop_app": false,
     "has_cli": false,
