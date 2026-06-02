@@ -249,13 +249,32 @@ function WizardContent() {
               Agent 是一个轻量程序（Python3），负责在你的服务器上执行部署命令。无需安装额外依赖。
             </p>
 
-            <div className="bg-gray-900 rounded-lg p-4 mb-4">
+            <div className="bg-gray-900 rounded-lg p-4 mb-4 relative">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-gray-400 text-xs">在服务器终端执行以下命令：</span>
                 <CopyButton text={installCmd} />
               </div>
-              <pre className="text-green-400 text-sm overflow-x-auto whitespace-pre-wrap">{installCmd}</pre>
+              <pre className="text-green-400 text-sm overflow-x-auto whitespace-pre-wrap pr-16">{installCmd}</pre>
             </div>
+
+            {/* Agent 是什么? */}
+            <details className="mb-4 group">
+              <summary className="text-sm text-blue-600 cursor-pointer hover:text-blue-700 py-1">
+                🤖 Agent 是什么？它安全吗？
+              </summary>
+              <div className="mt-2 pl-4 border-l-2 border-blue-200 text-sm text-gray-600 space-y-1">
+                <p>Agent 是一个运行在<strong>你自己服务器上</strong>的小程序（Python3，无额外依赖），负责实际执行 Docker 命令。</p>
+                <p>🔒 <strong>安全保证：</strong></p>
+                <ul className="list-disc pl-5 space-y-0.5 text-xs">
+                  <li>Agent 只在你的服务器上运行，数据不会离开你的服务器</li>
+                  <li>Token 是随机生成的，只有你知道</li>
+                  <li>只执行白名单内的命令（docker compose / docker ps 等）</li>
+                  <li>同一 IP 认证失败 5 次自动锁定 10 分钟</li>
+                  <li>我们的网站<strong>无法看到</strong>你服务器上的任何数据</li>
+                  <li>Agent 代码完全开源，可审查：<code className="bg-gray-100 px-1 rounded text-xs">public/agent/agent.py</code></li>
+                </ul>
+              </div>
+            </details>
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-700 mb-4">
               <p className="font-medium">执行后会输出 Agent Token，请复制保存</p>

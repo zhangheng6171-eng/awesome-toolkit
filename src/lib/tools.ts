@@ -12,6 +12,7 @@ export interface Tool {
   difficulty: number;
   quick_start: string[];
   alternatives?: string[];
+  useCase?: string;
   has_web_ui: boolean;
   has_desktop_app: boolean;
   has_cli: boolean;

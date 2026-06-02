@@ -183,18 +183,83 @@ function ServerCard({ server, onRemove }: { server: ServerInfo; onRemove: () => 
       </div>
 
       {expanded && server.installedTools.length > 0 && (
-        <div className="mt-4 pt-4 border-t border-gray-100 space-y-2">
+        <div className="mt-4 pt-4 border-t border-gray-100 space-y-3">
           {server.installedTools.map((tool) => (
-            <div key={tool.toolId} className="flex items-center justify-between text-sm">
+            <div key={tool.toolId} className="flex items-center justify-between text-sm bg-gray-50 rounded-lg p-3">
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                <Link href={`/tool/${tool.toolId}`} className="text-blue-600 hover:underline">
-                  {tool.toolName}
-                </Link>
+                <div>
+                  <Link href={`/tool/${tool.toolId}`} className="text-blue-600 hover:underline font-medium">
+                    {tool.toolName}
+                  </Link>
+                  <p className="text-xs text-gray-400">{new Date(tool.deployedAt).toLocaleDateString()}</p>
+                </div>
               </div>
-              <span className="text-gray-400 text-xs">
-                {new Date(tool.deployedAt).toLocaleDateString()}
-              </span>
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => window.open(`http://${server.host}`, '_blank')}
+                  className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
+                  title="访问工具"
+                >
+                  访问
+                </button>
+                <button
+                  onClick={async () => {
+                    const btn = document.activeElement as HTMLElement;
+                    if (btn) { btn.textContent = '更新中...'; (btn as HTMLButtonElement).disabled = true; }
+                    try {
+                      // Update via Agent API
+                      const token = prompt('请输入 Agent Token 来执行更新：');
+                      if (!token) return;
+                      const res = await fetch('/api/deploy/execute', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          toolId: tool.toolId,
+                          host: server.host,
+                          token,
+                          action: 'update',
+                        }),
+                      });
+                      const data = await res.json();
+                      alert(data.success ? '更新成功' : `更新失败: ${data.error || data.message}`);
+                    } catch { alert('操作失败'); }
+                    if (btn) { btn.textContent = '更新'; (btn as HTMLButtonElement).disabled = false; }
+                  }}
+                  className="px-2 py-1 text-xs bg-yellow-100 text-yellow-700 rounded hover:bg-yellow-200 transition-colors"
+                  title="更新工具"
+                >
+                  更新
+                </button>
+                <button
+                  onClick={async () => {
+                    if (!confirm(`确认卸载 ${tool.toolName}？此操作不可撤销。`)) return;
+                    const btn = document.activeElement as HTMLElement;
+                    if (btn) { btn.textContent = '卸载中...'; (btn as HTMLButtonElement).disabled = true; }
+                    try {
+                      const token = prompt('请输入 Agent Token 来执行卸载：');
+                      if (!token) return;
+                      const res = await fetch(`http://${server.host}:9876/uninstall`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'X-Agent-Token': token },
+                        body: JSON.stringify({ tool_id: tool.toolId }),
+                      });
+                      const data = await res.json();
+                      if (data.success) {
+                        alert('卸载成功');
+                        onRemove();
+                      } else {
+                        alert(`卸载失败: ${data.message}`);
+                      }
+                    } catch { alert('操作失败'); }
+                    if (btn) { btn.textContent = '卸载'; (btn as HTMLButtonElement).disabled = false; }
+                  }}
+                  className="px-2 py-1 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors"
+                  title="卸载工具"
+                >
+                  卸载
+                </button>
+              </div>
             </div>
           ))}
         </div>

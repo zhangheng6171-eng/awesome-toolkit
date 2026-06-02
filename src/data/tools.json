@@ -32,7 +32,9 @@
     "has_desktop_app": true,
     "has_cli": true,
     "license": "MIT",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "想要在本地免费使用 AI 大模型，不想把聊天数据上传到云端的个人用户",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "n8n",
@@ -67,7 +69,9 @@
     "has_desktop_app": true,
     "has_cli": true,
     "license": "Sustainable Use License",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "需要把不同软件串起来自动化工作流的人，比如自动把邮件附件存到网盘再发通知",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "immich",
@@ -102,7 +106,9 @@
     "has_desktop_app": false,
     "has_cli": true,
     "license": "AGPL-3.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "想要用自己的服务器备份手机照片，告别 iCloud/Google Photos 月费的用户",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "bitwarden",
@@ -137,7 +143,9 @@
     "has_desktop_app": true,
     "has_cli": true,
     "license": "AGPL-3.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "需要一个安全可靠的密码管理器，且希望密码数据完全由自己掌控",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "stirling-pdf",
@@ -173,7 +181,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "MIT",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "经常需要处理 PDF 文档（合并、拆分、转换格式），不想安装多个软件或上传到在线工具",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "photoprism",
@@ -209,7 +219,9 @@
     "has_desktop_app": false,
     "has_cli": true,
     "license": "AGPL-3.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "有大量照片需要管理，希望用 AI 自动分类和搜索，不想用 Google Photos 的隐私敏感用户",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "excalidraw",
@@ -245,7 +257,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "MIT",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "需要画流程图、草图或示意图，喜欢手绘风格，不需要复杂操作的设计小白",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "appwrite",
@@ -280,7 +294,9 @@
     "has_desktop_app": false,
     "has_cli": true,
     "license": "BSD-3-Clause",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "开发者想快速搭建应用后端（用户登录、数据库、文件存储），不想自己写服务器代码",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "nocodb",
@@ -316,7 +332,9 @@
     "has_desktop_app": false,
     "has_cli": true,
     "license": "AGPL-3.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "觉得传统数据库太难用，想像操作 Excel 一样管理数据，又能做自动化",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "penpot",
@@ -352,7 +370,9 @@
     "has_desktop_app": false,
     "has_cli": true,
     "license": "MPL-2.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "设计师或产品经理需要一个免费开源的 UI 设计工具，团队协作不花钱",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "changedetection-io",
@@ -388,7 +408,9 @@
     "has_desktop_app": false,
     "has_cli": true,
     "license": "Apache-2.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "想监控网站变化（价格、库存、公告），网站一有变动就收到通知",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "hoppscotch",
@@ -425,7 +447,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "MIT",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "开发者需要快速测试 API 接口，比 Postman 更轻量，浏览器打开即用",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "dify",
@@ -459,7 +483,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "Apache-2.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "想用 AI 搭建聊天机器人、知识库问答等应用，不需要编程就能创建 AI 助手",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "open-webui",
@@ -493,7 +519,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "MIT",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "已经装了 Ollama 等本地 AI 服务，想要一个像 ChatGPT 一样好用的聊天界面",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "it-tools",
@@ -527,7 +555,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "MIT",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "开发者需要各种日常小工具（JSON格式化、Base64编解码、UUID生成等），一个网页全搞定",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "cyberchef",
@@ -561,7 +591,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "Apache-2.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "需要对数据进行各种编码/解码/加密操作，像菜谱一样组合数据处理步骤",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "metabase",
@@ -596,7 +628,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "AGPL-3.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "公司或团队想看数据库里的数据做成图表，不需要会写 SQL，点点鼠标就能出报表",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "grafana",
@@ -631,7 +665,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "AGPL-3.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "需要做数据监控大屏，把所有系统的运行状态可视化展示，适合运维和技术团队",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "vaultwarden",
@@ -666,7 +702,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "AGPL-3.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "想要 Bitwarden 的所有功能但不想付费，可以在自己服务器上运行的密码管理器",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "adguard-home",
@@ -700,7 +738,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "GPL-3.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "想让全家所有设备都自动拦截广告和追踪器，在路由器层面就能过滤",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "paperless-ngx",
@@ -735,7 +775,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "GPL-3.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "家里有大量纸质文件需要电子化管理，AI 自动识别分类，以后搜索文件像搜网页一样",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "trilium-notes",
@@ -771,7 +813,9 @@
     "has_desktop_app": true,
     "has_cli": false,
     "license": "AGPL-3.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "需要一个强大的个人笔记系统，支持层级目录、双向链接，数据完全自己掌控",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "obs-studio",
@@ -806,7 +850,9 @@
     "has_desktop_app": true,
     "has_cli": false,
     "license": "GPL-2.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "需要录制屏幕或做直播推流，专业人士用的免费开源工具，功能不输付费软件",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "home-assistant",
@@ -841,7 +887,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "Apache-2.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "家里有各种智能设备（灯、空调、门锁），想用一个 App 统一控制并创建自动化场景",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "langflow",
@@ -875,7 +923,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "MIT",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "想用拖拽方式搭建 AI 工作流，不需要写代码，可视化连接各种 AI 模块",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "apache-superset",
@@ -910,7 +960,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "Apache-2.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "企业需要专业的数据分析和可视化平台，支持大数据量，适合数据分析团队",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "pi-hole",
@@ -945,7 +997,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "EUPL-1.2",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "想用树莓派或旧电脑搭建全屋广告过滤，所有联网设备自动拦截广告和追踪",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "joplin",
@@ -981,7 +1035,9 @@
     "has_desktop_app": true,
     "has_cli": true,
     "license": "AGPL-3.0",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "需要一个跨平台笔记 App，数据可以自己掌控（存本地或云盘），支持 Markdown 格式",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "lossless-cut",
@@ -1015,7 +1071,9 @@
     "has_desktop_app": true,
     "has_cli": true,
     "license": "MIT",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "需要快速剪辑视频（裁剪片段），不重新编码所以几秒完成，画质无损",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "uptime-kuma",
@@ -1050,7 +1108,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "MIT",
-    "added_date": "2026-06-01"
+    "added_date": "2026-06-01",
+    "useCase": "有自己部署的网站或服务，想实时监控它们是否在线，挂了第一时间收到通知",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "homebridge",
@@ -1085,7 +1145,9 @@
     "has_desktop_app": false,
     "has_cli": true,
     "license": "Apache-2.0",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "家里有非 HomeKit 的智能设备，想让它们也能在 iPhone 家庭 App 里统一控制",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "node-red",
@@ -1120,7 +1182,9 @@
     "has_desktop_app": false,
     "has_cli": true,
     "license": "Apache-2.0",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "想用可视化拖拽方式创建智能家居自动化流程，比如温度高了自动开风扇",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "netdata",
@@ -1154,7 +1218,9 @@
     "has_desktop_app": false,
     "has_cli": true,
     "license": "GPL-3.0",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "想实时监控服务器的 CPU、内存、网络等状态，界面漂亮开箱即用",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "prometheus",
@@ -1189,7 +1255,9 @@
     "has_desktop_app": false,
     "has_cli": true,
     "license": "Apache-2.0",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "专业运维团队需要监控大量服务器和应用，配合 Grafana 做可视化告警",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "beszel",
@@ -1223,7 +1291,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "MIT",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "个人或小团队需要轻量级服务器监控，比 Netdata 更简洁，资源占用更少",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "keepassxc",
@@ -1258,7 +1328,9 @@
     "has_desktop_app": true,
     "has_cli": true,
     "license": "GPL-3.0",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "想要一个离线密码管理器，密码文件自己保存（放U盘或网盘），不经过任何云端服务",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "passbolt",
@@ -1293,7 +1365,9 @@
     "has_desktop_app": false,
     "has_cli": true,
     "license": "AGPL-3.0",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "团队需要共享密码（比如公司账号），权限可管理，每次使用需二次验证",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "jellyfin",
@@ -1328,7 +1402,9 @@
     "has_desktop_app": true,
     "has_cli": false,
     "license": "GPL-2.0",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "家里有下载的电影和音乐，想建一个私人 Netflix/Spotify，全家人用各种设备看",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "navidrome",
@@ -1363,7 +1439,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "GPL-3.0",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "有大量音乐收藏，想随时随地用手机或电脑听自己的歌，界面像 Spotify 一样好用",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "audiobookshelf",
@@ -1398,7 +1476,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "GPL-3.0",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "有声书和播客爱好者，想在自己的服务器上管理和播放，支持断点续听",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "logseq",
@@ -1433,7 +1513,9 @@
     "has_desktop_app": true,
     "has_cli": false,
     "license": "AGPL-3.0",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "喜欢双向链接和大纲式笔记，隐私敏感，希望笔记数据完全本地化存储",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "siyuan",
@@ -1469,7 +1551,9 @@
     "has_desktop_app": true,
     "has_cli": false,
     "license": "AGPL-3.0",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "需要一款数据本地存储、支持块引用的知识管理工具，适合搭建个人知识库",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "outline",
@@ -1504,7 +1588,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "BSL",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "团队需要一个内部知识库/wiki，界面现代、支持实时协作，比 Confluence 轻量",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "nginx-proxy-manager",
@@ -1540,7 +1626,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "MIT",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "在自己服务器上部署了多个网站，想用网页界面管理域名和 SSL 证书，不懂 Nginx 配置也没关系",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "portainer",
@@ -1576,7 +1664,9 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "Zlib",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "在自己的服务器上跑了很多 Docker 容器，想用网页界面可视化管理（启停、查看日志、更新）",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "gitea",
@@ -1611,7 +1701,9 @@
     "has_desktop_app": false,
     "has_cli": true,
     "license": "MIT",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "想建一个私人的 GitHub，代码完全自己掌控，轻量到跑在树莓派上都可以",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "nextcloud",
@@ -1647,7 +1739,9 @@
     "has_desktop_app": true,
     "has_cli": true,
     "license": "AGPL-3.0",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "想要一个自己的云盘，像 Dropbox 一样但数据在自己服务器上，还能扩展日历、联系人等功能",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "plausible",
@@ -1682,7 +1776,9 @@
     "has_desktop_app": false,
     "has_cli": true,
     "license": "AGPL-3.0",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "想做网站流量统计但不想用 Google Analytics，数据隐私友好，页面轻量加载快",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "duplicati",
@@ -1718,7 +1814,9 @@
     "has_desktop_app": false,
     "has_cli": true,
     "license": "LGPL-2.1",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "想自动备份服务器或电脑上的重要文件到云存储，加密后再上传，谁也看不到你的数据",
+    "last_updated": "2026-06-02"
   },
   {
     "id": "actual",
@@ -1754,6 +1852,8 @@
     "has_desktop_app": false,
     "has_cli": false,
     "license": "MIT",
-    "added_date": "2026-06-02"
+    "added_date": "2026-06-02",
+    "useCase": "想要一个私人财务管理工具，记账数据存自己服务器上，不用 Mint/YNAB 这些第三方服务",
+    "last_updated": "2026-06-02"
   }
 ]

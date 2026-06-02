@@ -2,45 +2,52 @@ interface Env {
   DEPLOY_KV: KVNamespace;
 }
 
-// Paywall: intercept /api/deploy/execute and check user tier
+// Simple in-memory rate limiter (per Worker instance)
+const rateMap = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(ip: string, maxRequests: number, windowMs: number): boolean {
+  const now = Date.now();
+  const entry = rateMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateMap.set(ip, { count: 1, resetAt: now + windowMs });
+    return true;
+  }
+  if (entry.count >= maxRequests) {
+    return false;
+  }
+  entry.count++;
+  return true;
+}
+
+// Clean up old entries every 5 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, val] of rateMap) {
+    if (now > val.resetAt) rateMap.delete(key);
+  }
+}, 300000);
+
 export async function onRequest(context: { request: Request; env: Env; next: () => Promise<Response> }) {
   const url = new URL(context.request.url);
 
-  // Only intercept execute endpoint
-  if (url.pathname === '/api/deploy/execute' && context.request.method === 'POST') {
-    const userEmail = context.request.headers.get('Cf-Access-Authenticated-User-Email');
-
-    // In dev (no CF Access), check x-user-tier header
-    if (!userEmail) {
-      const tier = context.request.headers.get('x-user-tier') || 'free';
-      if (tier === 'free') {
-        return new Response(JSON.stringify({
-          error: '一键自动部署需要 Pro 方案',
-          upgrade_url: '/pricing',
-          current_tier: 'free',
-          required_tier: 'pro',
-        }), {
-          status: 403,
-          headers: { 'Content-Type': 'application/json' },
-        });
-      }
-      return context.next();
-    }
-
-    // Production: check KV for user tier
-    const tier = await context.env.DEPLOY_KV.get(`user:${userEmail}:tier`) || 'free';
-    if (tier === 'free') {
+  // Rate limiting: 10 requests per minute per IP for deploy endpoints
+  if (url.pathname.startsWith('/api/deploy')) {
+    const ip = context.request.headers.get('cf-connecting-ip') || 'unknown';
+    if (!checkRateLimit(ip, 10, 60000)) {
       return new Response(JSON.stringify({
-        error: '一键自动部署需要 Pro 方案',
-        upgrade_url: '/pricing',
-        current_tier: 'free',
-        required_tier: 'pro',
+        error: '请求过于频繁，请稍后重试',
+        retry_after: 60,
       }), {
-        status: 403,
-        headers: { 'Content-Type': 'application/json' },
+        status: 429,
+        headers: {
+          'Content-Type': 'application/json',
+          'Retry-After': '60',
+        },
       });
     }
   }
 
+  // TODO: 用户规模达到后再开启付费墙
+  // Currently all users can use deploy for free
   return context.next();
 }

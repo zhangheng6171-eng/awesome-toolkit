@@ -12,15 +12,62 @@ import subprocess
 import sys
 import threading
 import time
+from collections import defaultdict
 from pathlib import Path
 
 PORT = 9876
 TOKEN_FILE = os.path.expanduser("~/.awesome-tools-agent-token")
 INSTALL_DIR = os.path.expanduser("~/awesome-tools")
 
+# Security: IP rate limiting
+MAX_FAILED_ATTEMPTS = 5
+LOCKOUT_MINUTES = 10
+failed_attempts = defaultdict(list)  # ip -> [timestamps]
+
+# Allowed commands (whitelist)
+ALLOWED_COMMANDS = [
+    ["docker", "compose"],
+    ["docker", "ps"],
+    ["docker", "stats"],
+    ["docker", "--version"],
+    ["docker", "version"],
+    ["apt-get", "install"],
+    ["which", "docker"],
+    ["curl"],
+]
+
+
+def is_command_allowed(cmd_args):
+    """Check if command is in the whitelist."""
+    if not cmd_args:
+        return False
+    cmd_str = " ".join(cmd_args)
+    for allowed in ALLOWED_COMMANDS:
+        allowed_str = " ".join(allowed)
+        if cmd_str.startswith(allowed_str):
+            return True
+    return False
+
+
+def check_ip_lockout(ip):
+    """Check if IP is locked out. Returns (is_locked, reason)."""
+    now = time.time()
+    # Clean old entries
+    failed_attempts[ip] = [t for t in failed_attempts[ip] if now - t < LOCKOUT_MINUTES * 60]
+    if len(failed_attempts[ip]) >= MAX_FAILED_ATTEMPTS:
+        remaining = int(LOCKOUT_MINUTES * 60 - (now - min(failed_attempts[ip])))
+        return True, remaining
+    return False, 0
+
+
+def record_failed_attempt(ip):
+    """Record a failed auth attempt."""
+    failed_attempts[ip].append(time.time())
+
 
 def generate_token():
-    token = secrets.token_hex(16)
+    """Generate a 32-character random hex token."""
+    token = secrets.token_hex(16)  # 32 hex chars
     with open(TOKEN_FILE, "w") as f:
         f.write(token)
     os.chmod(TOKEN_FILE, 0o600)
@@ -53,7 +100,6 @@ def get_deployed_tools():
             if d.is_dir():
                 compose_file = d / "docker-compose.yml"
                 if compose_file.exists():
-                    # check status
                     try:
                         r = subprocess.run(
                             ["docker", "compose", "-f", str(compose_file), "ps", "--format", "json"],
@@ -90,6 +136,22 @@ def get_system_info():
     }
 
 
+def run_safe_command(cmd_args, cwd=None, timeout=300, capture=True, stream=False):
+    """Run a command after whitelist verification. Returns (ok, stdout_or_error)."""
+    if not is_command_allowed(cmd_args):
+        return False, f"Command rejected (not in whitelist): {' '.join(cmd_args[:2])}"
+    try:
+        if capture:
+            r = subprocess.run(cmd_args, capture_output=True, text=True, timeout=timeout, cwd=cwd)
+            return r.returncode == 0, r.stdout or r.stderr
+        else:
+            return True, None
+    except subprocess.TimeoutExpired:
+        return False, "Command timed out"
+    except Exception as e:
+        return False, str(e)
+
+
 def stream_execute(tool_id, compose_content, env_values, wfile):
     """Execute docker compose and stream logs via SSE."""
     tool_dir = Path(INSTALL_DIR) / tool_id
@@ -105,7 +167,6 @@ def stream_execute(tool_id, compose_content, env_values, wfile):
 
         # Write compose file
         compose_path = tool_dir / "docker-compose.yml"
-        # Apply env overrides
         content = compose_content
         for key, val in env_values.items():
             content = content.replace(f"${{{key}}}", val)
@@ -158,7 +219,6 @@ def stream_execute(tool_id, compose_content, env_values, wfile):
         except Exception:
             server_ip = "你的服务器IP"
 
-        # Parse POST_DEPLOY_URL
         post_deploy_match = None
         for line in content.split("\n"):
             if line.startswith("# POST_DEPLOY_URL="):
@@ -176,6 +236,30 @@ def stream_execute(tool_id, compose_content, env_values, wfile):
     except Exception as e:
         send("error", f"部署异常: {str(e)}")
         send("done", json.dumps({"success": False, "error": str(e)}))
+
+
+def update_tool(tool_id):
+    """Pull latest images and restart containers for a tool."""
+    tool_dir = Path(INSTALL_DIR) / tool_id
+    compose_file = tool_dir / "docker-compose.yml"
+    if not compose_file.exists():
+        return False, "工具未安装"
+    try:
+        r = subprocess.run(
+            ["docker", "compose", "-f", str(compose_file), "pull"],
+            cwd=str(tool_dir), capture_output=True, text=True, timeout=120,
+        )
+        if r.returncode != 0:
+            return False, f"镜像拉取失败: {r.stderr}"
+        r = subprocess.run(
+            ["docker", "compose", "-f", str(compose_file), "up", "-d", "--remove-orphans"],
+            cwd=str(tool_dir), capture_output=True, text=True, timeout=60,
+        )
+        if r.returncode != 0:
+            return False, f"重启失败: {r.stderr}"
+        return True, "更新成功"
+    except Exception as e:
+        return False, str(e)
 
 
 def uninstall_tool(tool_id):
@@ -196,13 +280,12 @@ def uninstall_tool(tool_id):
 
 class AgentHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, format, *args):
-        print(f"[Agent] {args[0]}")
+        print(f"[Agent] {self.client_address[0]} {args[0]}")
 
     def verify_token(self):
         auth = self.headers.get("Authorization", "")
         if auth.startswith("Bearer "):
             return auth[7:] == load_token()
-        # also accept x-agent-token header
         token = self.headers.get("X-Agent-Token", "")
         return token == load_token()
 
@@ -224,13 +307,19 @@ class AgentHandler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
+        ip = self.client_address[0]
+        is_locked, remaining = check_ip_lockout(ip)
+        if is_locked:
+            return self.send_json({"error": f"Too many failed attempts. Locked for {remaining}s"}, 429)
+
         if self.path == "/status":
             if not self.verify_token():
+                record_failed_attempt(ip)
+                print(f"[Security] Failed auth from {ip}")
                 return self.send_json({"error": "unauthorized"}, 401)
             info = get_system_info()
             self.send_json(info)
         elif self.path == "/token":
-            # Only allow localhost to read token
             if self.client_address[0] not in ("127.0.0.1", "::1", "localhost"):
                 return self.send_json({"error": "forbidden"}, 403)
             token = load_token()
@@ -239,8 +328,15 @@ class AgentHandler(http.server.BaseHTTPRequestHandler):
             self.send_json({"error": "not found"}, 404)
 
     def do_POST(self):
+        ip = self.client_address[0]
+        is_locked, remaining = check_ip_lockout(ip)
+        if is_locked:
+            return self.send_json({"error": f"Too many failed attempts. Locked for {remaining}s"}, 429)
+
         if self.path == "/execute":
             if not self.verify_token():
+                record_failed_attempt(ip)
+                print(f"[Security] Failed auth from {ip}")
                 return self.send_json({"error": "unauthorized"}, 401)
 
             length = int(self.headers.get("Content-Length", 0))
@@ -261,8 +357,22 @@ class AgentHandler(http.server.BaseHTTPRequestHandler):
 
             stream_execute(tool_id, compose_content, env_values, self.wfile)
 
+        elif self.path == "/update":
+            if not self.verify_token():
+                record_failed_attempt(ip)
+                print(f"[Security] Failed auth from {ip}")
+                return self.send_json({"error": "unauthorized"}, 401)
+
+            length = int(self.headers.get("Content-Length", 0))
+            body = json.loads(self.rfile.read(length))
+            tool_id = body.get("tool_id", "")
+            ok, msg = update_tool(tool_id)
+            self.send_json({"success": ok, "message": msg})
+
         elif self.path == "/uninstall":
             if not self.verify_token():
+                record_failed_attempt(ip)
+                print(f"[Security] Failed auth from {ip}")
                 return self.send_json({"error": "unauthorized"}, 401)
 
             length = int(self.headers.get("Content-Length", 0))

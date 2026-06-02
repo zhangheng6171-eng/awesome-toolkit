@@ -6,8 +6,34 @@ import { isDeployable } from '@/lib/deploy';
 import CompareToggle from '@/components/CompareToggle';
 import ToolCardMini from './ToolCardMini';
 
+import type { Metadata } from 'next';
+
 export async function generateStaticParams() {
   return getAllTools().map((tool) => ({ id: tool.id }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const tool = getToolById(id);
+  if (!tool) return { title: '工具未找到 | Awesome Toolkit' };
+
+  const catInfo = getCategoryInfo(tool.category);
+  const title = `${tool.name} - 自托管${tool.category}工具 | Awesome Toolkit`;
+  const description = `${tool.description_plain} | 一键部署到你的服务器，${tool.difficulty <= 2 ? '无需技术背景' : '几步即可完成'}。适合${tool.target_users.join('、')}。`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+    },
+  };
 }
 
 export default async function ToolDetailPage({
@@ -93,6 +119,14 @@ export default async function ToolDetailPage({
         <p className="mt-6 text-xl text-gray-700 leading-relaxed">
           {tool.description_plain}
         </p>
+
+        {/* 适合人群 */}
+        {tool.useCase && (
+          <div className="mt-4 bg-blue-50 rounded-lg p-4 border border-blue-100">
+            <span className="text-sm font-medium text-blue-700">🎯 适合谁用：</span>
+            <span className="text-sm text-blue-600">{tool.useCase}</span>
+          </div>
+        )}
 
         {/* 一键部署 CTA */}
         {isDeployable(tool.id) && (

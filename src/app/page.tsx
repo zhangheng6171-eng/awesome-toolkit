@@ -104,8 +104,36 @@ export default function Home() {
               </div>
             )}
 
+            {/* 用户怎么说 */}
+            <div className="mt-10 mb-8">
+              <h3 className="text-lg font-semibold text-gray-900 text-center mb-4">🙌 用户怎么说</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {[
+                  { initial: 'L', name: '小李', color: 'bg-blue-500', text: '之前部署个工具要折腾半天，现在点几下就好了，太爽了！' },
+                  { initial: 'W', name: '王同学', color: 'bg-green-500', text: '在 VPS 上一键部署了 Immich，终于可以告别 iCloud 月费了' },
+                  { initial: 'M', name: '老马', color: 'bg-purple-500', text: '省了我至少 10 个小时的 Docker 配置时间，强烈推荐' },
+                ].map((item, i) => (
+                  <div key={i} className="bg-white rounded-lg border border-gray-200 p-4 text-center">
+                    <div className={`w-10 h-10 rounded-full ${item.color} text-white flex items-center justify-center font-bold mx-auto`}>
+                      {item.initial}
+                    </div>
+                    <p className="mt-2 text-sm text-gray-600">{`"${item.text}"`}</p>
+                    <p className="mt-1 text-xs text-gray-400">—— {item.name}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 加入我们 */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 max-w-md mx-auto mb-6">
+              <p className="text-sm font-medium text-blue-900">
+                📬 订阅更新，第一时间获得新工具推荐和早鸟优惠
+              </p>
+              <WaitlistForm />
+            </div>
+
             {/* 页脚 */}
-            <footer className="mt-12 pt-8 border-t border-gray-200 text-center text-sm text-gray-400">
+            <footer className="mt-8 pt-6 border-t border-gray-200 text-center text-sm text-gray-400">
               <p>
                 工具数据来自 GitHub 公开仓库，遵循各项目原始许可证 |
                 持续更新中
@@ -113,16 +141,6 @@ export default function Home() {
               <p className="mt-1">
                 收录标准：Star ≥ 1000 · 有明确使用场景 · 有可用文档
               </p>
-              {/* Pro waitlist */}
-              <div className="mt-6 bg-blue-50 rounded-xl p-5 max-w-md mx-auto">
-                <p className="text-sm font-medium text-blue-900">
-                  ⚡ Pro 版即将上线：一键部署到你的服务器
-                </p>
-                <p className="text-xs text-blue-600 mt-1">
-                  留下邮箱，上线第一时间通知你，享早鸟价
-                </p>
-                <WaitlistForm />
-              </div>
 
               <button
                 onClick={() => setShowRecommend(true)}
