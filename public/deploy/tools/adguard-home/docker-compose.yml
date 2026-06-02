@@ -1,0 +1,15 @@
+# POST_DEPLOY_URL=http://你的服务器IP:3000
+# POST_DEPLOY_MSG=浏览器访问上述地址完成初始化设置，然后把家里路由器的DNS改成这台服务器的IP。
+version: "3.8"
+services:
+  adguard-home:
+    image: adguard/adguardhome:latest
+    container_name: adguard-home
+    restart: unless-stopped
+    ports:
+      - "3000:3000"     # Web 管理界面
+      - "53:53/tcp"     # DNS over TCP
+      - "53:53/udp"     # DNS over UDP
+    volumes:
+      - ./data/work:/opt/adguardhome/work
+      - ./data/conf:/opt/adguardhome/conf

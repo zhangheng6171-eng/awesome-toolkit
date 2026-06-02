@@ -1,0 +1,17 @@
+# POST_DEPLOY_URL=http://你的服务器IP:3000
+# POST_DEPLOY_MSG=浏览器访问上述地址创建管理员账号，在设置里连接你的Ollama或其他AI后端，就能像ChatGPT一样聊天。
+version: "3.8"
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/app/backend/data
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - WEBUI_SECRET_KEY=${SECRET_KEY:-change-me-to-a-random-string}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

@@ -1,0 +1,17 @@
+# POST_DEPLOY_URL=http://你的服务器IP:5678
+# POST_DEPLOY_MSG=打开浏览器访问上述地址，创建管理员账号，然后就可以拖拽节点创建工作流了。
+version: "3.8"
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    volumes:
+      - ./data:/home/node/.n8n
+    environment:
+      - N8N_SECURE_COOKIE=false
+      - N8N_HOST=${N8N_HOST:-}
+      - NODE_ENV=production
+      - WEBHOOK_URL=${WEBHOOK_URL:-}

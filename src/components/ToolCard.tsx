@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Tool } from '@/lib/tools';
 import { formatStarCount, renderDifficultyStars } from '@/lib/tools';
 import { getCategoryInfo } from '@/lib/categories';
+import CompareToggle from './CompareToggle';
 
 interface ToolCardProps {
   tool: Tool;
@@ -90,25 +91,20 @@ export default function ToolCard({ tool }: ToolCardProps) {
 
       {/* 使用方法链接 */}
       <div className="border-t border-gray-100">
-        <Link
-          href={`/tool/${tool.id}`}
-          className="w-full px-5 py-3 flex items-center justify-between text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50/50 transition-colors"
-        >
-          <span>📖 查看普通人使用方法</span>
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        <div className="flex items-center">
+          <Link
+            href={`/tool/${tool.id}`}
+            className="flex-1 px-5 py-3 flex items-center justify-between text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50/50 transition-colors"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </Link>
+            <span>📖 查看普通人使用方法</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+          <div className="px-4 py-3 border-l border-gray-100">
+            <CompareToggle id={tool.id} />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,33 @@
+# POST_DEPLOY_URL=http://你的服务器IP:7860
+# POST_DEPLOY_MSG=浏览器访问上述地址，像画流程图一样拖拽AI模块连起来，就能搭建AI应用。
+version: "3.8"
+services:
+  langflow:
+    image: langflowai/langflow:latest
+    container_name: langflow
+    restart: unless-stopped
+    ports:
+      - "7860:7860"
+    volumes:
+      - ./data:/app/langflow-data
+    environment:
+      - LANGFLOW_DATABASE_URL=postgresql://langflow:${DB_PASSWORD:-changeMe123!}@langflow-db:5432/langflow
+    depends_on:
+      langflow-db:
+        condition: service_healthy
+
+  langflow-db:
+    image: postgres:16-alpine
+    container_name: langflow-db
+    restart: unless-stopped
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=langflow
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-changeMe123!}
+      - POSTGRES_DB=langflow
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U langflow"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

@@ -1,0 +1,81 @@
+# POST_DEPLOY_URL=http://你的服务器IP:3002
+# POST_DEPLOY_MSG=浏览器访问上述地址创建管理员账号，选择「聊天助手」模板，上传知识库文档即可创建AI应用。
+version: "3.8"
+services:
+  dify-api:
+    image: langgenius/dify-api:latest
+    container_name: dify-api
+    restart: unless-stopped
+    volumes:
+      - ./data/storage:/app/api/storage
+    environment:
+      - MODE=api
+      - SECRET_KEY=${SECRET_KEY:-change-me-to-a-random-string-32chars}
+      - DB_HOST=dify-db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASS=${DB_PASSWORD:-changeMe123!}
+      - DB_NAME=dify
+      - REDIS_HOST=dify-redis
+      - REDIS_PORT=6379
+      - CELERY_BROKER_URL=redis://dify-redis:6379/1
+      - INIT_PASSWORD=${INIT_PASSWORD:-}
+    depends_on:
+      dify-db:
+        condition: service_healthy
+      dify-redis:
+        condition: service_started
+
+  dify-worker:
+    image: langgenius/dify-api:latest
+    container_name: dify-worker
+    restart: unless-stopped
+    volumes:
+      - ./data/storage:/app/api/storage
+    environment:
+      - MODE=worker
+      - SECRET_KEY=${SECRET_KEY:-change-me-to-a-random-string-32chars}
+      - DB_HOST=dify-db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASS=${DB_PASSWORD:-changeMe123!}
+      - DB_NAME=dify
+      - REDIS_HOST=dify-redis
+      - REDIS_PORT=6379
+      - CELERY_BROKER_URL=redis://dify-redis:6379/1
+    depends_on:
+      dify-db:
+        condition: service_healthy
+      dify-redis:
+        condition: service_started
+
+  dify-web:
+    image: langgenius/dify-web:latest
+    container_name: dify-web
+    restart: unless-stopped
+    ports:
+      - "3002:3000"
+    environment:
+      - API_HOST=dify-api
+      - API_PORT=5001
+
+  dify-db:
+    image: postgres:16-alpine
+    container_name: dify-db
+    restart: unless-stopped
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-changeMe123!}
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=dify
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  dify-redis:
+    image: redis:7-alpine
+    container_name: dify-redis
+    restart: unless-stopped

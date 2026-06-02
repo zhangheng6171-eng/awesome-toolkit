@@ -1,0 +1,52 @@
+# POST_DEPLOY_URL=http://你的服务器IP:2283
+# POST_DEPLOY_MSG=打开浏览器访问上述地址创建管理员账号，手机下载 Immich App 后填入同样地址即可自动备份照片。
+version: "3.8"
+services:
+  immich-server:
+    image: ghcr.io/immich-app/immich-server:release
+    container_name: immich-server
+    restart: unless-stopped
+    ports:
+      - "2283:2283"
+    volumes:
+      - ./data/photos:/usr/src/app/upload
+      - ./data/library:/usr/src/app/upload/library
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - DB_HOSTNAME=immich-db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=${DB_PASSWORD:-changeMe123!}
+      - DB_DATABASE_NAME=immich
+      - REDIS_HOSTNAME=immich-redis
+      - TZ=Asia/Shanghai
+    depends_on:
+      immich-db:
+        condition: service_healthy
+      immich-redis:
+        condition: service_healthy
+
+  immich-db:
+    image: tensorchord/pgvecto-rs:pg14-v0.2.0
+    container_name: immich-db
+    restart: unless-stopped
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-changeMe123!}
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=immich
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  immich-redis:
+    image: redis:7-alpine
+    container_name: immich-redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

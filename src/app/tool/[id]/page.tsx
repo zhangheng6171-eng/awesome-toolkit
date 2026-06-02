@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { getAllTools, getToolById, getToolsByCategory } from '@/lib/tools';
 import { getCategoryInfo } from '@/lib/categories';
 import { formatStarCount, renderDifficultyStars } from '@/lib/tools';
+import { isDeployable } from '@/lib/deploy';
+import CompareToggle from '@/components/CompareToggle';
 import ToolCardMini from './ToolCardMini';
 
 export async function generateStaticParams() {
@@ -82,6 +84,7 @@ export default async function ToolDetailPage({
                 </span>
               )}
               <span>适合：{tool.target_users.join('、')}</span>
+              <CompareToggle id={tool.id} />
             </div>
           </div>
         </div>
@@ -90,6 +93,32 @@ export default async function ToolDetailPage({
         <p className="mt-6 text-xl text-gray-700 leading-relaxed">
           {tool.description_plain}
         </p>
+
+        {/* 一键部署 CTA */}
+        {isDeployable(tool.id) && (
+          <div className="mt-8 bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl p-5 text-white">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">⚡</span>
+                <div>
+                  <div className="font-semibold text-lg">一键部署到你的服务器</div>
+                  <div className="text-sm text-blue-100 mt-0.5">
+                    复制一条命令，5 分钟内自动装好，不用懂 Docker
+                  </div>
+                </div>
+              </div>
+              <Link
+                href={`/deploy/${tool.id}`}
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-colors font-medium text-sm whitespace-nowrap"
+              >
+                开始部署
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        )}
 
         {/* 使用步骤 */}
         <div className="mt-8 bg-white rounded-xl border border-gray-200 p-6">

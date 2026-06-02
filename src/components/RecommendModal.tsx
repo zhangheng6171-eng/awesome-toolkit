@@ -7,7 +7,7 @@ interface RecommendModalProps {
   onClose: () => void;
 }
 
-const GITHUB_USERNAME = 'YOUR_USERNAME';
+const GITHUB_USERNAME = 'zhangheng6171-eng';
 const GITHUB_REPO = 'awesome-toolkit';
 
 export default function RecommendModal({ open, onClose }: RecommendModalProps) {

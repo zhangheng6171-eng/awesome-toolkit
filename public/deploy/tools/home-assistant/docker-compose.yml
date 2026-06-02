@@ -1,0 +1,16 @@
+# POST_DEPLOY_URL=http://你的服务器IP:8123
+# POST_DEPLOY_MSG=浏览器访问上述地址完成初始化向导，它会自动扫描你家网络里的智能设备。
+version: "3.8"
+services:
+  home-assistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: home-assistant
+    restart: unless-stopped
+    ports:
+      - "8123:8123"
+    volumes:
+      - ./data:/config
+      - /etc/localtime:/etc/localtime:ro
+    privileged: true
+    environment:
+      - TZ=Asia/Shanghai

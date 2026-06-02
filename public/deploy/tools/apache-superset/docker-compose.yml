@@ -1,0 +1,33 @@
+# POST_DEPLOY_URL=http://你的服务器IP:8088
+# POST_DEPLOY_MSG=浏览器访问上述地址，默认账号admin/admin，连接数据库创建图表生成数据看板。
+version: "3.8"
+services:
+  superset:
+    image: apache/superset:latest
+    container_name: superset
+    restart: unless-stopped
+    ports:
+      - "8088:8088"
+    volumes:
+      - ./data:/app/superset_home
+    environment:
+      - SUPERSET_SECRET_KEY=${SECRET_KEY:-change-me-to-a-random-string-32chars}
+      - TZ=Asia/Shanghai
+
+  superset-init:
+    image: apache/superset:latest
+    container_name: superset-init
+    depends_on:
+      - superset
+    entrypoint: >
+      bash -c "
+      echo '等待 Superset 启动...' &&
+      sleep 15 &&
+      superset fab create-admin --username admin --firstname Admin --lastname User --email admin@example.com --password ${ADMIN_PASSWORD:-admin} 2>/dev/null || true &&
+      superset db upgrade 2>/dev/null || true &&
+      superset init 2>/dev/null || true &&
+      echo 'Superset 初始化完成'
+      "
+    environment:
+      - SUPERSET_SECRET_KEY=${SECRET_KEY:-change-me-to-a-random-string-32chars}
+    restart: "no"

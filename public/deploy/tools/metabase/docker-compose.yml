@@ -1,0 +1,16 @@
+# POST_DEPLOY_URL=http://你的服务器IP:3003
+# POST_DEPLOY_MSG=浏览器访问上述地址创建管理员账号，连接数据库或导入Excel，点点鼠标生成图表和仪表盘。
+version: "3.8"
+services:
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    restart: unless-stopped
+    ports:
+      - "3003:3000"
+    volumes:
+      - ./data:/metabase-data
+    environment:
+      - MB_DB_FILE=/metabase-data/metabase.db
+      - MB_JETTY_PORT=3000
+      - TZ=Asia/Shanghai

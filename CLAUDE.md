@@ -125,11 +125,26 @@
 - [x] D：部署到 Cloudflare Pages（wrangler pages deploy）
 - [x] E：用户推荐工具入口（Modal → GitHub Issue）
 
+### 2026-06-02 更新（第二次）
+- [x] **工具对比功能**：/compare 页面 + ToolCard 对比按钮 + CompareBar 浮动栏 + URL 参数保持状态
+- [x] **AI 描述生成脚本**：scripts/generate-descriptions.mjs（基于 Claude Haiku API，支持 dry-run/force/with-steps）
+- [x] **部署与 Affiliate 指引**：docs/DEPLOY-AND-AFFILIATE.md
+
+### 2026-06-02 更新
+- [x] 修复 RecommendModal.tsx GITHUB_USERNAME（→ zhangheng6171-eng）
+- [x] **Phase 5 MVP：「一键部署」功能上线**
+  - 15 个工具的 Docker Compose 生产级配置（健康检查、数据持久化、网络隔离）
+  - 通用部署脚本 install.sh + 卸载脚本 uninstall.sh
+  - /deploy 工具列表页 + /deploy/[id] 部署详情页
+  - 工具详情页集成「一键部署」CTA 入口
+  - 变现钩子：服务器推荐链接（阿里云/腾讯云/Vultr）
+
 ### 明天待续
-- [ ] Phase 3 剩余：工具对比功能（同类工具横向比较）
-- [ ] Phase 3 剩余：AI 自动生成「普通人说明」草稿
-- [ ] 修复占位符：RecommendModal.tsx 中 YOUR_USERNAME 替换为真实用户名
-- [ ] 接入 scdn.cloudflare.com 自定义域名（可选）
+- [ ] 注册阿里云/腾讯云/Vultr Affiliate，替换占位链接为真实推广链接
+- [ ] 运行 AI 描述生成脚本改进短描述：`ANTHROPIC_API_KEY=xxx node scripts/generate-descriptions.mjs --with-steps --force`
+- [ ] 部署到 Cloudflare Pages（配置 GitHub Secrets 后推送触发）
+- [ ] Phase 6：付费功能（自动备份/监控告警/版本更新提醒）
+- [ ] 接入自定义域名（可选）
 
 ---
 

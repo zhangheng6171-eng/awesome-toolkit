@@ -1,0 +1,18 @@
+# POST_DEPLOY_URL=http://你的服务器IP:8080
+# POST_DEPLOY_MSG=打开浏览器访问上述地址，主页会展示所有 PDF 处理功能，拖文件进去就能用。
+version: "3.8"
+services:
+  stirling-pdf:
+    image: frooodle/s-pdf:latest
+    container_name: stirling-pdf
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data/trainingData:/usr/share/tessdata
+      - ./data/extraConfigs:/configs
+      - ./data/logs:/logs
+    environment:
+      - DOCKER_ENABLE_SECURITY=false
+      - INSTALL_BOOK_AND_ADVANCED_HTML_OPS=false
+      - LANGS=zh_CN,en_US

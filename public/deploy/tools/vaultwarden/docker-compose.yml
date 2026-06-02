@@ -1,0 +1,17 @@
+# POST_DEPLOY_URL=http://你的服务器IP:8081
+# POST_DEPLOY_MSG=浏览器访问上述地址创建主账号，手机下载 Bitwarden App，在设置里把服务器地址改成 http://你的服务器IP:8081。
+version: "3.8"
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    volumes:
+      - ./data:/data
+    environment:
+      - DOMAIN=https://${DOMAIN:-localhost}
+      - TZ=Asia/Shanghai
+      - SIGNUPS_ALLOWED=true
+      - LOG_FILE=/data/vaultwarden.log

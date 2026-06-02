@@ -1,0 +1,25 @@
+# POST_DEPLOY_URL=http://你的服务器IP:5000
+# POST_DEPLOY_MSG=浏览器访问上述地址，输入要监控的网页，设置通知方式即可。
+version: "3.8"
+services:
+  changedetection:
+    image: ghcr.io/dgtlmoon/changedetection.io:latest
+    container_name: changedetection
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data:/datastore
+    environment:
+      - TZ=Asia/Shanghai
+      - PLAYWRIGHT_DRIVER_URL=ws://changedetection-playwright:3000
+    depends_on:
+      - changedetection-playwright
+
+  changedetection-playwright:
+    image: browserless/chrome:latest
+    container_name: changedetection-playwright
+    restart: unless-stopped
+    environment:
+      - CONNECTION_TIMEOUT=60000
+      - MAX_CONCURRENT_SESSIONS=5

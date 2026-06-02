@@ -1,0 +1,13 @@
+# POST_DEPLOY_URL=http://你的服务器IP:3001
+# POST_DEPLOY_MSG=打开浏览器访问上述地址，创建管理员账号，然后添加你要监控的网站地址即可。
+version: "3.8"
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro

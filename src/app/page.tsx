@@ -6,6 +6,7 @@ import SearchBar from '@/components/SearchBar';
 import FilterPanel from '@/components/FilterPanel';
 import ToolCard from '@/components/ToolCard';
 import RecommendModal from '@/components/RecommendModal';
+import CompareBar from '@/components/CompareBar';
 import { filterTools, getAllTools } from '@/lib/tools';
 
 export default function Home() {
@@ -130,6 +131,8 @@ export default function Home() {
         open={showRecommend}
         onClose={() => setShowRecommend(false)}
       />
+
+      <CompareBar tools={allTools} />
     </>
   );
 }
