@@ -14,7 +14,13 @@ export async function onRequest(context: { request: Request; env: Env }) {
     });
   }
 
-  const userEmail = context.request.headers.get('Cf-Access-Authenticated-User-Email') || 'anonymous';
+  const userEmail = context.request.headers.get('Cf-Access-Authenticated-User-Email');
+  if (!userEmail) {
+    return new Response(JSON.stringify({ error: '请先登录' }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+    });
+  }
 
   try {
     // GET: list all servers for user

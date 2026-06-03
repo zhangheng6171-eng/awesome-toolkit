@@ -15,18 +15,26 @@ export default function WaitlistForm({
 }) {
   const [email, setEmail] = useState('');
   const [done, setDone] = useState(false);
+  const [error, setError] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email.trim()) return;
+    setError(false);
     try {
-      await fetch('/api/waitlist', {
+      const res = await fetch('/api/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email.trim(), source }),
       });
-    } catch {}
-    setDone(true);
+      if (res.ok) {
+        setDone(true);
+      } else {
+        setError(true);
+      }
+    } catch {
+      setError(true);
+    }
   }
 
   if (done) {
@@ -34,20 +42,25 @@ export default function WaitlistForm({
   }
 
   return (
-    <form className={`flex gap-2 ${compact ? '' : 'mt-2'}`} onSubmit={handleSubmit}>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder={placeholder}
-        required
-        className={`flex-1 px-3 py-2 border border-blue-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${compact ? 'text-xs' : ''}`}
-      />
-      <button type="submit"
-        className={`bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 ${compact ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-sm'}`}
-      >
-        {buttonText}
-      </button>
-    </form>
+    <div className={compact ? '' : 'mt-2'}>
+      {error && (
+        <p className="text-xs text-red-500 mb-2">提交失败，请检查网络后重试</p>
+      )}
+      <form className="flex gap-2" onSubmit={handleSubmit}>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder={placeholder}
+          required
+          className={`flex-1 px-3 py-2 border border-blue-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${compact ? 'text-xs' : ''}`}
+        />
+        <button type="submit"
+          className={`bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 ${compact ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-sm'}`}
+        >
+          {buttonText}
+        </button>
+      </form>
+    </div>
   );
 }

@@ -33,7 +33,8 @@ ALLOWED_COMMANDS = [
     ["docker", "version"],
     ["apt-get", "install"],
     ["which", "docker"],
-    ["curl"],
+    ["curl", "-fsSL", "-4", "ifconfig.me"],  # only for IP detection
+    ["curl", "-4fsSL", "ifconfig.me"],
 ]
 
 

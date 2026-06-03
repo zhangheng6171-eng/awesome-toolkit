@@ -61,19 +61,21 @@ export async function onRequest(context: { request: Request; env: Env }) {
       });
     }
 
-    // Save deploy record to KV
-    const userEmail = context.request.headers.get('Cf-Access-Authenticated-User-Email') || 'anonymous';
-    const record = {
-      userEmail,
-      toolId,
-      host,
-      timestamp: Date.now(),
-      status: 'deployed',
-    };
-    await context.env.DEPLOY_KV.put(
-      `deploy:${userEmail}:${Date.now()}`,
-      JSON.stringify(record)
-    );
+    // Save deploy record to KV (requires auth)
+    const userEmail = context.request.headers.get('Cf-Access-Authenticated-User-Email');
+    if (userEmail) {
+      const record = {
+        userEmail,
+        toolId,
+        host,
+        timestamp: Date.now(),
+        status: 'deployed',
+      };
+      await context.env.DEPLOY_KV.put(
+        `deploy:${userEmail}:${Date.now()}`,
+        JSON.stringify(record)
+      );
+    }
 
     // Stream the SSE from Agent back to browser
     return new Response(agentRes.body, {

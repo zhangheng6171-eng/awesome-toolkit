@@ -22,7 +22,13 @@ export async function onRequest(context: { request: Request; env: Env }) {
   }
 
   try {
-    const userEmail = context.request.headers.get('Cf-Access-Authenticated-User-Email') || 'anonymous';
+    const userEmail = context.request.headers.get('Cf-Access-Authenticated-User-Email');
+    if (!userEmail) {
+      return new Response(JSON.stringify({ error: '请先登录' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      });
+    }
 
     const list = await context.env.DEPLOY_KV.list({ prefix: `deploy:${userEmail}:` });
     const records: unknown[] = [];

@@ -3,10 +3,46 @@
 > 日期：2026-06-03
 > 构建：123 页，零 TypeScript 错误
 > 起始：115 页（28 部署配置）
+> RC 阶段：7 个 P0 修复已完成
 
 ---
 
-## 1. 修改/新增文件列表
+## RC 阶段 P0 修复 (2026-06-03)
+
+### 修复列表
+
+| # | 问题 | 审计级别 | 修复 |
+|---|------|----------|------|
+| P0-1 | API 认证兜底 | CRITICAL | deploy/history / servers 返回 401；deploy/execute 优雅跳过 KV 写入 |
+| P0-2 | 无 ErrorBoundary | MEDIUM | 新增 ErrorBoundary + Providers 包裹 layout |
+| P0-3 | 7 处 alert() | HIGH | Toast 组件 + useToast hook 替代全部 alert |
+| P0-4 | 2 处 prompt() 收集 Token | HIGH | TokenModal 组件（password 输入 + 显示/隐藏切换）替代 prompt |
+| P0-5 | 全站双 H1 | CRITICAL | Header.tsx 中 h1 → span（首页通过页面内 h1 保证 SEO） |
+| P0-6 | 安全头缺失 | MEDIUM | 新增 public/_headers（X-Frame-Options/CSP/Cache-Control） |
+| P0-7 | Agent curl 白名单过宽 | HIGH | 限制为仅 `curl -fsSL -4 ifconfig.me` 两个变体 |
+| 附 | WaitlistForm 空 catch | HIGH | 增加错误状态追踪和用户提示 |
+
+### 修改/新增文件
+
+| 文件 | 变更 |
+|------|------|
+| `src/components/ErrorBoundary.tsx` | **新增** — 全局错误边界 |
+| `src/components/Toast.tsx` | **新增** — Toast 通知系统（Provider + hook） |
+| `src/components/TokenModal.tsx` | **新增** — 密码输入 Modal（替代 prompt） |
+| `src/components/Providers.tsx` | **新增** — 客户端 Provider 包装器 |
+| `src/app/layout.tsx` | 集成 Providers（ErrorBoundary + ToastProvider） |
+| `src/app/dashboard/page.tsx` | alert→toast；prompt→TokenModal；DOM 操作→React state |
+| `src/components/Header.tsx` | h1→span（修复全站双 H1） |
+| `src/components/WaitlistForm.tsx` | 空 catch→错误状态处理 |
+| `functions/api/deploy/history.ts` | anonymous 兜底→401 拒绝 |
+| `functions/api/servers.ts` | anonymous 兜底→401 拒绝 |
+| `functions/api/deploy/execute.ts` | anonymous 兜底→优雅跳过 KV 写入 |
+| `public/agent/agent.py` | curl 白名单收紧到仅 IP 检测 |
+| `public/_headers` | **新增** — 安全头 + 缓存策略 |
+
+---
+
+## 1. 修改/新增文件列表（RC 之前）
 
 ### 修改文件
 

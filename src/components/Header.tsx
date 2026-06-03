@@ -38,9 +38,9 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <div className="flex-shrink-0">
             <Link href="/" className="no-underline">
-              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 hover:text-blue-600 transition-colors">
+              <span className="text-xl sm:text-2xl font-bold text-gray-900 hover:text-blue-600 transition-colors">
                 GitHub 精选工具库
-              </h1>
+              </span>
             </Link>
             <p className="mt-0.5 text-xs sm:text-sm text-gray-500 hidden sm:block">
               从全世界开源代码中，挑出最好用的工具，配好普通话使用说明
