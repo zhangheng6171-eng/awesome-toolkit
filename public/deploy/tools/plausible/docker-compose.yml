@@ -1,0 +1,55 @@
+# POST_DEPLOY_URL=http://你的服务器IP:8001
+# POST_DEPLOY_MSG=浏览器访问注册管理员账号，添加你的网站域名，把 JS 统计代码贴到网站里即可看到实时访客数据。
+version: "3.8"
+services:
+  plausible:
+    image: plausible/analytics:latest
+    container_name: plausible
+    restart: unless-stopped
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./data:/data
+    environment:
+      - BASE_URL=http://你的服务器IP:8001
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:-changeMeToRandom64CharsPlausibleSecretKeyBase0000}
+      - TOTP_VAULT_KEY=${TOTP_VAULT_KEY:-changeMeToRandom64CharsPlausibleTotpVaultKey000000}
+      - DISABLE_REGISTRATION=false
+      - ENABLE_EMAIL_VERIFICATION=false
+      - TZ=Asia/Shanghai
+    depends_on:
+      db:
+        condition: service_healthy
+      clickhouse:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    container_name: plausible-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=plausible
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-changeMe123!}
+      - POSTGRES_DB=plausible
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U plausible"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:24-alpine
+    container_name: plausible-clickhouse
+    restart: unless-stopped
+    volumes:
+      - ./clickhouse:/var/lib/clickhouse
+      - ./clickhouse-config.xml:/etc/clickhouse-server/config.d/logging.xml:ro
+    ulimits:
+      nofile: 262144
+    healthcheck:
+      test: ["CMD", "clickhouse-client", "--query", "SELECT 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

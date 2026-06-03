@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
+import WaitlistForm from '@/components/WaitlistForm';
 
 interface FuturePlan {
   name: string;
@@ -44,25 +44,6 @@ const futurePlans: FuturePlan[] = [
 ];
 
 export default function PricingPage() {
-  const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!email.trim()) return;
-    setSubmitting(true);
-    try {
-      await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), source: 'pricing-early-bird' }),
-      });
-    } catch {}
-    setSubmitted(true);
-    setSubmitting(false);
-  }
-
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white border-b border-gray-200">
@@ -111,25 +92,9 @@ export default function PricingPage() {
           <p className="text-sm text-blue-600 mt-1">
             留下邮箱，付费版上线时获得 <strong>50% 折扣</strong>，并锁定早鸟价永久有效
           </p>
-          {submitted ? (
-            <p className="mt-4 text-green-600 font-medium">✅ 已登记！上线时我们会第一时间通知你</p>
-          ) : (
-            <form className="mt-4 flex gap-2" onSubmit={handleSubmit}>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                required
-                className="flex-1 px-3 py-2 border border-blue-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              <button type="submit" disabled={submitting}
-                className="px-5 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
-              >
-                {submitting ? '提交中...' : '锁定早鸟价'}
-              </button>
-            </form>
-          )}
+          <div className="mt-4">
+            <WaitlistForm source="pricing-early-bird" buttonText="锁定早鸟价" />
+          </div>
         </div>
       </main>
     </div>

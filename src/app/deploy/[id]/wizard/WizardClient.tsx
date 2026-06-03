@@ -222,8 +222,24 @@ function WizardContent() {
       </div>
 
       <main className="max-w-2xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        {/* Step indicator */}
-        <div className="flex items-center justify-center gap-2 mb-8">
+        {/* Step indicator - compact text on mobile */}
+        <div className="mb-6 sm:hidden text-center">
+          <span className="text-sm font-semibold text-blue-600">
+            步骤 {step + 1}/4 — {stepLabels[step]}
+          </span>
+          <div className="mt-1.5 flex gap-1 justify-center">
+            {([0, 1, 2, 3] as Step[]).map((s) => (
+              <div key={s} className={`h-1 rounded-full transition-all ${
+                s < step ? 'w-4 bg-green-500' :
+                s === step ? 'w-6 bg-blue-600' :
+                'w-2 bg-gray-200'
+              }`} />
+            ))}
+          </div>
+        </div>
+
+        {/* Step indicator - full visual on desktop */}
+        <div className="hidden sm:flex items-center justify-center gap-2 mb-8">
           {([0, 1, 2, 3] as Step[]).map((s) => (
             <div key={s} className="flex items-center gap-1.5">
               <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${

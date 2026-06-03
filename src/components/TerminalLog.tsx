@@ -33,7 +33,7 @@ export default function TerminalLog({ logs, isRunning }: TerminalLogProps) {
   }, [logs]);
 
   return (
-    <div className="bg-gray-900 rounded-lg border border-gray-700 p-4 h-80 overflow-y-auto font-mono text-sm">
+    <div className="bg-gray-900 rounded-lg border border-gray-700 p-3 sm:p-4 h-80 overflow-y-auto overflow-x-auto font-mono text-xs sm:text-sm">
       {logs.length === 0 && isRunning && (
         <div className="flex items-center gap-2 text-gray-500">
           <span className="inline-block w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />

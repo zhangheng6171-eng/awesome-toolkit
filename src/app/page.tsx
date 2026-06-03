@@ -7,6 +7,8 @@ import FilterPanel from '@/components/FilterPanel';
 import ToolCard from '@/components/ToolCard';
 import RecommendModal from '@/components/RecommendModal';
 import CompareBar from '@/components/CompareBar';
+import MobileFilterBar from '@/components/MobileFilterBar';
+import WaitlistForm from '@/components/WaitlistForm';
 import { filterTools, getAllTools } from '@/lib/tools';
 
 export default function Home() {
@@ -60,9 +62,28 @@ export default function Home() {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* 侧边筛选 */}
-          <aside className="lg:col-span-1">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
+          {/* Mobile filter bar - horizontal scroll */}
+          <div className="lg:hidden">
+            <MobileFilterBar
+              category={category}
+              onCategoryChange={setCategory}
+              difficulty={difficulty}
+              onDifficultyChange={setDifficulty}
+              targetUser={targetUser}
+              onTargetUserChange={setTargetUser}
+              onClear={() => {
+                setSearch('');
+                setCategory('');
+                setDifficulty(null);
+                setTargetUser('');
+              }}
+              resultCount={filteredTools.length}
+            />
+          </div>
+
+          {/* Desktop sidebar filter */}
+          <aside className="hidden lg:block lg:col-span-1">
             <div className="lg:sticky lg:top-24 bg-white rounded-xl border border-gray-200 p-5">
               <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">
                 筛选条件
@@ -175,43 +196,5 @@ function StatCard({ label, value }: { label: string; value: string }) {
   );
 }
 
-function WaitlistForm() {
-  'use client';
-  const [email, setEmail] = useState('');
-  const [done, setDone] = useState(false);
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!email.trim()) return;
-    try {
-      await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), source: 'homepage' }),
-      });
-    } catch {}
-    setDone(true);
-  }
-
-  if (done) {
-    return <p className="mt-2 text-sm text-green-600 font-medium">✅ 已登记，上线时通知你!</p>;
-  }
-
-  return (
-    <form className="mt-2 flex gap-2" onSubmit={handleSubmit}>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="your@email.com"
-        required
-        className="flex-1 px-3 py-2 border border-blue-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-      />
-      <button type="submit"
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700"
-      >
-        登记
-      </button>
-    </form>
-  );
-}
+// MobileFilterBar extracted to src/components/MobileFilterBar.tsx
+// WaitlistForm extracted to src/components/WaitlistForm.tsx

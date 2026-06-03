@@ -1,18 +1,10 @@
 import Link from 'next/link';
-import { getDeployConfig, getDeployCommand, getServerRecommendation } from '@/lib/deploy';
+import { getDeployConfig, getDeployCommand, getServerRecommendation, getDeployableTools } from '@/lib/deploy';
 import { getToolById } from '@/lib/tools';
 import CopyButton from '@/components/CopyButton';
 
 export async function generateStaticParams() {
-  const tools = [
-    'uptime-kuma', 'n8n', 'immich', 'stirling-pdf', 'vaultwarden',
-    'adguard-home', 'changedetection-io', 'paperless-ngx', 'home-assistant',
-    'open-webui', 'dify', 'langflow', 'metabase', 'grafana', 'apache-superset',
-    'homebridge', 'node-red', 'netdata', 'beszel', 'jellyfin', 'navidrome',
-    'audiobookshelf', 'nginx-proxy-manager', 'portainer', 'gitea', 'nextcloud',
-    'duplicati', 'actual',
-  ];
-  return tools.map((id) => ({ id }));
+  return getDeployableTools().map((t) => ({ id: t.id }));
 }
 
 export default async function DeployDetailPage({

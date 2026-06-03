@@ -1,0 +1,46 @@
+# POST_DEPLOY_URL=https://你的服务器IP:8443
+# POST_DEPLOY_MSG=浏览器访问完成安装向导，创建管理员账号并下载恢复密钥（务必保存好）。安装 Passbolt 浏览器插件后即可管理密码。
+version: "3.8"
+services:
+  passbolt:
+    image: passbolt/passbolt:latest-ce
+    container_name: passbolt
+    restart: unless-stopped
+    ports:
+      - "8443:443"
+      - "8080:80"
+    volumes:
+      - ./gpg:/etc/passbolt/gpg
+      - ./jwt:/etc/passbolt/jwt
+    environment:
+      - APP_FULL_BASE_URL=https://你的服务器IP:8443
+      - DATASOURCES_DEFAULT_HOST=localhost
+      - DATASOURCES_DEFAULT_PORT=3306
+      - DATASOURCES_DEFAULT_DATABASE=passbolt
+      - DATASOURCES_DEFAULT_USERNAME=passbolt
+      - DATASOURCES_DEFAULT_PASSWORD=${DB_PASSWORD:-changeMe123!}
+      - EMAIL_TRANSPORT_DEFAULT_HOST=localhost
+      - EMAIL_TRANSPORT_DEFAULT_PORT=1025
+      - EMAIL_DEFAULT_FROM=admin@example.com
+      - PASSBOLT_REGISTRATION_PUBLIC=true
+      - PASSBOLT_SSL_FORCE=true
+      - TZ=Asia/Shanghai
+    tmpfs:
+      - /tmp
+
+  db:
+    image: mariadb:10.11
+    container_name: passbolt-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-rootChangeMe123!}
+      - MYSQL_DATABASE=passbolt
+      - MYSQL_USER=passbolt
+      - MYSQL_PASSWORD=${DB_PASSWORD:-changeMe123!}
+    volumes:
+      - ./db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

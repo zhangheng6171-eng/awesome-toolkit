@@ -68,7 +68,8 @@ function CompareContent() {
           <p className="mt-2 text-gray-500">{tools.length} 个工具，{rows.length} 个维度横向比较</p>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-x-auto">
+        {/* Desktop table */}
+        <div className="hidden md:block bg-white rounded-xl border border-gray-200 shadow-sm overflow-x-auto">
           <table className="w-full min-w-[600px]">
             <thead>
               <tr>
@@ -113,6 +114,39 @@ function CompareContent() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile card stack */}
+        <div className="md:hidden space-y-4">
+          {tools.map((tool) => (
+            <div key={tool.id} className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+              <div className="px-4 py-3 bg-gray-50 border-b border-gray-100 flex items-center justify-between">
+                <div>
+                  <Link href={`/tool/${tool.id}`} className="text-lg font-bold text-gray-900 hover:text-blue-600">
+                    {tool.name}
+                  </Link>
+                  <div className="flex items-center gap-2 mt-0.5 text-xs text-gray-400">
+                    <a href={tool.github_url} target="_blank" rel="noopener noreferrer" className="hover:text-gray-600">GitHub ↗</a>
+                    <Link href={`/deploy/${tool.id}`} className="hover:text-blue-600">一键部署 ↗</Link>
+                  </div>
+                </div>
+                <CompareToggle id={tool.id} />
+              </div>
+              <div className="divide-y divide-gray-100">
+                {rows.map((row) => {
+                  const toolIdx = tools.indexOf(tool);
+                  return (
+                    <div key={row.dimension.key} className="flex justify-between px-4 py-2.5 text-sm">
+                      <span className="text-gray-500">{row.dimension.label}</span>
+                      <span className={`text-gray-900 font-medium ${row.dimension.key === 'stars' ? 'font-semibold' : ''}`}>
+                        {row.values[toolIdx]}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
 
         <p className="mt-6 text-center text-sm text-gray-400">

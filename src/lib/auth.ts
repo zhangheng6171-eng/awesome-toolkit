@@ -28,6 +28,61 @@ export interface DeployedToolInfo {
   status: 'running' | 'stopped' | 'unknown';
 }
 
+interface CFUserInfo {
+  email: string;
+  tier: UserTier;
+  source: 'cf-access' | 'local';
+}
+
+let cachedUserInfo: CFUserInfo | null = null;
+
+// Fetch user info from Cloudflare Access (production) or localStorage (dev)
+export async function fetchUserInfo(): Promise<CFUserInfo> {
+  if (typeof window === 'undefined') return { email: 'anonymous', tier: 'free', source: 'local' };
+
+  // Return cached result within the same page load
+  if (cachedUserInfo) return cachedUserInfo;
+
+  try {
+    // In production, CF Access injects Cf-Access-Authenticated-User-Email
+    // The /api/auth/upgrade endpoint reads this header and returns user info
+    const res = await fetch('/api/auth/upgrade');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.email) {
+        cachedUserInfo = { email: data.email, tier: data.tier || 'free', source: 'cf-access' };
+        // Sync CF email to localStorage so offline/dashboard features still work
+        syncLocalEmail(data.email);
+        return cachedUserInfo;
+      }
+    }
+  } catch {
+    // API not available (local dev without Functions)
+  }
+
+  // Fallback to localStorage
+  const state = getAuthState();
+  cachedUserInfo = {
+    email: state.email || '',
+    tier: state.tier,
+    source: 'local',
+  };
+  return cachedUserInfo;
+}
+
+// Clear cached user info (e.g., after logout)
+export function clearUserCache() {
+  cachedUserInfo = null;
+}
+
+function syncLocalEmail(email: string) {
+  const state = getAuthState();
+  if (state.email !== email) {
+    state.email = email;
+    setAuthState(state);
+  }
+}
+
 // Try to get user email from Cloudflare Access header (production)
 // Falls back to localStorage (local dev)
 export async function getCurrentUserEmail(): Promise<string> {
@@ -131,5 +186,6 @@ export function getServerLimit(tier: UserTier): number {
 
 export function resetAuth() {
   if (typeof window === 'undefined') return;
+  clearUserCache();
   localStorage.removeItem(AUTH_KEY);
 }

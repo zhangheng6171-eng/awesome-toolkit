@@ -55,21 +55,22 @@ export default function CompareBar({ tools }: { tools: Tool[] }) {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-gray-500 font-medium">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-xs sm:text-sm text-gray-500 font-medium flex-shrink-0">
             已选 {ids.length}/4
           </span>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 overflow-x-auto flex-nowrap">
             {selectedTools.map((tool) => (
               <span
                 key={tool.id}
-                className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full text-sm"
+                className="inline-flex items-center gap-1 px-2 py-0.5 sm:py-1 bg-blue-50 text-blue-700 rounded-full text-xs sm:text-sm whitespace-nowrap flex-shrink-0"
               >
-                {tool.name}
+                <span className="hidden sm:inline">{tool.name}</span>
+                <span className="sm:hidden max-w-[4rem] truncate">{tool.name}</span>
                 <button
                   onClick={() => removeCompareId(tool.id)}
-                  className="ml-0.5 text-blue-400 hover:text-red-500 transition-colors"
+                  className="ml-0.5 text-blue-400 hover:text-red-500 transition-colors flex-shrink-0"
                 >
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -79,23 +80,23 @@ export default function CompareBar({ tools }: { tools: Tool[] }) {
             ))}
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
           <button
             onClick={() => clearCompare()}
-            className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-xs sm:text-sm text-gray-400 hover:text-gray-600 transition-colors"
           >
             清空
           </button>
           <Link
             href={`/compare?tools=${ids.join(',')}`}
-            className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors whitespace-nowrap ${
               ids.length >= 2
                 ? 'bg-blue-600 text-white hover:bg-blue-700'
                 : 'bg-gray-100 text-gray-400 cursor-not-allowed pointer-events-none'
             }`}
           >
             开始对比
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </Link>

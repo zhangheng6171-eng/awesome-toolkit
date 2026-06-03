@@ -1,0 +1,67 @@
+# POST_DEPLOY_URL=http://你的服务器IP:3005
+# POST_DEPLOY_MSG=浏览器访问完成 OIDC 登录配置（推荐用 GitHub OAuth App 或 Google），之后即可创建团队知识库。
+version: "3.8"
+services:
+  outline:
+    image: outlinewiki/outline:latest
+    container_name: outline
+    restart: unless-stopped
+    ports:
+      - "3005:3000"
+    volumes:
+      - ./data:/var/lib/outline/data
+    environment:
+      - URL=http://你的服务器IP:3005
+      - SECRET_KEY=${SECRET_KEY:-changeMeToRandom64Chars1234567890abcdefghijklmnopqrstuv}
+      - UTILS_SECRET=${UTILS_SECRET:-changeMeToRandom64Chars0987654321zyxwvutsrqponmlkjih}
+      - PORT=3000
+      - DATABASE_URL=postgres://outline:${DB_PASSWORD:-changeMe123!}@db:5432/outline
+      - DATABASE_URL_TEST=postgres://outline:${DB_PASSWORD:-changeMe123!}@db:5432/outline-test
+      - PGSSLMODE=disable
+      - REDIS_URL=redis://redis:6379
+      - FILE_STORAGE=local
+      - FILE_STORAGE_LOCAL_ROOT_DIR=/var/lib/outline/data
+      - RATE_LIMITER_ENABLED=true
+      - DEFAULT_LANGUAGE=zh_CN
+      - FORCE_HTTPS=false
+      - TZ=Asia/Shanghai
+      # OIDC 认证 — 部署后需在管理后台配置
+      - OIDC_CLIENT_ID=${OIDC_CLIENT_ID:-}
+      - OIDC_CLIENT_SECRET=${OIDC_CLIENT_SECRET:-}
+      - OIDC_AUTH_URI=${OIDC_AUTH_URI:-}
+      - OIDC_TOKEN_URI=${OIDC_TOKEN_URI:-}
+      - OIDC_USERINFO_URI=${OIDC_USERINFO_URI:-}
+      - OIDC_LOGOUT_URI=${OIDC_LOGOUT_URI:-}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  redis:
+    image: redis:7-alpine
+    container_name: outline-redis
+    restart: unless-stopped
+    volumes:
+      - ./redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  db:
+    image: postgres:16-alpine
+    container_name: outline-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=outline
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-changeMe123!}
+      - POSTGRES_DB=outline
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U outline"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
