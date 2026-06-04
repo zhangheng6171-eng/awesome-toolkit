@@ -3,7 +3,7 @@
     "id": "ollama",
     "name": "Ollama",
     "github_url": "https://github.com/ollama/ollama",
-    "stars": 172970,
+    "stars": 173087,
     "category": "AI & 自动化",
     "tags": [
       "本地AI",
@@ -40,7 +40,7 @@
     "id": "n8n",
     "name": "n8n",
     "github_url": "https://github.com/n8n-io/n8n",
-    "stars": 190811,
+    "stars": 190980,
     "category": "开发效率工具",
     "tags": [
       "自动化",
@@ -77,7 +77,7 @@
     "id": "immich",
     "name": "Immich",
     "github_url": "https://github.com/immich-app/immich",
-    "stars": 102527,
+    "stars": 102594,
     "category": "自部署 & 家庭服务器",
     "tags": [
       "照片备份",
@@ -114,7 +114,7 @@
     "id": "bitwarden",
     "name": "Bitwarden",
     "github_url": "https://github.com/bitwarden/server",
-    "stars": 19056,
+    "stars": 19068,
     "category": "安全 & 隐私",
     "tags": [
       "密码管理",
@@ -151,7 +151,7 @@
     "id": "stirling-pdf",
     "name": "Stirling PDF",
     "github_url": "https://github.com/Stirling-Tools/Stirling-PDF",
-    "stars": 80101,
+    "stars": 80160,
     "category": "文件 & 知识管理",
     "tags": [
       "PDF",
@@ -189,7 +189,7 @@
     "id": "photoprism",
     "name": "PhotoPrism",
     "github_url": "https://github.com/photoprism/photoprism",
-    "stars": 39737,
+    "stars": 39739,
     "category": "自部署 & 家庭服务器",
     "tags": [
       "照片管理",
@@ -227,7 +227,7 @@
     "id": "excalidraw",
     "name": "Excalidraw",
     "github_url": "https://github.com/excalidraw/excalidraw",
-    "stars": 124505,
+    "stars": 124578,
     "category": "创意 & 媒体处理",
     "tags": [
       "绘图",
@@ -265,7 +265,7 @@
     "id": "appwrite",
     "name": "Appwrite",
     "github_url": "https://github.com/appwrite/appwrite",
-    "stars": 56205,
+    "stars": 56209,
     "category": "开发效率工具",
     "tags": [
       "后端服务",
@@ -302,7 +302,7 @@
     "id": "nocodb",
     "name": "NocoDB",
     "github_url": "https://github.com/nocodb/nocodb",
-    "stars": 63229,
+    "stars": 63246,
     "category": "数据处理 & 可视化",
     "tags": [
       "电子表格",
@@ -340,7 +340,7 @@
     "id": "penpot",
     "name": "Penpot",
     "github_url": "https://github.com/penpot/penpot",
-    "stars": 48812,
+    "stars": 48864,
     "category": "创意 & 媒体处理",
     "tags": [
       "UI设计",
@@ -378,7 +378,7 @@
     "id": "changedetection-io",
     "name": "changedetection.io",
     "github_url": "https://github.com/dgtlmoon/changedetection.io",
-    "stars": 31851,
+    "stars": 31864,
     "category": "网络 & 爬虫",
     "tags": [
       "网页监控",
@@ -416,7 +416,7 @@
     "id": "hoppscotch",
     "name": "Hoppscotch",
     "github_url": "https://github.com/hoppscotch/hoppscotch",
-    "stars": 79387,
+    "stars": 79408,
     "category": "网络 & 爬虫",
     "tags": [
       "API测试",
@@ -455,7 +455,7 @@
     "id": "dify",
     "name": "Dify",
     "github_url": "https://github.com/langgenius/dify",
-    "stars": 143588,
+    "stars": 143753,
     "category": "AI & 自动化",
     "tags": [
       "AI应用",
@@ -491,7 +491,7 @@
     "id": "open-webui",
     "name": "Open WebUI",
     "github_url": "https://github.com/open-webui/open-webui",
-    "stars": 139745,
+    "stars": 139894,
     "category": "AI & 自动化",
     "tags": [
       "聊天界面",
@@ -527,7 +527,7 @@
     "id": "it-tools",
     "name": "IT-Tools",
     "github_url": "https://github.com/CorentinTh/it-tools",
-    "stars": 39106,
+    "stars": 39125,
     "category": "开发效率工具",
     "tags": [
       "在线工具",
@@ -563,7 +563,7 @@
     "id": "cyberchef",
     "name": "CyberChef",
     "github_url": "https://github.com/gchq/CyberChef",
-    "stars": 34978,
+    "stars": 34986,
     "category": "网络 & 爬虫",
     "tags": [
       "数据转换",
@@ -599,7 +599,7 @@
     "id": "metabase",
     "name": "Metabase",
     "github_url": "https://github.com/metabase/metabase",
-    "stars": 47540,
+    "stars": 47552,
     "category": "数据处理 & 可视化",
     "tags": [
       "数据分析",
@@ -636,7 +636,7 @@
     "id": "grafana",
     "name": "Grafana",
     "github_url": "https://github.com/grafana/grafana",
-    "stars": 74128,
+    "stars": 74130,
     "category": "数据处理 & 可视化",
     "tags": [
       "监控",
@@ -673,7 +673,7 @@
     "id": "vaultwarden",
     "name": "Vaultwarden",
     "github_url": "https://github.com/dani-garcia/vaultwarden",
-    "stars": 61759,
+    "stars": 61810,
     "category": "安全 & 隐私",
     "tags": [
       "密码管理",
@@ -710,7 +710,7 @@
     "id": "adguard-home",
     "name": "AdGuard Home",
     "github_url": "https://github.com/AdguardTeam/AdGuardHome",
-    "stars": 34590,
+    "stars": 34619,
     "category": "安全 & 隐私",
     "tags": [
       "广告拦截",
@@ -746,7 +746,7 @@
     "id": "paperless-ngx",
     "name": "Paperless-ngx",
     "github_url": "https://github.com/paperless-ngx/paperless-ngx",
-    "stars": 41854,
+    "stars": 41874,
     "category": "文件 & 知识管理",
     "tags": [
       "文档管理",
@@ -783,7 +783,7 @@
     "id": "trilium-notes",
     "name": "Trilium Notes",
     "github_url": "https://github.com/zadam/trilium",
-    "stars": 36304,
+    "stars": 36313,
     "category": "文件 & 知识管理",
     "tags": [
       "笔记",
@@ -821,7 +821,7 @@
     "id": "obs-studio",
     "name": "OBS Studio",
     "github_url": "https://github.com/obsproject/obs-studio",
-    "stars": 72904,
+    "stars": 72928,
     "category": "创意 & 媒体处理",
     "tags": [
       "录屏",
@@ -858,7 +858,7 @@
     "id": "home-assistant",
     "name": "Home Assistant",
     "github_url": "https://github.com/home-assistant/core",
-    "stars": 87474,
+    "stars": 87498,
     "category": "自部署 & 家庭服务器",
     "tags": [
       "智能家居",
@@ -895,7 +895,7 @@
     "id": "langflow",
     "name": "LangFlow",
     "github_url": "https://github.com/langflow-ai/langflow",
-    "stars": 149135,
+    "stars": 149197,
     "category": "AI & 自动化",
     "tags": [
       "AI流程",
@@ -931,7 +931,7 @@
     "id": "apache-superset",
     "name": "Apache Superset",
     "github_url": "https://github.com/apache/superset",
-    "stars": 73135,
+    "stars": 73154,
     "category": "数据处理 & 可视化",
     "tags": [
       "BI",
@@ -968,7 +968,7 @@
     "id": "pi-hole",
     "name": "Pi-hole",
     "github_url": "https://github.com/pi-hole/pi-hole",
-    "stars": 59110,
+    "stars": 59121,
     "category": "安全 & 隐私",
     "tags": [
       "广告拦截",
@@ -1005,7 +1005,7 @@
     "id": "joplin",
     "name": "Joplin",
     "github_url": "https://github.com/laurent22/joplin",
-    "stars": 55066,
+    "stars": 55077,
     "category": "文件 & 知识管理",
     "tags": [
       "笔记",
@@ -1043,7 +1043,7 @@
     "id": "lossless-cut",
     "name": "LosslessCut",
     "github_url": "https://github.com/mifi/lossless-cut",
-    "stars": 40848,
+    "stars": 40868,
     "category": "创意 & 媒体处理",
     "tags": [
       "视频剪辑",
@@ -1079,7 +1079,7 @@
     "id": "uptime-kuma",
     "name": "Uptime Kuma",
     "github_url": "https://github.com/louislam/uptime-kuma",
-    "stars": 87573,
+    "stars": 87617,
     "category": "自部署 & 家庭服务器",
     "tags": [
       "监控",
@@ -1116,7 +1116,7 @@
     "id": "homebridge",
     "name": "Homebridge",
     "github_url": "https://github.com/homebridge/homebridge",
-    "stars": 25367,
+    "stars": 25369,
     "category": "自部署 & 家庭服务器",
     "tags": [
       "智能家居",
@@ -1153,7 +1153,7 @@
     "id": "node-red",
     "name": "Node-RED",
     "github_url": "https://github.com/node-red/node-red",
-    "stars": 23214,
+    "stars": 23218,
     "category": "自部署 & 家庭服务器",
     "tags": [
       "流程自动化",
@@ -1190,7 +1190,7 @@
     "id": "netdata",
     "name": "Netdata",
     "github_url": "https://github.com/netdata/netdata",
-    "stars": 79043,
+    "stars": 79052,
     "category": "自部署 & 家庭服务器",
     "tags": [
       "系统监控",
@@ -1226,7 +1226,7 @@
     "id": "prometheus",
     "name": "Prometheus",
     "github_url": "https://github.com/prometheus/prometheus",
-    "stars": 64247,
+    "stars": 64260,
     "category": "自部署 & 家庭服务器",
     "tags": [
       "监控",
@@ -1263,7 +1263,7 @@
     "id": "beszel",
     "name": "Beszel",
     "github_url": "https://github.com/henrygd/beszel",
-    "stars": 22359,
+    "stars": 22380,
     "category": "自部署 & 家庭服务器",
     "tags": [
       "轻量监控",
@@ -1299,7 +1299,7 @@
     "id": "keepassxc",
     "name": "KeePassXC",
     "github_url": "https://github.com/keepassxreboot/keepassxc",
-    "stars": 27461,
+    "stars": 27478,
     "category": "安全 & 隐私",
     "tags": [
       "密码管理",
@@ -1336,7 +1336,7 @@
     "id": "passbolt",
     "name": "Passbolt",
     "github_url": "https://github.com/passbolt/passbolt_api",
-    "stars": 5958,
+    "stars": 5961,
     "category": "安全 & 隐私",
     "tags": [
       "密码管理",
@@ -1373,7 +1373,7 @@
     "id": "jellyfin",
     "name": "Jellyfin",
     "github_url": "https://github.com/jellyfin/jellyfin",
-    "stars": 52829,
+    "stars": 52877,
     "category": "创意 & 媒体处理",
     "tags": [
       "媒体服务器",
@@ -1410,7 +1410,7 @@
     "id": "navidrome",
     "name": "Navidrome",
     "github_url": "https://github.com/navidrome/navidrome",
-    "stars": 21413,
+    "stars": 21433,
     "category": "创意 & 媒体处理",
     "tags": [
       "音乐服务器",
@@ -1447,7 +1447,7 @@
     "id": "audiobookshelf",
     "name": "Audiobookshelf",
     "github_url": "https://github.com/advplyr/audiobookshelf",
-    "stars": 13069,
+    "stars": 13078,
     "category": "创意 & 媒体处理",
     "tags": [
       "有声书",
@@ -1484,7 +1484,7 @@
     "id": "logseq",
     "name": "Logseq",
     "github_url": "https://github.com/logseq/logseq",
-    "stars": 43205,
+    "stars": 43222,
     "category": "文件 & 知识管理",
     "tags": [
       "笔记",
@@ -1521,7 +1521,7 @@
     "id": "siyuan",
     "name": "SiYuan",
     "github_url": "https://github.com/siyuan-note/siyuan",
-    "stars": 44243,
+    "stars": 44250,
     "category": "文件 & 知识管理",
     "tags": [
       "笔记",
@@ -1559,7 +1559,7 @@
     "id": "outline",
     "name": "Outline",
     "github_url": "https://github.com/outline/outline",
-    "stars": 38732,
+    "stars": 38748,
     "category": "文件 & 知识管理",
     "tags": [
       "团队文档",
@@ -1596,7 +1596,7 @@
     "id": "nginx-proxy-manager",
     "name": "Nginx Proxy Manager",
     "github_url": "https://github.com/NginxProxyManager/nginx-proxy-manager",
-    "stars": 33034,
+    "stars": 33058,
     "category": "网络 & 爬虫",
     "tags": [
       "反向代理",
@@ -1634,7 +1634,7 @@
     "id": "portainer",
     "name": "Portainer",
     "github_url": "https://github.com/portainer/portainer",
-    "stars": 37630,
+    "stars": 37639,
     "category": "开发效率工具",
     "tags": [
       "Docker管理",
@@ -1672,7 +1672,7 @@
     "id": "gitea",
     "name": "Gitea",
     "github_url": "https://github.com/go-gitea/gitea",
-    "stars": 56083,
+    "stars": 56103,
     "category": "开发效率工具",
     "tags": [
       "Git仓库",
@@ -1709,7 +1709,7 @@
     "id": "nextcloud",
     "name": "Nextcloud",
     "github_url": "https://github.com/nextcloud/server",
-    "stars": 35616,
+    "stars": 35628,
     "category": "文件 & 知识管理",
     "tags": [
       "私有云盘",
@@ -1747,7 +1747,7 @@
     "id": "plausible",
     "name": "Plausible Analytics",
     "github_url": "https://github.com/plausible/analytics",
-    "stars": 26757,
+    "stars": 26790,
     "category": "数据处理 & 可视化",
     "tags": [
       "网站统计",
@@ -1784,7 +1784,7 @@
     "id": "duplicati",
     "name": "Duplicati",
     "github_url": "https://github.com/duplicati/duplicati",
-    "stars": 14603,
+    "stars": 14615,
     "category": "文件 & 知识管理",
     "tags": [
       "备份",
@@ -1822,7 +1822,7 @@
     "id": "actual",
     "name": "Actual Budget",
     "github_url": "https://github.com/actualbudget/actual",
-    "stars": 26790,
+    "stars": 26817,
     "category": "自部署 & 家庭服务器",
     "tags": [
       "个人理财",
