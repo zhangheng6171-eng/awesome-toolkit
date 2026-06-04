@@ -4,7 +4,10 @@ import { getCategoryInfo } from '@/lib/categories';
 import { formatStarCount, renderDifficultyStars } from '@/lib/tools';
 import { isDeployable } from '@/lib/deploy';
 import CompareToggle from '@/components/CompareToggle';
+import PlatformSelector from '@/components/PlatformSelector';
 import ToolCardMini from './ToolCardMini';
+import TrackToolView from '@/components/TrackToolView';
+import { JsonLd, softwareApplicationSchema } from '@/components/JsonLd';
 
 import type { Metadata } from 'next';
 
@@ -85,6 +88,9 @@ export default async function ToolDetailPage({
           </nav>
         </div>
       </div>
+
+      <JsonLd data={softwareApplicationSchema(tool)} />
+      <TrackToolView toolId={tool.id} />
 
       {/* 主体内容 */}
       <main className="max-w-3xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -182,6 +188,15 @@ export default async function ToolDetailPage({
             </span>
           ))}
         </div>
+
+        {/* 平台选择器 */}
+        <PlatformSelector
+          platforms={tool.platforms}
+          toolId={tool.id}
+          toolName={tool.name}
+          isDeployable={isDeployable(tool.id)}
+          platformInstructions={tool.platform_instructions}
+        />
 
         {/* 工具属性 */}
         <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-gray-600">

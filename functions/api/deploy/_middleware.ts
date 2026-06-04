@@ -19,16 +19,17 @@ function checkRateLimit(ip: string, maxRequests: number, windowMs: number): bool
   return true;
 }
 
-// Clean up old entries every 5 minutes
-setInterval(() => {
+// Clean up stale entries on each request (no setInterval in Workers global scope)
+function cleanupStale() {
   const now = Date.now();
   for (const [key, val] of rateMap) {
     if (now > val.resetAt) rateMap.delete(key);
   }
-}, 300000);
+}
 
 export async function onRequest(context: { request: Request; env: Env; next: () => Promise<Response> }) {
   const url = new URL(context.request.url);
+  cleanupStale();
 
   // Rate limiting: 10 requests per minute per IP for deploy endpoints
   if (url.pathname.startsWith('/api/deploy')) {

@@ -34,7 +34,27 @@
     "license": "MIT",
     "added_date": "2026-06-01",
     "useCase": "想要在本地免费使用 AI 大模型，不想把聊天数据上传到云端的个人用户",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "native",
+      "linux": "native",
+      "mac": "native",
+      "nas": "unsupported",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 8192,
+      "recommended_ram_mb": 16384,
+      "min_disk_mb": 20480,
+      "recommended_disk_mb": 102400,
+      "cpu": "high",
+      "docker_required": false,
+      "gpu_beneficial": true,
+      "install_time_minutes": 10,
+      "setup_complexity": "simple",
+      "setup_notes": "CPU 模式需要 16GB+ 内存，GPU 模式 8GB 即可。每个模型额外占用 4-20GB 磁盘。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "n8n",
@@ -71,7 +91,81 @@
     "license": "Sustainable Use License",
     "added_date": "2026-06-01",
     "useCase": "需要把不同软件串起来自动化工作流的人，比如自动把邮件附件存到网盘再发通知",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "platform_instructions": {
+      "windows": {
+        "prerequisites": "安装 Docker Desktop（免费），确保已启用 WSL 2",
+        "steps": [
+          "打开 docker.com，下载 Docker Desktop for Windows 安装包，双击安装（一路点 OK）",
+          "安装完重启电脑，右下角任务栏会出现 Docker 鲸鱼图标，等它显示「Docker Desktop is running」",
+          "在 C 盘创建一个文件夹 C:\n8n，在里面再创建子文件夹 data",
+          "在 C:\n8n 文件夹里新建一个文本文件，命名为 docker-compose.yml，复制下方的配置内容粘贴进去并保存",
+          "打开 PowerShell（右键开始菜单 → Windows PowerShell），输入 cd C:\n8n 然后回车",
+          "输入 docker compose up -d 然后回车，Docker 会自动下载并启动 n8n（第一次大约 3-5 分钟）",
+          "浏览器打开 http://localhost:5678，创建你的管理员账号，开始拖拽节点创建工作流"
+        ],
+        "note": "Windows 每次重启后 Docker Desktop 会自动启动，n8n 也会自动运行。如果改端口，记得同时改 docker-compose.yml 和防火墙设置。"
+      },
+      "linux": {
+        "prerequisites": "一台 Linux 服务器（Ubuntu 20.04+ 推荐），已安装 Docker 和 Docker Compose",
+        "steps": [
+          "SSH 登录你的服务器：ssh root@你的服务器IP",
+          "如果还没装 Docker，运行：curl -fsSL https://get.docker.com | sh",
+          "创建 n8n 目录：mkdir -p /opt/n8n/data && cd /opt/n8n",
+          "创建 docker-compose.yml：nano docker-compose.yml，粘贴下方配置内容，Ctrl+X 保存",
+          "启动：docker compose up -d",
+          "浏览器打开 http://你的服务器IP:5678，创建管理员账号",
+          "（推荐）用 Nginx Proxy Manager 或 Caddy 配置反向代理 + HTTPS，绑定自己的域名"
+        ],
+        "note": "生产环境建议配置 N8N_HOST 和 WEBHOOK_URL 环境变量为你的域名，否则 Webhook 功能可能不正常。"
+      },
+      "mac": {
+        "prerequisites": "安装 Docker Desktop for Mac（Apple Silicon 原生支持）",
+        "steps": [
+          "打开 docker.com，下载 Docker Desktop for Mac（选 Apple Chip 版或 Intel 版）",
+          "双击 .dmg 文件，把 Docker 图标拖到 Applications 文件夹",
+          "从启动台打开 Docker Desktop，等顶部菜单栏出现鲸鱼图标并显示「Running」",
+          "在终端执行：mkdir -p ~/n8n/data && cd ~/n8n",
+          "创建 docker-compose.yml：nano docker-compose.yml，粘贴下方配置内容，Ctrl+X 保存",
+          "启动：docker compose up -d",
+          "浏览器打开 http://localhost:5678，创建管理员账号"
+        ],
+        "note": "Mac 进入睡眠后 Docker 容器会暂停，唤醒后会自动恢复。如需长期运行建议部署到 VPS 或 NAS。"
+      },
+      "nas": {
+        "prerequisites": "Synology NAS（DSM 7.x），套件中心已安装 Container Manager",
+        "steps": [
+          "打开 DSM 网页管理后台，进入 File Station",
+          "在 docker 共享文件夹下创建 n8n 子文件夹，再在里面创建 data 子文件夹",
+          "打开 Container Manager → 项目 → 新增 → 命名为 n8n",
+          "将下方 docker-compose.yml 内容粘贴到配置框中",
+          "Volume 路径修改为 /volume1/docker/n8n/data:/home/node/.n8n",
+          "点击下一步，确认端口映射 5678:5678，点击完成",
+          "浏览器打开 http://你的NAS的IP:5678，创建管理员账号"
+        ],
+        "note": "如果从外网访问，需要在 NAS 控制面板 → 外部访问中配置端口转发，或使用 Nginx Proxy Manager 做反向代理。"
+      }
+    },
+    "system_requirements": {
+      "min_ram_mb": 512,
+      "recommended_ram_mb": 2048,
+      "min_disk_mb": 1024,
+      "recommended_disk_mb": 5120,
+      "cpu": "medium",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "simple",
+      "setup_notes": "也可用 npx n8n 一行命令启动，不需要 Docker。生产环境推荐 Docker。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "immich",
@@ -108,7 +202,73 @@
     "license": "AGPL-3.0",
     "added_date": "2026-06-01",
     "useCase": "想要用自己的服务器备份手机照片，告别 iCloud/Google Photos 月费的用户",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "platform_instructions": {
+      "windows": {
+        "prerequisites": "安装 Docker Desktop，建议 8GB+ 可用内存",
+        "steps": [
+          "安装 Docker Desktop for Windows（启用 WSL 2）",
+          "创建 C:\\immich 文件夹，下载官方 docker-compose.yml 和 .env 文件",
+          "修改 .env 中的 UPLOAD_LOCATION 为你的照片存放路径",
+          "docker compose up -d，第一次需下载多个镜像（约 5 分钟）",
+          "访问 http://localhost:2283 创建管理员账号，开始上传照片"
+        ],
+        "note": "Immich 的机器学习功能需要 GPU 才能快速识别。CPU 模式也能用，只是慢一些。"
+      },
+      "linux": {
+        "prerequisites": "Linux VPS 或本地 Linux，Docker + Docker Compose 已安装",
+        "steps": [
+          "wget -O- https://github.com/immich-app/immich/releases/latest/download/install.sh | bash",
+          "修改 .env 文件中的 UPLOAD_LOCATION 为你的照片目录",
+          "docker compose up -d",
+          "访问 http://你的服务器IP:2283，创建管理员账号",
+          "手机安装 Immich App，填入服务器地址，开启自动备份"
+        ],
+        "note": "外网访问需要配置 HTTPS 反向代理。照片存储路径建议用 SSD。"
+      },
+      "mac": {
+        "prerequisites": "Docker Desktop for Mac",
+        "steps": [
+          "安装 Docker Desktop for Mac",
+          "终端运行 Immich 官方安装脚本",
+          "修改 .env 中 UPLOAD_LOCATION 为 Mac 上的照片文件夹路径",
+          "docker compose up -d",
+          "访问 http://localhost:2283"
+        ],
+        "note": "Mac 版适合尝鲜体验。正式备份建议部署到 Linux 服务器或 NAS。"
+      },
+      "nas": {
+        "prerequisites": "Synology NAS（4GB+ 内存推荐，2GB 需关闭 ML 功能）",
+        "steps": [
+          "Container Manager > 项目 > 新增",
+          "导入 Immich 官方 docker-compose.yml",
+          "修改 UPLOAD_LOCATION 为 /volume1/photo 或你的照片目录",
+          "在 .env 中设置 IMMICH_MACHINE_LEARNING_ENABLED=false（低配 NAS）",
+          "启动后访问 http://你的NAS的IP:2283"
+        ],
+        "note": "这是 Immich 最推荐的部署方式之一。NAS 硬盘大、一直开机，非常适合做照片备份。"
+      }
+    },
+    "system_requirements": {
+      "min_ram_mb": 2048,
+      "recommended_ram_mb": 4096,
+      "min_disk_mb": 10240,
+      "recommended_disk_mb": 102400,
+      "cpu": "high",
+      "docker_required": true,
+      "gpu_beneficial": true,
+      "install_time_minutes": 10,
+      "setup_complexity": "moderate",
+      "setup_notes": "机器学习功能需要 GPU（可选）。2GB NAS 建议关闭 ML 功能。照片越多磁盘越大。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "bitwarden",
@@ -145,7 +305,27 @@
     "license": "AGPL-3.0",
     "added_date": "2026-06-01",
     "useCase": "需要一个安全可靠的密码管理器，且希望密码数据完全由自己掌控",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "native",
+      "linux": "native",
+      "mac": "native",
+      "nas": "unsupported",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 512,
+      "recommended_ram_mb": 2048,
+      "min_disk_mb": 1024,
+      "recommended_disk_mb": 5120,
+      "cpu": "medium",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 3,
+      "setup_complexity": "simple",
+      "setup_notes": "官方提供免费云服务，也可以自托管。桌面 App + 浏览器插件 + 手机 App 全平台覆盖。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "stirling-pdf",
@@ -183,7 +363,27 @@
     "license": "MIT",
     "added_date": "2026-06-01",
     "useCase": "经常需要处理 PDF 文档（合并、拆分、转换格式），不想安装多个软件或上传到在线工具",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 1024,
+      "recommended_ram_mb": 2048,
+      "min_disk_mb": 2048,
+      "recommended_disk_mb": 5120,
+      "cpu": "medium",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "simple",
+      "setup_notes": "处理大 PDF 时需要更多内存。也可用 stirlingpdf.io 在线版。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "photoprism",
@@ -221,7 +421,27 @@
     "license": "AGPL-3.0",
     "added_date": "2026-06-01",
     "useCase": "有大量照片需要管理，希望用 AI 自动分类和搜索，不想用 Google Photos 的隐私敏感用户",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 2048,
+      "recommended_ram_mb": 4096,
+      "min_disk_mb": 10240,
+      "recommended_disk_mb": 102400,
+      "cpu": "high",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 10,
+      "setup_complexity": "moderate",
+      "setup_notes": "类似 Immich，但更偏专业照片管理。需要指定照片目录作为数据源。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "excalidraw",
@@ -259,7 +479,27 @@
     "license": "MIT",
     "added_date": "2026-06-01",
     "useCase": "需要画流程图、草图或示意图，喜欢手绘风格，不需要复杂操作的设计小白",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "web",
+      "linux": "web",
+      "mac": "web",
+      "nas": "web",
+      "recommended": "web"
+    },
+    "system_requirements": {
+      "min_ram_mb": 256,
+      "recommended_ram_mb": 512,
+      "min_disk_mb": 50,
+      "recommended_disk_mb": 200,
+      "cpu": "low",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 1,
+      "setup_complexity": "simple",
+      "setup_notes": "纯网页白板工具，浏览器打开 excalidraw.com 即用，无需安装。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "appwrite",
@@ -296,7 +536,27 @@
     "license": "BSD-3-Clause",
     "added_date": "2026-06-01",
     "useCase": "开发者想快速搭建应用后端（用户登录、数据库、文件存储），不想自己写服务器代码",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 4096,
+      "recommended_ram_mb": 8192,
+      "min_disk_mb": 10240,
+      "recommended_disk_mb": 30720,
+      "cpu": "high",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 20,
+      "setup_complexity": "complex",
+      "setup_notes": "微服务架构，包含多个容器。仅限开发者使用，需要编程知识。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "nocodb",
@@ -334,7 +594,66 @@
     "license": "AGPL-3.0",
     "added_date": "2026-06-01",
     "useCase": "觉得传统数据库太难用，想像操作 Excel 一样管理数据，又能做自动化",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "platform_instructions": {
+      "windows": {
+        "prerequisites": "安装 Docker Desktop 或 Node.js 18+",
+        "steps": [
+          "方式一（Docker）：docker run -d -p 8080:8080 nocodb/nocodb",
+          "方式二（npx）：打开 PowerShell，输入 npx nocodb 回车",
+          "浏览器访问 http://localhost:8080（Docker）",
+          "创建项目，可选择导入 Excel、CSV 或连接外部数据库"
+        ],
+        "note": "npx 方式适合临时使用。Docker 方式数据持久化需挂载 volume。"
+      },
+      "linux": {
+        "prerequisites": "Linux VPS，Docker 已安装",
+        "steps": [
+          "docker run -d --restart unless-stopped -p 8080:8080 -v nocodb-data:/usr/app/data nocodb/nocodb",
+          "浏览器访问 http://你的服务器IP:8080",
+          "推荐配合 PostgreSQL 使用（生产环境）或 SQLite（个人使用）"
+        ],
+        "note": "生产环境建议使用外置 PostgreSQL，性能和可靠性更好。"
+      },
+      "mac": {
+        "prerequisites": "Docker Desktop for Mac 或 Node.js 18+",
+        "steps": [
+          "安装 Docker Desktop for Mac",
+          "终端运行：docker run -d -p 8080:8080 nocodb/nocodb",
+          "浏览器访问 http://localhost:8080"
+        ],
+        "note": "也可以用 npx nocodb 快速启动，不需要 Docker。"
+      },
+      "nas": {
+        "prerequisites": "Synology NAS，Container Manager 已安装",
+        "steps": [
+          "Container Manager > 映像 > 搜索 nocodb/nocodb",
+          "设置端口映射 8080:8080，挂载文件夹",
+          "启动容器，访问 http://你的NAS的IP:8080"
+        ],
+        "note": "NocoDB 非常轻量，2GB 内存 NAS 即可运行。推荐用 PostgreSQL 做数据库。"
+      }
+    },
+    "system_requirements": {
+      "min_ram_mb": 512,
+      "recommended_ram_mb": 2048,
+      "min_disk_mb": 1024,
+      "recommended_disk_mb": 5120,
+      "cpu": "medium",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "simple",
+      "setup_notes": "也可用 npx nocodb 启动。配合 PostgreSQL 更适合生产环境。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "penpot",
@@ -372,7 +691,27 @@
     "license": "MPL-2.0",
     "added_date": "2026-06-01",
     "useCase": "设计师或产品经理需要一个免费开源的 UI 设计工具，团队协作不花钱",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 1024,
+      "recommended_ram_mb": 2048,
+      "min_disk_mb": 2048,
+      "recommended_disk_mb": 10240,
+      "cpu": "medium",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 10,
+      "setup_complexity": "moderate",
+      "setup_notes": "开源 Figma。Docker 部署或使用 penpot.app 免费在线版。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "changedetection-io",
@@ -410,7 +749,27 @@
     "license": "Apache-2.0",
     "added_date": "2026-06-01",
     "useCase": "想监控网站变化（价格、库存、公告），网站一有变动就收到通知",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 256,
+      "recommended_ram_mb": 1024,
+      "min_disk_mb": 1024,
+      "recommended_disk_mb": 5120,
+      "cpu": "medium",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "simple",
+      "setup_notes": "监控网页变化。添加网址+监控区域+通知方式即可。支持十几种通知渠道。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "hoppscotch",
@@ -449,7 +808,27 @@
     "license": "MIT",
     "added_date": "2026-06-01",
     "useCase": "开发者需要快速测试 API 接口，比 Postman 更轻量，浏览器打开即用",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "web",
+      "linux": "web",
+      "mac": "web",
+      "nas": "web",
+      "recommended": "web"
+    },
+    "system_requirements": {
+      "min_ram_mb": 128,
+      "recommended_ram_mb": 256,
+      "min_disk_mb": 50,
+      "recommended_disk_mb": 200,
+      "cpu": "low",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 1,
+      "setup_complexity": "simple",
+      "setup_notes": "纯网页 App，浏览器打开 hoppscotch.io 直接用，不需要部署。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "dify",
@@ -485,7 +864,73 @@
     "license": "Apache-2.0",
     "added_date": "2026-06-01",
     "useCase": "想用 AI 搭建聊天机器人、知识库问答等应用，不需要编程就能创建 AI 助手",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "platform_instructions": {
+      "windows": {
+        "prerequisites": "安装 Docker Desktop，至少 8GB 可用内存",
+        "steps": [
+          "安装 Docker Desktop for Windows，确保 WSL 2 已启用",
+          "创建 C:\\dify 文件夹，下载官方 docker-compose.yml 放入其中",
+          "在 PowerShell 中 cd C:\\dify，运行 docker compose up -d",
+          "首次启动需 5-10 分钟（下载多个镜像），完成后访问 http://localhost:3000",
+          "创建管理员账号，配置 OpenAI API Key 或本地 Ollama 地址"
+        ],
+        "note": "Dify 包含多个服务（API、Worker、Web、PostgreSQL、Redis、Weaviate），需要 8GB+ 内存，低配电脑可能很慢。"
+      },
+      "linux": {
+        "prerequisites": "Linux VPS（推荐 4GB+ 内存），已安装 Docker 和 Docker Compose",
+        "steps": [
+          "SSH 登录服务器：cd /opt && git clone https://github.com/langgenius/dify.git",
+          "cd dify/docker && cp .env.example .env",
+          "编辑 .env 文件，填入你的 OpenAI API Key 或其他模型配置",
+          "docker compose up -d",
+          "浏览器访问 http://你的服务器IP:3000，完成初始化设置"
+        ],
+        "note": "生产环境建议配置外部 PostgreSQL 和 Redis。内存不足可在 .env 中关闭不需要的服务。"
+      },
+      "mac": {
+        "prerequisites": "Docker Desktop for Mac，至少 8GB 可用内存",
+        "steps": [
+          "安装 Docker Desktop for Mac（Apple Silicon 版）",
+          "终端执行：cd ~ && git clone https://github.com/langgenius/dify.git",
+          "cd dify/docker && cp .env.example .env",
+          "编辑 .env 填入 API Key，docker compose up -d",
+          "浏览器访问 http://localhost:3000"
+        ],
+        "note": "Mac 睡眠后容器暂停。推荐仅用于开发测试，生产部署用 Linux VPS。"
+      },
+      "nas": {
+        "prerequisites": "Synology NAS（8GB+ 内存），Container Manager 已安装",
+        "steps": [
+          "SSH 登录 NAS 或通过 File Station 创建 dify 项目文件夹",
+          "下载 dify 官方 docker-compose.yml 到该文件夹",
+          "在 Container Manager 中导入项目，注意修改 volume 路径为 NAS 路径",
+          "环境变量中配置 API Key，启动所有服务",
+          "启动后访问 http://你的NAS的IP:3000"
+        ],
+        "note": "Dify 对 NAS 内存要求较高，建议 8GB+ 型号。低配 NAS 建议用 Dify 免费云版。"
+      }
+    },
+    "system_requirements": {
+      "min_ram_mb": 4096,
+      "recommended_ram_mb": 8192,
+      "min_disk_mb": 10240,
+      "recommended_disk_mb": 30720,
+      "cpu": "high",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 15,
+      "setup_complexity": "moderate",
+      "setup_notes": "包含 6 个容器（API、Worker、Web、PostgreSQL、Redis、Weaviate），需 4GB+ 内存。需配置 LLM API Key。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "open-webui",
@@ -521,7 +966,69 @@
     "license": "MIT",
     "added_date": "2026-06-01",
     "useCase": "已经装了 Ollama 等本地 AI 服务，想要一个像 ChatGPT 一样好用的聊天界面",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "platform_instructions": {
+      "windows": {
+        "prerequisites": "安装 Docker Desktop + 提前装好 Ollama",
+        "steps": [
+          "先安装 Ollama（ollama.com 下载安装包），启动并下载至少一个模型",
+          "安装 Docker Desktop",
+          "PowerShell 运行：docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main",
+          "浏览器访问 http://localhost:3000，注册账号",
+          "在设置中 Ollama 地址填 http://host.docker.internal:11434"
+        ],
+        "note": "如果 Ollama 装在另一台电脑上，把 Ollama 地址改为那台电脑的 IP。"
+      },
+      "linux": {
+        "prerequisites": "Linux VPS 或本地 Linux，Docker 已安装",
+        "steps": [
+          "如需本地 Ollama：curl -fsSL https://ollama.com/install.sh | sh && ollama pull qwen3",
+          "docker run -d --network host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name open-webui ghcr.io/open-webui/open-webui:main",
+          "浏览器访问 http://你的服务器IP:3000"
+        ],
+        "note": "使用 --network host 让容器直接访问本机 Ollama。如 Ollama 在其他机器上，改 OLLAMA_BASE_URL 即可。"
+      },
+      "mac": {
+        "prerequisites": "Docker Desktop for Mac + Ollama（可选）",
+        "steps": [
+          "安装 Ollama（ollama.com 下载 Mac 版）",
+          "安装 Docker Desktop for Mac",
+          "终端运行 docker run 命令（同 Linux）",
+          "浏览器访问 http://localhost:3000"
+        ],
+        "note": "Mac 版 Ollama 支持 Metal GPU 加速，速度比 Docker 中的 Ollama 快很多。"
+      },
+      "nas": {
+        "prerequisites": "Synology NAS（8GB+ 内存），Container Manager 已安装",
+        "steps": [
+          "Container Manager > 映像 > 搜索 ghcr.io/open-webui/open-webui",
+          "设置环境变量 OLLAMA_BASE_URL 指向你的 Ollama 服务器地址",
+          "端口映射 3000:8080，启动容器",
+          "浏览器访问 http://你的NAS的IP:3000"
+        ],
+        "note": "NAS 上一般不适合跑 Ollama（无 GPU）。建议 NAS 只跑 Open WebUI，Ollama 跑在有 GPU 的电脑上。"
+      }
+    },
+    "system_requirements": {
+      "min_ram_mb": 2048,
+      "recommended_ram_mb": 4096,
+      "min_disk_mb": 2048,
+      "recommended_disk_mb": 10240,
+      "cpu": "medium",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "simple",
+      "setup_notes": "需要搭配 Ollama 或其他 LLM 后端使用。Ollama 推荐单独部署在有 GPU 的机器上。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "it-tools",
@@ -557,7 +1064,27 @@
     "license": "MIT",
     "added_date": "2026-06-01",
     "useCase": "开发者需要各种日常小工具（JSON格式化、Base64编解码、UUID生成等），一个网页全搞定",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "web",
+      "linux": "web",
+      "mac": "web",
+      "nas": "docker",
+      "recommended": "web"
+    },
+    "system_requirements": {
+      "min_ram_mb": 128,
+      "recommended_ram_mb": 256,
+      "min_disk_mb": 100,
+      "recommended_disk_mb": 500,
+      "cpu": "low",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 1,
+      "setup_complexity": "simple",
+      "setup_notes": "纯网页工具，浏览器打开 it-tools.tech 即可使用，无需安装。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "cyberchef",
@@ -593,7 +1120,27 @@
     "license": "Apache-2.0",
     "added_date": "2026-06-01",
     "useCase": "需要对数据进行各种编码/解码/加密操作，像菜谱一样组合数据处理步骤",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "web",
+      "linux": "web",
+      "mac": "web",
+      "nas": "web",
+      "recommended": "web"
+    },
+    "system_requirements": {
+      "min_ram_mb": 128,
+      "recommended_ram_mb": 256,
+      "min_disk_mb": 50,
+      "recommended_disk_mb": 200,
+      "cpu": "low",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 1,
+      "setup_complexity": "simple",
+      "setup_notes": "纯网页工具，浏览器打开即用。处理大文件时需更多内存。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "metabase",
@@ -630,7 +1177,27 @@
     "license": "AGPL-3.0",
     "added_date": "2026-06-01",
     "useCase": "公司或团队想看数据库里的数据做成图表，不需要会写 SQL，点点鼠标就能出报表",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 1024,
+      "recommended_ram_mb": 2048,
+      "min_disk_mb": 2048,
+      "recommended_disk_mb": 5120,
+      "cpu": "medium",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "simple",
+      "setup_notes": "需要连接数据库或导入数据才能发挥作用。单用户使用 SQLite 即可。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "grafana",
@@ -667,7 +1234,27 @@
     "license": "AGPL-3.0",
     "added_date": "2026-06-01",
     "useCase": "需要做数据监控大屏，把所有系统的运行状态可视化展示，适合运维和技术团队",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 512,
+      "recommended_ram_mb": 2048,
+      "min_disk_mb": 2048,
+      "recommended_disk_mb": 10240,
+      "cpu": "medium",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "moderate",
+      "setup_notes": "需要配置数据源（Prometheus、PostgreSQL 等）。配合 Prometheus 使用最经典。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "vaultwarden",
@@ -704,7 +1291,72 @@
     "license": "AGPL-3.0",
     "added_date": "2026-06-01",
     "useCase": "想要 Bitwarden 的所有功能但不想付费，可以在自己服务器上运行的密码管理器",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "platform_instructions": {
+      "windows": {
+        "prerequisites": "安装 Docker Desktop",
+        "steps": [
+          "安装 Docker Desktop for Windows",
+          "创建 C:\\vaultwarden 文件夹，在里面创建 docker-compose.yml",
+          "PowerShell 中 cd C:\\vaultwarden && docker compose up -d",
+          "浏览器访问 http://localhost:8080，创建账号",
+          "手机下载 Bitwarden App，设置 > 自托管服务器 > 填入 http://你的IP:8080"
+        ],
+        "note": "仅本地使用不需要 HTTPS。如需外网访问，强烈建议用 Nginx Proxy Manager 配置 HTTPS 反向代理。"
+      },
+      "linux": {
+        "prerequisites": "Linux VPS，Docker 已安装",
+        "steps": [
+          "mkdir -p /opt/vaultwarden/data && cd /opt/vaultwarden",
+          "创建 docker-compose.yml（或使用我们的一键部署）",
+          "docker compose up -d",
+          "访问 http://你的服务器IP:8080 创建主账号",
+          "所有设备安装 Bitwarden App，填入自托管地址即可同步密码"
+        ],
+        "note": "密码管理器的安全级别最高。务必配置 HTTPS，不要用 HTTP 暴露到公网。"
+      },
+      "mac": {
+        "prerequisites": "Docker Desktop for Mac",
+        "steps": [
+          "安装 Docker Desktop for Mac",
+          "终端执行：mkdir -p ~/vaultwarden/data && cd ~/vaultwarden",
+          "创建 docker-compose.yml，docker compose up -d",
+          "浏览器访问 http://localhost:8080"
+        ],
+        "note": "公网暴露必须配 HTTPS，用 Nginx Proxy Manager 或 Caddy。"
+      },
+      "nas": {
+        "prerequisites": "Synology NAS（任意型号），Container Manager 已安装",
+        "steps": [
+          "File Station > docker 文件夹 > 新建 vaultwarden/data 子文件夹",
+          "Container Manager > 项目 > 新增 > 导入 docker-compose.yml",
+          "Volume 映射 /volume1/docker/vaultwarden/data:/data",
+          "端口映射 8080:8080，启动",
+          "访问 http://你的NAS的IP:8080 创建账号"
+        ],
+        "note": "Vaultwarden 资源占用极低（~50MB 内存），是最适合 NAS 的工具之一。"
+      }
+    },
+    "system_requirements": {
+      "min_ram_mb": 256,
+      "recommended_ram_mb": 512,
+      "min_disk_mb": 512,
+      "recommended_disk_mb": 2048,
+      "cpu": "low",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 3,
+      "setup_complexity": "simple",
+      "setup_notes": "极轻量（~50MB 内存）。公网访问必须配置 HTTPS（Nginx Proxy Manager 或 Caddy）。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "adguard-home",
@@ -740,7 +1392,27 @@
     "license": "GPL-3.0",
     "added_date": "2026-06-01",
     "useCase": "想让全家所有设备都自动拦截广告和追踪器，在路由器层面就能过滤",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "native",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "linux"
+    },
+    "system_requirements": {
+      "min_ram_mb": 256,
+      "recommended_ram_mb": 512,
+      "min_disk_mb": 512,
+      "recommended_disk_mb": 2048,
+      "cpu": "low",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "moderate",
+      "setup_notes": "需要占用 53 端口（DNS）。Windows 需先停用系统 DNS 服务。装完后路由器 DNS 指向它。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "paperless-ngx",
@@ -777,7 +1449,27 @@
     "license": "GPL-3.0",
     "added_date": "2026-06-01",
     "useCase": "家里有大量纸质文件需要电子化管理，AI 自动识别分类，以后搜索文件像搜网页一样",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 1024,
+      "recommended_ram_mb": 2048,
+      "min_disk_mb": 5120,
+      "recommended_disk_mb": 20480,
+      "cpu": "medium",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 10,
+      "setup_complexity": "moderate",
+      "setup_notes": "需要配置 OCR 语言。扫描件越多磁盘需求越大。NAS 用户的最爱。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "trilium-notes",
@@ -815,7 +1507,27 @@
     "license": "AGPL-3.0",
     "added_date": "2026-06-01",
     "useCase": "需要一个强大的个人笔记系统，支持层级目录、双向链接，数据完全自己掌控",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "native",
+      "linux": "native",
+      "mac": "native",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 512,
+      "recommended_ram_mb": 1024,
+      "min_disk_mb": 512,
+      "recommended_disk_mb": 2048,
+      "cpu": "low",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 3,
+      "setup_complexity": "simple",
+      "setup_notes": "桌面版直接安装。Docker 版可在浏览器访问。支持无限层级笔记。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "obs-studio",
@@ -852,7 +1564,27 @@
     "license": "GPL-2.0",
     "added_date": "2026-06-01",
     "useCase": "需要录制屏幕或做直播推流，专业人士用的免费开源工具，功能不输付费软件",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "native",
+      "linux": "native",
+      "mac": "native",
+      "nas": "unsupported",
+      "recommended": "windows"
+    },
+    "system_requirements": {
+      "min_ram_mb": 4096,
+      "recommended_ram_mb": 8192,
+      "min_disk_mb": 2048,
+      "recommended_disk_mb": 10240,
+      "cpu": "high",
+      "docker_required": false,
+      "gpu_beneficial": true,
+      "install_time_minutes": 5,
+      "setup_complexity": "moderate",
+      "setup_notes": "需要 GPU 和桌面环境。纯服务器无法运行。录屏和直播需要较好的硬件。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "home-assistant",
@@ -889,7 +1621,27 @@
     "license": "Apache-2.0",
     "added_date": "2026-06-01",
     "useCase": "家里有各种智能设备（灯、空调、门锁），想用一个 App 统一控制并创建自动化场景",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "linux"
+    },
+    "system_requirements": {
+      "min_ram_mb": 1024,
+      "recommended_ram_mb": 2048,
+      "min_disk_mb": 5120,
+      "recommended_disk_mb": 20480,
+      "cpu": "medium",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 15,
+      "setup_complexity": "complex",
+      "setup_notes": "智能家居中枢。Docker 版不支持 USB 透传（Zigbee/Z-Wave），需要 host 网络模式。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "langflow",
@@ -925,7 +1677,67 @@
     "license": "MIT",
     "added_date": "2026-06-01",
     "useCase": "想用拖拽方式搭建 AI 工作流，不需要写代码，可视化连接各种 AI 模块",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "platform_instructions": {
+      "windows": {
+        "prerequisites": "安装 Docker Desktop",
+        "steps": [
+          "安装 Docker Desktop for Windows 并启动",
+          "打开 PowerShell，运行：docker run -d -p 7860:7860 langflowai/langflow",
+          "浏览器访问 http://localhost:7860",
+          "添加 API Key（OpenAI 或本地 Ollama），拖拽组件创建工作流"
+        ],
+        "note": "LangFlow 资源占用较低，4GB 内存即可流畅运行。"
+      },
+      "linux": {
+        "prerequisites": "Linux VPS（2GB+ 内存），Docker 已安装",
+        "steps": [
+          "SSH 登录服务器",
+          "运行：docker run -d --restart unless-stopped -p 7860:7860 langflowai/langflow",
+          "浏览器访问 http://你的服务器IP:7860",
+          "配置 LLM 后端（OpenAI / Ollama / 其他）"
+        ],
+        "note": "推荐用 Docker Compose 管理，更方便配置环境变量和持久化存储。"
+      },
+      "mac": {
+        "prerequisites": "Docker Desktop for Mac",
+        "steps": [
+          "安装 Docker Desktop for Mac",
+          "终端运行：docker run -d -p 7860:7860 langflowai/langflow",
+          "浏览器访问 http://localhost:7860"
+        ],
+        "note": "Mac 适合开发测试，生产部署推荐 Linux VPS。"
+      },
+      "nas": {
+        "prerequisites": "Synology NAS（4GB+ 内存），Container Manager 已安装",
+        "steps": [
+          "Container Manager > 映像 > 新增 > 搜索 langflowai/langflow",
+          "启动容器，端口映射 7860:7860",
+          "浏览器访问 http://你的NAS的IP:7860"
+        ],
+        "note": "LangFlow 比 Dify 轻量很多，4GB 内存的 NAS 足够运行。"
+      }
+    },
+    "system_requirements": {
+      "min_ram_mb": 2048,
+      "recommended_ram_mb": 4096,
+      "min_disk_mb": 2048,
+      "recommended_disk_mb": 10240,
+      "cpu": "medium",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "simple",
+      "setup_notes": "轻量级 AI 工作流工具。需配置 LLM API Key（OpenAI 或本地 Ollama）。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "apache-superset",
@@ -962,7 +1774,27 @@
     "license": "Apache-2.0",
     "added_date": "2026-06-01",
     "useCase": "企业需要专业的数据分析和可视化平台，支持大数据量，适合数据分析团队",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 2048,
+      "recommended_ram_mb": 4096,
+      "min_disk_mb": 5120,
+      "recommended_disk_mb": 20480,
+      "cpu": "high",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 10,
+      "setup_complexity": "moderate",
+      "setup_notes": "比 Metabase 更专业，适合数据分析团队。初始化配置较复杂。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "pi-hole",
@@ -999,7 +1831,27 @@
     "license": "EUPL-1.2",
     "added_date": "2026-06-01",
     "useCase": "想用树莓派或旧电脑搭建全屋广告过滤，所有联网设备自动拦截广告和追踪",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "native",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "linux"
+    },
+    "system_requirements": {
+      "min_ram_mb": 256,
+      "recommended_ram_mb": 512,
+      "min_disk_mb": 1024,
+      "recommended_disk_mb": 2048,
+      "cpu": "low",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 10,
+      "setup_complexity": "moderate",
+      "setup_notes": "推荐用树莓派或 Linux 部署。同样需要 53 端口和路由器 DNS 配置。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "joplin",
@@ -1037,7 +1889,27 @@
     "license": "AGPL-3.0",
     "added_date": "2026-06-01",
     "useCase": "需要一个跨平台笔记 App，数据可以自己掌控（存本地或云盘），支持 Markdown 格式",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "native",
+      "linux": "native",
+      "mac": "native",
+      "nas": "unsupported",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 512,
+      "recommended_ram_mb": 1024,
+      "min_disk_mb": 512,
+      "recommended_disk_mb": 2048,
+      "cpu": "low",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 3,
+      "setup_complexity": "simple",
+      "setup_notes": "桌面 App + 手机 App，通过网盘同步。不需要服务器。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "lossless-cut",
@@ -1073,7 +1945,27 @@
     "license": "MIT",
     "added_date": "2026-06-01",
     "useCase": "需要快速剪辑视频（裁剪片段），不重新编码所以几秒完成，画质无损",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "native",
+      "linux": "native",
+      "mac": "native",
+      "nas": "unsupported",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 1024,
+      "recommended_ram_mb": 2048,
+      "min_disk_mb": 512,
+      "recommended_disk_mb": 2048,
+      "cpu": "medium",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 2,
+      "setup_complexity": "simple",
+      "setup_notes": "桌面 App，下载即用。视频剪辑时需足够磁盘空间存放输出文件。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "uptime-kuma",
@@ -1110,7 +2002,27 @@
     "license": "MIT",
     "added_date": "2026-06-01",
     "useCase": "有自己部署的网站或服务，想实时监控它们是否在线，挂了第一时间收到通知",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 256,
+      "recommended_ram_mb": 512,
+      "min_disk_mb": 512,
+      "recommended_disk_mb": 2048,
+      "cpu": "low",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 3,
+      "setup_complexity": "simple",
+      "setup_notes": "最易用的监控工具。添加要监控的网址，支持微信/邮件/钉钉等通知。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "homebridge",
@@ -1147,7 +2059,27 @@
     "license": "Apache-2.0",
     "added_date": "2026-06-02",
     "useCase": "家里有非 HomeKit 的智能设备，想让它们也能在 iPhone 家庭 App 里统一控制",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "linux"
+    },
+    "system_requirements": {
+      "min_ram_mb": 512,
+      "recommended_ram_mb": 1024,
+      "min_disk_mb": 1024,
+      "recommended_disk_mb": 2048,
+      "cpu": "low",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 10,
+      "setup_complexity": "moderate",
+      "setup_notes": "让非 HomeKit 设备出现在 Apple 家庭 App 中。需与智能设备在同一局域网。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "node-red",
@@ -1184,7 +2116,27 @@
     "license": "Apache-2.0",
     "added_date": "2026-06-02",
     "useCase": "想用可视化拖拽方式创建智能家居自动化流程，比如温度高了自动开风扇",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 256,
+      "recommended_ram_mb": 1024,
+      "min_disk_mb": 512,
+      "recommended_disk_mb": 2048,
+      "cpu": "low",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "simple",
+      "setup_notes": "极轻量的流程自动化。配合 Home Assistant 使用效果更好。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "netdata",
@@ -1220,7 +2172,27 @@
     "license": "GPL-3.0",
     "added_date": "2026-06-02",
     "useCase": "想实时监控服务器的 CPU、内存、网络等状态，界面漂亮开箱即用",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "native",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "linux"
+    },
+    "system_requirements": {
+      "min_ram_mb": 512,
+      "recommended_ram_mb": 1024,
+      "min_disk_mb": 1024,
+      "recommended_disk_mb": 5120,
+      "cpu": "medium",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 3,
+      "setup_complexity": "simple",
+      "setup_notes": "装好即用，自动发现所有监控指标。界面酷炫。Linux 原生安装效果更好。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "prometheus",
@@ -1257,7 +2229,27 @@
     "license": "Apache-2.0",
     "added_date": "2026-06-02",
     "useCase": "专业运维团队需要监控大量服务器和应用，配合 Grafana 做可视化告警",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 1024,
+      "recommended_ram_mb": 4096,
+      "min_disk_mb": 10240,
+      "recommended_disk_mb": 51200,
+      "cpu": "high",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 10,
+      "setup_complexity": "complex",
+      "setup_notes": "专业级监控，需编辑 YAML 配置文件。通常配合 Grafana 使用。适合运维团队。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "beszel",
@@ -1293,7 +2285,27 @@
     "license": "MIT",
     "added_date": "2026-06-02",
     "useCase": "个人或小团队需要轻量级服务器监控，比 Netdata 更简洁，资源占用更少",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 256,
+      "recommended_ram_mb": 512,
+      "min_disk_mb": 512,
+      "recommended_disk_mb": 2048,
+      "cpu": "low",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "moderate",
+      "setup_notes": "需要 Hub + Agent 架构。每台被监控的服务器都要装 Agent。比 Netdata 更轻。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "keepassxc",
@@ -1330,7 +2342,27 @@
     "license": "GPL-3.0",
     "added_date": "2026-06-02",
     "useCase": "想要一个离线密码管理器，密码文件自己保存（放U盘或网盘），不经过任何云端服务",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "native",
+      "linux": "native",
+      "mac": "native",
+      "nas": "unsupported",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 256,
+      "recommended_ram_mb": 512,
+      "min_disk_mb": 200,
+      "recommended_disk_mb": 500,
+      "cpu": "low",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 2,
+      "setup_complexity": "simple",
+      "setup_notes": "纯桌面 App，离线使用。密码文件可以放 U 盘或同步盘。不需要服务器。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "passbolt",
@@ -1367,7 +2399,27 @@
     "license": "AGPL-3.0",
     "added_date": "2026-06-02",
     "useCase": "团队需要共享密码（比如公司账号），权限可管理，每次使用需二次验证",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 1024,
+      "recommended_ram_mb": 2048,
+      "min_disk_mb": 2048,
+      "recommended_disk_mb": 5120,
+      "cpu": "medium",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 15,
+      "setup_complexity": "complex",
+      "setup_notes": "面向团队，配置需数据库 + 邮件服务 + GPG 密钥。个人用户推荐 Vaultwarden。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "jellyfin",
@@ -1404,7 +2456,27 @@
     "license": "GPL-2.0",
     "added_date": "2026-06-02",
     "useCase": "家里有下载的电影和音乐，想建一个私人 Netflix/Spotify，全家人用各种设备看",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "native",
+      "linux": "native",
+      "mac": "native",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 1024,
+      "recommended_ram_mb": 4096,
+      "min_disk_mb": 5120,
+      "recommended_disk_mb": 102400,
+      "cpu": "high",
+      "docker_required": false,
+      "gpu_beneficial": true,
+      "install_time_minutes": 10,
+      "setup_complexity": "moderate",
+      "setup_notes": "硬件转码需要 GPU。直接播放不需要 GPU。电影/音乐文件越多磁盘越大。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "navidrome",
@@ -1441,7 +2513,27 @@
     "license": "GPL-3.0",
     "added_date": "2026-06-02",
     "useCase": "有大量音乐收藏，想随时随地用手机或电脑听自己的歌，界面像 Spotify 一样好用",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 256,
+      "recommended_ram_mb": 512,
+      "min_disk_mb": 1024,
+      "recommended_disk_mb": 2048,
+      "cpu": "low",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "simple",
+      "setup_notes": "轻量音乐服务器。占用极低。需要指定音乐文件夹路径。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "audiobookshelf",
@@ -1478,7 +2570,27 @@
     "license": "GPL-3.0",
     "added_date": "2026-06-02",
     "useCase": "有声书和播客爱好者，想在自己的服务器上管理和播放，支持断点续听",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 512,
+      "recommended_ram_mb": 1024,
+      "min_disk_mb": 2048,
+      "recommended_disk_mb": 10240,
+      "cpu": "medium",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "simple",
+      "setup_notes": "有声书和播客管理。手机 App 支持断点续听、倍速播放。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "logseq",
@@ -1515,7 +2627,27 @@
     "license": "AGPL-3.0",
     "added_date": "2026-06-02",
     "useCase": "喜欢双向链接和大纲式笔记，隐私敏感，希望笔记数据完全本地化存储",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "native",
+      "linux": "native",
+      "mac": "native",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 1024,
+      "recommended_ram_mb": 2048,
+      "min_disk_mb": 1024,
+      "recommended_disk_mb": 5120,
+      "cpu": "medium",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 3,
+      "setup_complexity": "simple",
+      "setup_notes": "桌面 App 为主，数据存本地文件夹。Docker 版可在浏览器访问。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "siyuan",
@@ -1553,7 +2685,27 @@
     "license": "AGPL-3.0",
     "added_date": "2026-06-02",
     "useCase": "需要一款数据本地存储、支持块引用的知识管理工具，适合搭建个人知识库",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "native",
+      "linux": "native",
+      "mac": "native",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 512,
+      "recommended_ram_mb": 1024,
+      "min_disk_mb": 512,
+      "recommended_disk_mb": 2048,
+      "cpu": "low",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 3,
+      "setup_complexity": "simple",
+      "setup_notes": "国产笔记软件。桌面版安装即用。对中文用户特别友好。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "outline",
@@ -1590,7 +2742,27 @@
     "license": "BSL",
     "added_date": "2026-06-02",
     "useCase": "团队需要一个内部知识库/wiki，界面现代、支持实时协作，比 Confluence 轻量",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 1024,
+      "recommended_ram_mb": 2048,
+      "min_disk_mb": 5120,
+      "recommended_disk_mb": 20480,
+      "cpu": "medium",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 15,
+      "setup_complexity": "complex",
+      "setup_notes": "需要 OAuth 登录（GitHub/Google）+ PostgreSQL + Redis。配置较复杂。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "nginx-proxy-manager",
@@ -1628,7 +2800,27 @@
     "license": "MIT",
     "added_date": "2026-06-02",
     "useCase": "在自己服务器上部署了多个网站，想用网页界面管理域名和 SSL 证书，不懂 Nginx 配置也没关系",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 256,
+      "recommended_ram_mb": 512,
+      "min_disk_mb": 1024,
+      "recommended_disk_mb": 2048,
+      "cpu": "low",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "moderate",
+      "setup_notes": "需要 80/443 端口用于 HTTP/HTTPS。Windows 需先停用 IIS。一键申请 SSL 证书。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "portainer",
@@ -1666,7 +2858,70 @@
     "license": "Zlib",
     "added_date": "2026-06-02",
     "useCase": "在自己的服务器上跑了很多 Docker 容器，想用网页界面可视化管理（启停、查看日志、更新）",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "platform_instructions": {
+      "windows": {
+        "prerequisites": "安装 Docker Desktop",
+        "steps": [
+          "先安装并启动 Docker Desktop",
+          "打开 PowerShell，运行 docker volume create portainer_data",
+          "运行：docker run -d -p 9443:9443 -p 8000:8000 --name portainer --restart=always -v \\\\.\\pipe\\docker_engine:\\\\.\\pipe\\docker_engine -v portainer_data:/data portainer/portainer-ce:latest",
+          "浏览器访问 https://localhost:9443（注意是 https）",
+          "首次访问会要求创建管理员密码（至少 12 位），然后选择本地连接"
+        ],
+        "note": "Portainer 是 Docker 管理的第一步。装完它后面所有工具都能在网页上点点鼠标部署。"
+      },
+      "linux": {
+        "prerequisites": "Linux VPS，Docker 已安装",
+        "steps": [
+          "docker run -d -p 9443:9443 -p 8000:8000 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest",
+          "浏览器访问 https://你的服务器IP:9443",
+          "创建管理员密码（至少 12 位）",
+          "连接本地 Docker 环境，开始可视化管理"
+        ],
+        "note": "Portainer 自己就是个容器，占用极低（~30MB 内存）。建议作为每个新服务器的第一个部署。"
+      },
+      "mac": {
+        "prerequisites": "Docker Desktop for Mac",
+        "steps": [
+          "安装 Docker Desktop for Mac",
+          "终端运行 docker run 命令（同 Linux）",
+          "访问 https://localhost:9443"
+        ],
+        "note": "Mac 版功能与 Linux 完全相同。"
+      },
+      "nas": {
+        "prerequisites": "Synology NAS，Container Manager 已安装",
+        "steps": [
+          "Container Manager > 映像 > 搜索 portainer/portainer-ce",
+          "启动容器，端口映射 9443:9443 和 8000:8000",
+          "挂载 /var/run/docker.sock:/var/run/docker.sock",
+          "访问 https://你的NAS的IP:9443",
+          "之后可以在 Portainer 网页中管理所有 NAS 上的 Docker 容器"
+        ],
+        "note": "NAS 上的 Portainer 需要访问 Docker socket，权限设置可能需要在 SSH 中手动调整。"
+      }
+    },
+    "system_requirements": {
+      "min_ram_mb": 256,
+      "recommended_ram_mb": 512,
+      "min_disk_mb": 1024,
+      "recommended_disk_mb": 2048,
+      "cpu": "low",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 3,
+      "setup_complexity": "simple",
+      "setup_notes": "管理 Docker 的必备工具，建议作为每个新服务器的第一个部署。"
+    },
+    "beginner_friendly": true
   },
   {
     "id": "gitea",
@@ -1703,7 +2958,27 @@
     "license": "MIT",
     "added_date": "2026-06-02",
     "useCase": "想建一个私人的 GitHub，代码完全自己掌控，轻量到跑在树莓派上都可以",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 512,
+      "recommended_ram_mb": 2048,
+      "min_disk_mb": 2048,
+      "recommended_disk_mb": 10240,
+      "cpu": "low",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "simple",
+      "setup_notes": "极轻量的 Git 服务，一个可执行文件就能跑。数据库选 SQLite 最简单。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "nextcloud",
@@ -1741,7 +3016,27 @@
     "license": "AGPL-3.0",
     "added_date": "2026-06-02",
     "useCase": "想要一个自己的云盘，像 Dropbox 一样但数据在自己服务器上，还能扩展日历、联系人等功能",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 1024,
+      "recommended_ram_mb": 4096,
+      "min_disk_mb": 10240,
+      "recommended_disk_mb": 102400,
+      "cpu": "medium",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 15,
+      "setup_complexity": "complex",
+      "setup_notes": "功能多但重。推荐 Docker Compose 部署。文件越多磁盘越大。外网访问需配域名+HTTPS。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "plausible",
@@ -1778,7 +3073,27 @@
     "license": "AGPL-3.0",
     "added_date": "2026-06-02",
     "useCase": "想做网站流量统计但不想用 Google Analytics，数据隐私友好，页面轻量加载快",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 1024,
+      "recommended_ram_mb": 2048,
+      "min_disk_mb": 5120,
+      "recommended_disk_mb": 20480,
+      "cpu": "medium",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 10,
+      "setup_complexity": "moderate",
+      "setup_notes": "需要 ClickHouse + PostgreSQL。需要在被统计网站插入 JS 代码。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "duplicati",
@@ -1816,7 +3131,27 @@
     "license": "LGPL-2.1",
     "added_date": "2026-06-02",
     "useCase": "想自动备份服务器或电脑上的重要文件到云存储，加密后再上传，谁也看不到你的数据",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 512,
+      "recommended_ram_mb": 1024,
+      "min_disk_mb": 1024,
+      "recommended_disk_mb": 2048,
+      "cpu": "medium",
+      "docker_required": false,
+      "gpu_beneficial": false,
+      "install_time_minutes": 5,
+      "setup_complexity": "moderate",
+      "setup_notes": "需要配置备份目标（云存储/FTP/本地硬盘）。支持加密和增量备份。"
+    },
+    "beginner_friendly": false
   },
   {
     "id": "actual",
@@ -1854,6 +3189,26 @@
     "license": "MIT",
     "added_date": "2026-06-02",
     "useCase": "想要一个私人财务管理工具，记账数据存自己服务器上，不用 Mint/YNAB 这些第三方服务",
-    "last_updated": "2026-06-02"
+    "last_updated": "2026-06-02",
+    "platforms": {
+      "windows": "docker",
+      "linux": "docker",
+      "mac": "docker",
+      "nas": "docker",
+      "recommended": "all"
+    },
+    "system_requirements": {
+      "min_ram_mb": 256,
+      "recommended_ram_mb": 512,
+      "min_disk_mb": 512,
+      "recommended_disk_mb": 2048,
+      "cpu": "low",
+      "docker_required": true,
+      "gpu_beneficial": false,
+      "install_time_minutes": 3,
+      "setup_complexity": "simple",
+      "setup_notes": "个人理财记账。所有数据存自己服务器。手机通过网页添加到主屏幕即可使用。"
+    },
+    "beginner_friendly": true
   }
 ]

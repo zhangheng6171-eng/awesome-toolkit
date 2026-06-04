@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E3A5F"/>
+      <stop offset="100%" style="stop-color:#0F172A"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3B82F6"/>
+      <stop offset="100%" style="stop-color:#8B5CF6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid pattern -->
+  <g opacity="0.05">
+    <line x1="0" y1="0" x2="1200" y2="0" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="90" x2="1200" y2="90" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="180" x2="1200" y2="180" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="270" x2="1200" y2="270" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="360" x2="1200" y2="360" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="450" x2="1200" y2="450" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="540" x2="1200" y2="540" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="630" x2="1200" y2="630" stroke="white" stroke-width="1"/>
+  </g>
+
+  <!-- Logo area -->
+  <rect x="80" y="80" width="120" height="120" rx="28" fill="url(#accent)"/>
+  <text x="140" y="158" font-family="system-ui,sans-serif" font-size="56" font-weight="bold" fill="white" text-anchor="middle">AT</text>
+
+  <!-- Title -->
+  <text x="230" y="158" font-family="system-ui,sans-serif" font-size="52" font-weight="bold" fill="white">
+    Awesome Toolkit
+  </text>
+
+  <!-- Subtitle tag -->
+  <rect x="230" y="185" width="220" height="32" rx="16" fill="rgba(59,130,246,0.2)"/>
+  <text x="340" y="207" font-family="system-ui,sans-serif" font-size="16" fill="#60A5FA" text-anchor="middle">开源工具 · 一键部署</text>
+
+  <!-- Main value prop -->
+  <text x="80" y="320" font-family="system-ui,sans-serif" font-size="36" font-weight="bold" fill="white">
+    从 GitHub 精选 50+ 最强开源工具
+  </text>
+  <text x="80" y="370" font-family="system-ui,sans-serif" font-size="24" fill="#94A3B8">
+    提供一键部署方案，普通人也能在自己的服务器上运行开源软件
+  </text>
+
+  <!-- Feature pills -->
+  <rect x="80" y="420" width="200" height="52" rx="12" fill="rgba(255,255,255,0.08)"/>
+  <text x="100" y="452" font-family="system-ui,sans-serif" font-size="18" fill="#E2E8F0">⚡ 复制命令，5分钟装好</text>
+
+  <rect x="300" y="420" width="240" height="52" rx="12" fill="rgba(255,255,255,0.08)"/>
+  <text x="320" y="452" font-family="system-ui,sans-serif" font-size="18" fill="#E2E8F0">🔒 数据留在你自己的服务器</text>
+
+  <rect x="560" y="420" width="200" height="52" rx="12" fill="rgba(255,255,255,0.08)"/>
+  <text x="580" y="452" font-family="system-ui,sans-serif" font-size="18" fill="#E2E8F0">💰 全部免费，无需信用卡</text>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="580" width="1200" height="50" fill="rgba(0,0,0,0.3)"/>
+  <text x="600" y="612" font-family="system-ui,sans-serif" font-size="16" fill="#64748B" text-anchor="middle">
+    awesome-toolkit.pages.dev · 50+ 工具 · 32 个一键部署 · 全部免费
+  </text>
+</svg>

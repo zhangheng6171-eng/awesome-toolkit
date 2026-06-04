@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getDeployConfig, getDeployCommand, getServerRecommendation, getDeployableTools } from '@/lib/deploy';
 import { getToolById } from '@/lib/tools';
@@ -5,6 +6,26 @@ import CopyButton from '@/components/CopyButton';
 
 export async function generateStaticParams() {
   return getDeployableTools().map((t) => ({ id: t.id }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const config = getDeployConfig(id);
+  if (!config) return { title: '暂不支持部署 | Awesome Toolkit' };
+  return {
+    title: `一键部署 ${config.name} — Docker 自托管 | Awesome Toolkit`,
+    description: `在你的服务器上一键部署 ${config.name}。Agent 自动完成检测系统 → 拉取镜像 → 启动服务，3-5 分钟搞定。`,
+    alternates: { canonical: `/deploy/${id}` },
+    openGraph: {
+      title: `一键部署 ${config.name} | Awesome Toolkit`,
+      description: `在你的服务器上一键部署 ${config.name}。复制一条命令即可自动完成。`,
+      type: 'article',
+    },
+  };
 }
 
 export default async function DeployDetailPage({

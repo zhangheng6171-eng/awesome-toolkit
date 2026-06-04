@@ -27,6 +27,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
   const [tokenRequest, setTokenRequest] = useState<TokenRequest | null>(null);
+  const [authError, setAuthError] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -34,8 +35,8 @@ export default function DashboardPage() {
     setMounted(true);
 
     Promise.all([
-      fetch('/api/deploy/history').then((r) => r.json()).catch(() => ({})),
-      fetch('/api/servers').then((r) => r.json()).catch(() => ({})),
+      fetch('/api/deploy/history').then((r) => { if (r.status === 401) setAuthError(true); return r.json(); }).catch(() => ({})),
+      fetch('/api/servers').then((r) => { if (r.status === 401) setAuthError(true); return r.json(); }).catch(() => ({})),
     ]).then(([historyData, serversData]) => {
       if (historyData.deployments) setRemoteHistory(historyData.deployments);
       if (serversData.servers) {
@@ -111,10 +112,11 @@ export default function DashboardPage() {
             <div className="flex items-center gap-3">
               <button
                 onClick={syncToKV}
-                disabled={syncing}
-                className="text-sm text-blue-600 hover:underline disabled:opacity-50"
+                disabled={syncing || authError}
+                className="text-sm text-blue-600 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+                title={authError ? '请先配置 Cloudflare Access 登录' : undefined}
               >
-                {syncing ? '同步中...' : '☁️ 同步到云端'}
+                {syncing ? '同步中...' : authError ? '🚫 未登录' : '☁️ 同步到云端'}
               </button>
               <Link href="/" className="text-sm text-blue-600 hover:underline">
                 返回首页
@@ -124,6 +126,20 @@ export default function DashboardPage() {
         </div>
 
         <main className="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+          {/* Auth not configured banner */}
+          {authError && (
+            <div className="mb-6 bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
+              <span className="text-amber-500 text-xl mt-0.5">🔐</span>
+              <div className="flex-1">
+                <div className="font-medium text-amber-800">未登录 — Cloudflare Access 尚未配置</div>
+                <div className="text-sm text-amber-600 mt-1">
+                  云端同步功能需要登录后才能使用。你仍可以在本地管理服务器，但数据不会保存到云端。
+                  如果你是本项目的管理员，请在 Cloudflare Dashboard 中配置 Zero Trust Access。
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 mb-8">
             <StatCard label="当前方案" value={tierLabel(auth.tier)} />

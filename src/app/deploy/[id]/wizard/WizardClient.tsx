@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import TerminalLog from '@/components/TerminalLog';
+import { track } from '@/lib/analytics';
 import type { LogEntry } from '@/components/TerminalLog';
 
 type Step = 0 | 1 | 2 | 3;
@@ -53,6 +54,8 @@ function WizardContent() {
       }
     }).catch(() => {});
   }, [toolId]);
+
+  useEffect(() => { track('deploy_start', { tool_id: toolId }); }, [toolId]);
 
   function startPolling() {
     if (!host.trim()) return;
@@ -172,6 +175,7 @@ function WizardContent() {
                 if (result.success) {
                   setDeployUrl(result.accessUrl || result.access_url || '');
                   setDeployDone(true);
+                  track('deploy_complete', { tool_id: toolId });
                 } else {
                   setDeployError(result.error || '部署失败');
                 }

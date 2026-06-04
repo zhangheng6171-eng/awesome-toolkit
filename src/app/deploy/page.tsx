@@ -1,6 +1,19 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getDeployableTools } from '@/lib/deploy';
 import type { DeployConfig } from '@/lib/deploy';
+import { JsonLd, itemListSchema } from '@/components/JsonLd';
+
+export const metadata: Metadata = {
+  title: '一键部署 — 开源工具 Docker 部署 | Awesome Toolkit',
+  description: '32 个开源工具支持一键部署到你的服务器。复制一条命令，5 分钟内自动装好，不用懂 Docker。从照片管理到密码管理，全部免费。',
+  alternates: { canonical: '/deploy' },
+  openGraph: {
+    title: '一键部署开源工具 — Awesome Toolkit',
+    description: '32 个开源工具支持一键部署到你的服务器。复制一条命令，5 分钟内自动装好。',
+    type: 'website',
+  },
+};
 
 export default function DeployPage() {
   const tools = getDeployableTools();
@@ -72,6 +85,12 @@ export default function DeployPage() {
           </nav>
         </div>
       </div>
+
+      <JsonLd data={itemListSchema(tools.map((t) => ({
+        name: t.name,
+        url: `https://awesome-toolkit.pages.dev/deploy/${t.id}`,
+        description: `一键部署 ${t.name} 到你的服务器`,
+      })))} />
 
       <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* 标题区域 */}

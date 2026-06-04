@@ -7,11 +7,11 @@ pages_build_output_dir = "out"
 # wrangler kv:namespace create DEPLOY_KV
 [[kv_namespaces]]
 binding = "WAITLIST_KV"
-id = "WAITLIST_KV_PLACEHOLDER"
+id = "b8e7d7da3e3c417ab8328f6c5f0a3a33"
 
 [[kv_namespaces]]
 binding = "DEPLOY_KV"
-id = "DEPLOY_KV_PLACEHOLDER"
+id = "c62ce2947ece40f79b49822a3ae9d088"
 
 # Environment variables
 [vars]
