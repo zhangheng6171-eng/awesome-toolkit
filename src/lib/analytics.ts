@@ -73,7 +73,5 @@ export function track(
   }
 }
 
-// Auto-track page view
-if (typeof window !== 'undefined') {
-  track('page_view');
-}
+// Page view tracking moved to PageViewTracker component (layout-level)
+// This ensures it fires on every route change, not just on first import
