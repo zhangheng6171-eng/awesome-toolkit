@@ -11,7 +11,61 @@ import MobileFilterBar from '@/components/MobileFilterBar';
 import WaitlistForm from '@/components/WaitlistForm';
 import Link from 'next/link';
 import { filterTools } from '@/lib/tools';
+import { track } from '@/lib/analytics';
 import type { Tool } from '@/lib/tools';
+
+const FEATURED_SCENARIOS = [
+  {
+    emoji: '📸',
+    title: '手机照片自动备份',
+    toolId: 'immich',
+    toolName: 'Immich',
+    sceneType: 'photo_backup',
+    description: '像苹果 iCloud 一样自动备份，但不交月费',
+    hardware: '电脑 / NAS / VPS',
+    installTime: '5 分钟',
+    difficulty: '很简单',
+    difficultyStars: '⭐',
+  },
+  {
+    emoji: '🤖',
+    title: 'AI 自动干活',
+    toolId: 'n8n',
+    toolName: 'n8n',
+    sceneType: 'ai_automation',
+    description: '收邮件 → 存附件 → 发微信通知，像搭积木一样',
+    hardware: '电脑 / NAS / VPS',
+    installTime: '3 分钟',
+    difficulty: '简单',
+    difficultyStars: '⭐⭐',
+  },
+  {
+    emoji: '🔐',
+    title: '一个密码管理所有账号',
+    toolId: 'vaultwarden',
+    toolName: 'Vaultwarden',
+    sceneType: 'password_manager',
+    description: '代替 1Password，密码存在自己服务器上',
+    hardware: '电脑 / NAS',
+    installTime: '3 分钟',
+    difficulty: '很简单',
+    difficultyStars: '⭐',
+  },
+  {
+    emoji: '📄',
+    title: 'PDF 文档处理',
+    toolId: 'stirling-pdf',
+    toolName: 'Stirling PDF',
+    sceneType: 'pdf_tools',
+    description: '合并、拆分、加水印、签名，一个网页全搞定',
+    hardware: '电脑 / NAS / VPS',
+    installTime: '3 分钟',
+    difficulty: '很简单',
+    difficultyStars: '⭐',
+  },
+];
+
+const HOT_TAGS = ['照片备份', '密码管理', '网站监控', 'AI聊天', 'PDF处理', '去广告'];
 
 export default function HomeClient({ tools }: { tools: Tool[] }) {
   const [search, setSearch] = useState('');
@@ -25,44 +79,140 @@ export default function HomeClient({ tools }: { tools: Tool[] }) {
     [search, category, difficulty, targetUser]
   );
 
-  const totalCategories = useMemo(() => new Set(tools.map((t) => t.category)).size, [tools]);
+  const scrollToTools = () => {
+    document.getElementById('tools-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <>
       <Header />
 
       <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        {/* Hero Section */}
+        <section className="text-center py-10 sm:py-16">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight tracking-tight">
+            不用写代码，不用学 Docker，<br className="sm:hidden" />不用看英文
+          </h1>
+          <p className="mt-4 text-lg sm:text-xl text-gray-500">
+            选你想做的事，剩下的交给我们
+          </p>
+
+          {/* Main CTA */}
+          <div className="mt-8">
+            <Link
+              href="/recommendations"
+              onClick={() => track('hero_cta_click', { location: 'homepage_hero' })}
+              className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-xl text-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
+            >
+              <span className="text-xl">🚀</span> 告诉我用什么设备
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
+          </div>
+
+          {/* Secondary text link */}
+          <div className="mt-3">
+            <button
+              onClick={scrollToTools}
+              className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
+            >
+              也可以先看看有哪些工具 →
+            </button>
+          </div>
+
+          {/* Windows quick entry */}
+          <div className="mt-4">
+            <Link
+              href="/recommendations?platform=windows"
+              className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-blue-600 transition-colors"
+            >
+              💻 我只有 Windows 电脑
+            </Link>
+          </div>
+
+          {/* Trust signals */}
+          <div className="mt-10 flex flex-wrap justify-center gap-8 sm:gap-12">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-900">50</div>
+              <div className="text-sm text-gray-500">精选工具</div>
+            </div>
+            <div className="text-center">
+              <div className="text-lg sm:text-xl font-bold text-gray-900">Windows / Mac</div>
+              <div className="text-sm text-gray-500">Linux / NAS 都能用</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-900">32</div>
+              <div className="text-sm text-gray-500">一键部署</div>
+            </div>
+          </div>
+        </section>
+
+        {/* Scene cards */}
+        <section className="mt-4 mb-10">
+          <h2 className="text-xl font-semibold text-gray-900 text-center mb-6">
+            想做什么？从这里开始
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {FEATURED_SCENARIOS.map((scene) => (
+              <Link
+                key={scene.toolId}
+                href={`/tool/${scene.toolId}`}
+                onClick={() => track('scene_card_click', { tool_id: scene.toolId, scene_type: scene.sceneType })}
+                className="group bg-white rounded-xl border border-gray-200 p-5 hover:border-blue-300 hover:shadow-md transition-all"
+              >
+                <div className="text-3xl mb-3">{scene.emoji}</div>
+                <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                  {scene.title}
+                </h3>
+                <p className="mt-1.5 text-sm text-gray-500 leading-relaxed">
+                  {scene.description}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-gray-400">
+                  <span>🖥 {scene.hardware}</span>
+                  <span>⏱ {scene.installTime}</span>
+                  <span>{scene.difficultyStars} {scene.difficulty}</span>
+                </div>
+                <div className="mt-3 text-sm font-medium text-blue-600 group-hover:text-blue-700">
+                  用 {scene.toolName} 搞定 →
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Waitlist */}
+        <section className="mb-10">
+          <div className="max-w-md mx-auto text-center">
+            <p className="text-sm font-medium text-gray-700 mb-2">
+              📬 新工具上线通知你 · 前 100 个订阅者解锁全部功能
+            </p>
+            <WaitlistForm />
+          </div>
+        </section>
+
+        {/* Tools section divider */}
+        <div className="text-center mb-6" id="tools-section">
+          <span className="text-sm text-gray-400">── 或者浏览全部 50 个工具 ──</span>
+        </div>
+
+        {/* Hot tags + Search */}
         <div className="mb-6">
+          <div className="flex flex-wrap justify-center gap-2 mb-4">
+            {HOT_TAGS.map((tag) => (
+              <button
+                key={tag}
+                onClick={() => setSearch(tag)}
+                className="px-3 py-1.5 bg-gray-100 hover:bg-blue-50 hover:text-blue-600 text-sm text-gray-600 rounded-full transition-colors border border-gray-200"
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
           <SearchBar value={search} onChange={setSearch} resultCount={filteredTools.length} />
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-          <StatCard label="收录工具" value={String(tools.length)} />
-          <StatCard label="分类数" value={String(totalCategories)} />
-          <StatCard label="许可证类型" value={String(new Set(tools.map((t) => t.license)).size)} />
-          <StatCard label="对小白友好" value={String(tools.filter((t) => t.target_users.includes('技术小白')).length)} />
-        </div>
-
-        {/* Device wizard CTA */}
-        <div className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100 p-4 flex items-center justify-between flex-wrap gap-3">
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">🪄</span>
-            <div>
-              <div className="font-semibold text-gray-900 text-sm">不知道从哪个工具开始？</div>
-              <div className="text-xs text-gray-500">告诉我们你的设备，自动推荐最适合的工具</div>
-            </div>
-          </div>
-          <Link
-            href="/recommendations"
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors whitespace-nowrap"
-          >
-            开始匹配
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </Link>
-        </div>
-
+        {/* Filter + Tool cards */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           <div className="lg:hidden">
             <MobileFilterBar
@@ -111,33 +261,8 @@ export default function HomeClient({ tools }: { tools: Tool[] }) {
               </div>
             )}
 
-            <div className="mt-10 mb-8">
-              <h3 className="text-lg font-semibold text-gray-900 text-center mb-4">🙌 用户怎么说</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {[
-                  { initial: 'L', name: '小李', color: 'bg-blue-500', text: '之前部署个工具要折腾半天，现在点几下就好了，太爽了！' },
-                  { initial: 'W', name: '王同学', color: 'bg-green-500', text: '在 VPS 上一键部署了 Immich，终于可以告别 iCloud 月费了' },
-                  { initial: 'M', name: '老马', color: 'bg-purple-500', text: '省了我至少 10 个小时的 Docker 配置时间，强烈推荐' },
-                ].map((item, i) => (
-                  <div key={i} className="bg-white rounded-lg border border-gray-200 p-4 text-center">
-                    <div className={`w-10 h-10 rounded-full ${item.color} text-white flex items-center justify-center font-bold mx-auto`}>
-                      {item.initial}
-                    </div>
-                    <p className="mt-2 text-sm text-gray-600">{`"${item.text}"`}</p>
-                    <p className="mt-1 text-xs text-gray-400">—— {item.name}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 max-w-md mx-auto mb-6">
-              <p className="text-sm font-medium text-blue-900">📬 订阅更新，第一时间获得新工具推荐和早鸟优惠</p>
-              <WaitlistForm />
-            </div>
-
-            <footer className="mt-8 pt-6 border-t border-gray-200 text-center text-sm text-gray-400">
-              <p>工具数据来自 GitHub 公开仓库，遵循各项目原始许可证 | 持续更新中</p>
-              <p className="mt-1">收录标准：Star ≥ 1000 · 有明确使用场景 · 有可用文档</p>
+            <footer className="mt-10 pt-6 border-t border-gray-200 text-center text-sm text-gray-400">
+              <p>工具数据持续更新中 · 遵循各项目原始许可证</p>
               <button
                 onClick={() => setShowRecommend(true)}
                 className="mt-4 inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-medium hover:bg-blue-700 transition-colors"
@@ -155,14 +280,5 @@ export default function HomeClient({ tools }: { tools: Tool[] }) {
       <RecommendModal open={showRecommend} onClose={() => setShowRecommend(false)} />
       <CompareBar tools={tools} />
     </>
-  );
-}
-
-function StatCard({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="bg-white rounded-lg border border-gray-200 px-4 py-3 text-center">
-      <div className="text-2xl font-bold text-gray-900">{value}</div>
-      <div className="text-xs text-gray-500 mt-0.5">{label}</div>
-    </div>
   );
 }

@@ -8,11 +8,15 @@ interface Stats {
   sessions: number;
   tools: Record<string, number>;
   devices: Record<string, number>;
+  scene_types: Record<string, number>;
   pages: Record<string, number>;
   funnel: {
     page_view: number;
+    hero_cta_click: number;
+    scene_card_click: number;
     wizard_open: number;
     device_select: number;
+    results_viewed: number;
     tool_click: number;
     deploy_start: number;
     deploy_complete: number;
@@ -22,6 +26,7 @@ interface Stats {
     page: string;
     tool_id?: string;
     device?: string;
+    scene_type?: string;
     timestamp: number;
     session_id: string;
   }>;
@@ -29,8 +34,11 @@ interface Stats {
 
 const EVENT_LABELS: Record<string, string> = {
   page_view: '页面浏览',
+  hero_cta_click: 'Hero CTA 点击',
+  scene_card_click: '场景卡片点击',
   wizard_open: '打开推荐向导',
   device_select: '选择设备',
+  results_viewed: '查看推荐结果',
   tool_click: '点击工具',
   deploy_start: '开始部署',
   deploy_complete: '部署完成',
@@ -137,6 +145,18 @@ export default function AnalyticsDashboard() {
               rate="100%"
             />
             <FunnelStep
+              label="Hero CTA 点击"
+              count={stats.funnel.hero_cta_click}
+              total={stats.funnel.page_view}
+              rate={pct(stats.funnel.hero_cta_click, stats.funnel.page_view)}
+            />
+            <FunnelStep
+              label="场景卡片点击"
+              count={stats.funnel.scene_card_click}
+              total={stats.funnel.page_view}
+              rate={pct(stats.funnel.scene_card_click, stats.funnel.page_view)}
+            />
+            <FunnelStep
               label="打开推荐向导"
               count={stats.funnel.wizard_open}
               total={stats.funnel.page_view}
@@ -147,6 +167,12 @@ export default function AnalyticsDashboard() {
               count={stats.funnel.device_select}
               total={stats.funnel.page_view}
               rate={pct(stats.funnel.device_select, stats.funnel.page_view)}
+            />
+            <FunnelStep
+              label="查看推荐结果"
+              count={stats.funnel.results_viewed}
+              total={stats.funnel.page_view}
+              rate={pct(stats.funnel.results_viewed, stats.funnel.page_view)}
             />
             <FunnelStep
               label="点击工具详情"
@@ -172,16 +198,16 @@ export default function AnalyticsDashboard() {
           {/* Mini conversion rates */}
           <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-gray-500">
             <div className="bg-gray-50 rounded p-2 text-center">
-              <div className="font-medium text-gray-700">首页 → 向导</div>
-              <div className="text-lg font-bold text-blue-600">{pct(stats.funnel.wizard_open, stats.funnel.page_view)}</div>
+              <div className="font-medium text-gray-700">首页 → Hero CTA</div>
+              <div className="text-lg font-bold text-blue-600">{pct(stats.funnel.hero_cta_click, stats.funnel.page_view)}</div>
             </div>
             <div className="bg-gray-50 rounded p-2 text-center">
-              <div className="font-medium text-gray-700">向导 → 设备选择</div>
-              <div className="text-lg font-bold text-blue-600">{pct(stats.funnel.device_select, stats.funnel.wizard_open)}</div>
+              <div className="font-medium text-gray-700">首页 → 场景卡</div>
+              <div className="text-lg font-bold text-indigo-600">{pct(stats.funnel.scene_card_click, stats.funnel.page_view)}</div>
             </div>
             <div className="bg-gray-50 rounded p-2 text-center">
-              <div className="font-medium text-gray-700">工具详情 → 部署</div>
-              <div className="text-lg font-bold text-blue-600">{pct(stats.funnel.deploy_start, stats.funnel.tool_click)}</div>
+              <div className="font-medium text-gray-700">向导 → 结果</div>
+              <div className="text-lg font-bold text-blue-600">{pct(stats.funnel.results_viewed, stats.funnel.wizard_open)}</div>
             </div>
             <div className="bg-gray-50 rounded p-2 text-center">
               <div className="font-medium text-gray-700">部署 → 成功</div>
@@ -373,9 +399,12 @@ function deviceLabel(d: string): string {
 function eventColor(event: string): string {
   const m: Record<string, string> = {
     page_view: 'bg-gray-100 text-gray-600',
+    hero_cta_click: 'bg-blue-100 text-blue-700',
+    scene_card_click: 'bg-indigo-100 text-indigo-700',
     wizard_open: 'bg-purple-100 text-purple-600',
-    device_select: 'bg-indigo-100 text-indigo-600',
-    tool_click: 'bg-blue-100 text-blue-600',
+    device_select: 'bg-violet-100 text-violet-600',
+    results_viewed: 'bg-teal-100 text-teal-700',
+    tool_click: 'bg-sky-100 text-sky-700',
     deploy_start: 'bg-amber-100 text-amber-700',
     deploy_complete: 'bg-green-100 text-green-700',
   };

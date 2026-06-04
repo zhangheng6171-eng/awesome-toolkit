@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { track } from '@/lib/analytics';
 import type { DeviceProfile, Tool } from '@/lib/tools';
@@ -256,6 +256,14 @@ function ResultsView({ tools, device, ramMb, onReset }: {
 }) {
   const [showCategory, setShowCategory] = useState('');
   const [showBeginner, setShowBeginner] = useState(false);
+  const hasTracked = useRef(false);
+
+  useEffect(() => {
+    if (!hasTracked.current) {
+      hasTracked.current = true;
+      track('results_viewed', { platform: device, recommendation_count: tools.length });
+    }
+  }, [device, tools.length]);
 
   const categories = useMemo(() => {
     const cats = new Set(tools.map((t) => t.category));

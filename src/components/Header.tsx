@@ -11,7 +11,7 @@ const navLinks = [
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
     </svg>
   )},
-  { href: '/deploy', label: '一键部署', icon: (
+  { href: '/deploy', label: '一键部署', highlight: true, icon: (
     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
     </svg>
@@ -39,33 +39,33 @@ export default function Header() {
           <div className="flex-shrink-0">
             <Link href="/" className="no-underline">
               <span className="text-xl sm:text-2xl font-bold text-gray-900 hover:text-blue-600 transition-colors">
-                GitHub 精选工具库
+                好工具一键装
               </span>
             </Link>
-            <p className="mt-0.5 text-xs sm:text-sm text-gray-500 hidden sm:block">
-              从全世界开源代码中，挑出最好用的工具，配好普通话使用说明
-            </p>
           </div>
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-2">
-            {navLinks.map((link) => (
+            {navLinks.map((link) => {
+              const isActive = pathname.startsWith(link.href);
+              const isHighlight = (link as typeof link & { highlight?: boolean }).highlight;
+              return (
               <Link
                 key={link.href}
                 href={link.href}
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                  pathname.startsWith(link.href)
+                  isActive
                     ? 'bg-blue-600 text-white'
+                    : isHighlight
+                    ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 }`}
               >
                 {link.icon}
                 {link.label}
               </Link>
-            ))}
-            <span className="text-xs text-gray-400 hidden lg:block ml-1">
-              收录标准：Star≥1000 · 有文档 · 能实际用
-            </span>
+            );
+            })}
           </div>
 
           {/* Right side: UserMenu + mobile hamburger */}
@@ -95,13 +95,18 @@ export default function Header() {
         {menuOpen && (
           <div className="md:hidden mt-3 pt-3 border-t border-gray-100 space-y-3">
             <div className="flex flex-wrap gap-2">
-              {navLinks.map((link) => (
+              {navLinks.map((link) => {
+                const isActive = pathname.startsWith(link.href);
+                const isHighlight = (link as typeof link & { highlight?: boolean }).highlight;
+                return (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
                   className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    pathname.startsWith(link.href)
+                    isActive
+                      ? 'bg-blue-600 text-white'
+                      : isHighlight
                       ? 'bg-blue-600 text-white'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                   }`}
@@ -109,7 +114,8 @@ export default function Header() {
                   {link.icon}
                   {link.label}
                 </Link>
-              ))}
+              );
+              })}
             </div>
             <div className="pt-2 border-t border-gray-100">
               <UserMenu />

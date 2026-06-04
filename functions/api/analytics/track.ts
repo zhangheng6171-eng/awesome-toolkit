@@ -10,6 +10,10 @@ interface TrackEvent {
   page: string;
   tool_id?: string;
   device?: string;
+  scene_type?: string;
+  platform?: string;
+  location?: string;
+  recommendation_count?: number;
   referrer: string;
   timestamp: number;
   session_id: string;
@@ -22,6 +26,9 @@ const PREFIX_MAP: Record<string, string> = {
   tool_click: 'tool',
   deploy_start: 'deps',
   deploy_complete: 'done',
+  hero_cta_click: 'hero',
+  scene_card_click: 'scene',
+  results_viewed: 'res',
 };
 
 export async function onRequest(context: { request: Request; env: Env }) {

@@ -37,8 +37,11 @@
 | 事件名 | 触发时机 | 携带数据 |
 |--------|----------|----------|
 | `page_view` | 任何页面加载（自动） | `page`, `referrer`, `session_id`, `timestamp` |
+| `hero_cta_click` | 点击首页 Hero 主按钮「🚀 告诉我用什么设备」 | `page`, `location: 'homepage_hero'`, `session_id`, `timestamp` |
+| `scene_card_click` | 点击首页场景卡片 | `page`, `tool_id`, `scene_type`, `session_id`, `timestamp` |
 | `wizard_open` | 用户进入 `/recommendations` 页面 | `page`, `session_id`, `timestamp` |
 | `device_select` | 用户选择设备类型 | `page`, `device`, `session_id`, `timestamp` |
+| `results_viewed` | 推荐结果列表首次展示 | `page`, `platform`, `recommendation_count`, `session_id`, `timestamp` |
 | `tool_click` | 用户进入 `/tool/[id]` 详情页 | `page`, `tool_id`, `session_id`, `timestamp` |
 | `deploy_start` | 用户进入 `/deploy/[id]/wizard` | `page`, `tool_id`, `session_id`, `timestamp` |
 | `deploy_complete` | Agent 返回部署成功 | `page`, `tool_id`, `session_id`, `timestamp` |
@@ -63,8 +66,11 @@ interface AnalyticsEvent {
 - TTL: 30 天
 - Prefix 映射:
   - `pv` → page_view
+  - `hero` → hero_cta_click
+  - `scene` → scene_card_click
   - `wiz` → wizard_open
   - `dev` → device_select
+  - `res` → results_viewed
   - `tool` → tool_click
   - `deps` → deploy_start
   - `done` → deploy_complete
@@ -79,11 +85,16 @@ interface AnalyticsEvent {
 ```
 首页浏览 (page_view)                 100%
     │
-    ├── 打开推荐向导 (wizard_open)    目标 ≥ 15%
+    ├── Hero CTA 点击 (hero_cta_click)   目标 ≥ 40%
+    ├── 场景卡片点击 (scene_card_click)  目标 ≥ 25%
+    │
+    ├── 打开推荐向导 (wizard_open)    目标 ≥ 40%
     │       │
     │       └── 选择设备 (device_select)  目标 ≥ 70%
+    │               │
+    │               └── 查看推荐结果 (results_viewed)  目标 ≥ 80%
     │
-    ├── 点击工具详情 (tool_click)      目标 ≥ 40%
+    ├── 点击工具详情 (tool_click)      目标 ≥ 60%
     │       │
     │       └── 开始部署 (deploy_start)   目标 ≥ 25%
     │               │

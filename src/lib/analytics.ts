@@ -24,6 +24,10 @@ interface EventPayload {
   page: string;
   tool_id?: string;
   device?: string;
+  scene_type?: string;
+  platform?: string;
+  location?: string;
+  recommendation_count?: number;
   referrer: string;
   timestamp: number;
   session_id: string;
@@ -48,14 +52,20 @@ function flush() {
 
 export function track(
   event: string,
-  props?: { tool_id?: string; device?: string }
+  props?: {
+    tool_id?: string;
+    device?: string;
+    scene_type?: string;
+    platform?: string;
+    location?: string;
+    recommendation_count?: number;
+  }
 ) {
   if (typeof window === 'undefined') return;
   const payload: EventPayload = {
     event,
     page: window.location.pathname,
-    tool_id: props?.tool_id,
-    device: props?.device,
+    ...props,
     referrer: document.referrer || '',
     timestamp: Date.now(),
     session_id: getSessionId(),

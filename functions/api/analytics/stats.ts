@@ -10,11 +10,15 @@ interface Stats {
   sessions: number;
   tools: Record<string, number>;
   devices: Record<string, number>;
+  scene_types: Record<string, number>;
   pages: Record<string, number>;
   funnel: {
     page_view: number;
+    hero_cta_click: number;
+    scene_card_click: number;
     wizard_open: number;
     device_select: number;
+    results_viewed: number;
     tool_click: number;
     deploy_start: number;
     deploy_complete: number;
@@ -45,11 +49,15 @@ export async function onRequest(context: { request: Request; env: Env }) {
       sessions: 0,
       tools: {} as Record<string, number>,
       devices: {} as Record<string, number>,
+      scene_types: {} as Record<string, number>,
       pages: {} as Record<string, number>,
       funnel: {
         page_view: 0,
+        hero_cta_click: 0,
+        scene_card_click: 0,
         wizard_open: 0,
         device_select: 0,
+        results_viewed: 0,
         tool_click: 0,
         deploy_start: 0,
         deploy_complete: 0,
@@ -70,16 +78,22 @@ export async function onRequest(context: { request: Request; env: Env }) {
 
     // Map prefixes back to event names
     stats.events['page_view'] = prefixCounts['pv'] || 0;
+    stats.events['hero_cta_click'] = prefixCounts['hero'] || 0;
+    stats.events['scene_card_click'] = prefixCounts['scene'] || 0;
     stats.events['wizard_open'] = prefixCounts['wiz'] || 0;
     stats.events['device_select'] = prefixCounts['dev'] || 0;
+    stats.events['results_viewed'] = prefixCounts['res'] || 0;
     stats.events['tool_click'] = prefixCounts['tool'] || 0;
     stats.events['deploy_start'] = prefixCounts['deps'] || 0;
     stats.events['deploy_complete'] = prefixCounts['done'] || 0;
 
     stats.funnel = {
       page_view: prefixCounts['pv'] || 0,
+      hero_cta_click: prefixCounts['hero'] || 0,
+      scene_card_click: prefixCounts['scene'] || 0,
       wizard_open: prefixCounts['wiz'] || 0,
       device_select: prefixCounts['dev'] || 0,
+      results_viewed: prefixCounts['res'] || 0,
       tool_click: prefixCounts['tool'] || 0,
       deploy_start: prefixCounts['deps'] || 0,
       deploy_complete: prefixCounts['done'] || 0,
@@ -94,9 +108,10 @@ export async function onRequest(context: { request: Request; env: Env }) {
     }
     stats.sessions = sessionCount;
 
-    // Read tool_click events for per-tool counts (limit to 100 for perf)
+    // Read tool_click events for per-tool counts (limit to 200 for perf)
     const toolKeys = list.keys.filter((k) => k.name.startsWith('analytics:tool:')).slice(0, 200);
     const deviceKeys = list.keys.filter((k) => k.name.startsWith('analytics:dev:')).slice(0, 200);
+    const sceneKeys = list.keys.filter((k) => k.name.startsWith('analytics:scene:')).slice(0, 200);
     const pageKeys = list.keys.filter((k) => k.name.startsWith('analytics:pv:')).slice(0, 200);
     const recentKeys = list.keys
       .filter((k) => !k.name.includes(':session:'))
@@ -126,6 +141,20 @@ export async function onRequest(context: { request: Request; env: Env }) {
           const ev = JSON.parse(entry);
           if (ev.device) {
             stats.devices[ev.device] = (stats.devices[ev.device] || 0) + 1;
+          }
+        } catch { /* skip */ }
+      }
+    }
+
+    // Read scene_card_click events for scene type distribution
+    if (sceneKeys.length > 0) {
+      const sceneEntries = await Promise.all(sceneKeys.map((k) => kv.get(k.name).catch(() => null)));
+      for (const entry of sceneEntries) {
+        if (!entry) continue;
+        try {
+          const ev = JSON.parse(entry);
+          if (ev.scene_type) {
+            stats.scene_types[ev.scene_type] = (stats.scene_types[ev.scene_type] || 0) + 1;
           }
         } catch { /* skip */ }
       }
