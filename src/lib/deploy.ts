@@ -56,7 +56,12 @@ const deployRegistry: Record<string, DeployConfig> = {
     memory_mb: 512,
     disk_gb: 4,
     post_deploy_url: 'http://你的服务器IP:8080',
-    post_deploy_msg: '打开浏览器访问 http://你的服务器IP:8080，主页会展示所有 PDF 处理功能，拖文件进去就能用。',
+    post_deploy_msg: '打开浏览器访问 http://你的服务器IP:8080，首次访问会提示创建管理员账号（自己设置用户名和密码），之后每次使用都需要登录。登录后主页会展示所有 PDF 处理功能，拖文件进去就能用。',
+    setup_notes: [
+      '首次访问需要创建管理员账号：自己设置用户名和密码，记住即可',
+      '如果不需要密码保护，可以在 docker-compose.yml 中把 DOCKER_ENABLE_SECURITY 改为 false，然后运行 docker compose up -d 重启',
+      '处理大文件（100MB+）时建议给服务器分配 1GB 以上内存',
+    ],
   },
   vaultwarden: {
     id: 'vaultwarden',
@@ -66,7 +71,11 @@ const deployRegistry: Record<string, DeployConfig> = {
     disk_gb: 2,
     post_deploy_url: 'http://你的服务器IP:8081',
     post_deploy_msg: '打开浏览器访问 http://你的服务器IP:8081，创建你的主账号。然后在手机上下载 Bitwarden App，在 App 设置里把「服务器地址」改成 http://你的服务器IP:8081，所有密码就存在你自己的服务器上。',
-    alternative_install: '如需开启 HTTPS（推荐），建议配合 Nginx Proxy Manager 或 Caddy 配置 SSL 证书。',
+    alternative_install: '⚠️ 手机 App（iOS/安卓）要求 HTTPS 加密连接。HTTP 仅适合电脑浏览器临时测试。如需在手机上使用：推荐用 Nginx Proxy Manager 一键配置 SSL 证书，或使用 Cloudflare Tunnel 免费获得 HTTPS。',
+    setup_notes: [
+      '首次部署需先注册账号：SSH 进入服务器，编辑 docker-compose.yml，把 SIGNUPS_ALLOWED 改为 true，运行 docker compose up -d 重启，然后访问网页注册。注册完成后改回 false 再重启。',
+      '⚠️ 重要：手机 App 必须 HTTPS！如果只用电脑浏览器访问，HTTP 够用。手机用户请先配置 SSL 证书（推荐 Nginx Proxy Manager 或 Cloudflare Tunnel）。',
+    ],
   },
   'adguard-home': {
     id: 'adguard-home',
@@ -387,5 +396,13 @@ export function getServerRecommendation(config: DeployConfig): string {
     config.memory_mb >= 4096
       ? `${config.memory_mb / 1024}GB`
       : `${config.memory_mb}MB`;
-  return `服务器最低配置：${memDesc} 内存 + ${config.disk_gb}GB 硬盘，推荐阿里云/腾讯云轻量应用服务器（月费约 ¥50-100）`;
+  let priceDesc: string;
+  if (config.memory_mb >= 4096) {
+    priceDesc = '月费约 ¥80-150';
+  } else if (config.memory_mb >= 2048) {
+    priceDesc = '月费约 ¥60-100';
+  } else {
+    priceDesc = '月费约 ¥40-80';
+  }
+  return `服务器最低配置：${memDesc} 内存 + ${config.disk_gb}GB 硬盘，推荐阿里云/腾讯云轻量应用服务器（${priceDesc}）`;
 }
