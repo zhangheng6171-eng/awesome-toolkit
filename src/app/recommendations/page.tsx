@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { getAllTools } from '@/lib/tools';
 import RecommendationsClient from './RecommendationsClient';
@@ -14,5 +15,9 @@ export const metadata: Metadata = {
 
 export default function RecommendationsPage() {
   const tools = getAllTools();
-  return <RecommendationsClient tools={tools} />;
+  return (
+    <Suspense>
+      <RecommendationsClient tools={tools} />
+    </Suspense>
+  );
 }

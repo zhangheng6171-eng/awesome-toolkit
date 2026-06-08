@@ -13,5 +13,6 @@ services:
     environment:
       - DOMAIN=https://${DOMAIN:-localhost}
       - TZ=Asia/Shanghai
-      - SIGNUPS_ALLOWED=true
+      - SIGNUPS_ALLOWED=false
+      # 首次部署时改为 true 注册主账号，注册完成后改回 false
       - LOG_FILE=/data/vaultwarden.log

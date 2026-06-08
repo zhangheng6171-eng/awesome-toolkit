@@ -13,6 +13,7 @@ services:
       - ./data/extraConfigs:/configs
       - ./data/logs:/logs
     environment:
-      - DOCKER_ENABLE_SECURITY=false
+      - DOCKER_ENABLE_SECURITY=true
+      # true = 需要密码登录才能使用，保护文件不被未授权访问
       - INSTALL_BOOK_AND_ADVANCED_HTML_OPS=false
       - LANGS=zh_CN,en_US

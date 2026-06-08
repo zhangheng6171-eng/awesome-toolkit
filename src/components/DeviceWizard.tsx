@@ -13,13 +13,17 @@ import { getUniqueCategories } from '@/lib/tools';
 
 interface Props {
   tools: Tool[];
+  initialPlatform?: DeviceProfile['type'] | null;
 }
 
 const STEP_LABELS = ['你的设备', '内存大小', 'Docker', '用途'] as const;
 
-export default function DeviceWizard({ tools }: Props) {
+const VALID_PLATFORMS: DeviceProfile['type'][] = ['windows', 'mac', 'linux', 'nas'];
+
+export default function DeviceWizard({ tools, initialPlatform }: Props) {
+  const platform = initialPlatform && VALID_PLATFORMS.includes(initialPlatform) ? initialPlatform : null;
   const [step, setStep] = useState(0);
-  const [device, setDevice] = useState<DeviceProfile['type'] | null>(null);
+  const [device, setDevice] = useState<DeviceProfile['type'] | null>(platform);
   const [ramMb, setRamMb] = useState(4096);
   const [hasDocker, setHasDocker] = useState<boolean | null>(null);
   const [category, setCategory] = useState('');

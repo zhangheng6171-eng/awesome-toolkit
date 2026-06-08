@@ -1,10 +1,14 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import type { Tool } from '@/lib/tools';
+import type { DeviceProfile } from '@/lib/tools';
 import DeviceWizard from '@/components/DeviceWizard';
 import Link from 'next/link';
 
 export default function RecommendationsClient({ tools }: { tools: Tool[] }) {
+  const searchParams = useSearchParams();
+  const initialPlatform = (searchParams.get('platform') as DeviceProfile['type']) ?? undefined;
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -21,7 +25,7 @@ export default function RecommendationsClient({ tools }: { tools: Tool[] }) {
       </div>
 
       <main className="max-w-3xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        <DeviceWizard tools={tools} />
+        <DeviceWizard tools={tools} initialPlatform={initialPlatform} />
 
         {/* Quick tips */}
         <div className="mt-12 pb-8">
