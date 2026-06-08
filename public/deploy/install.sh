@@ -98,11 +98,27 @@ else
   echo -e "      ✓ Docker 安装完成"
 fi
 
+# Ensure docker commands work — handle non-root fresh install where
+# the docker group hasn't taken effect for the current session
+if docker info &>/dev/null 2>&1; then
+  DOCKER_CMD="docker"
+  SUDO=""
+elif sudo docker info &>/dev/null 2>&1; then
+  DOCKER_CMD="sudo docker"
+  SUDO="sudo"
+  echo -e "      ${YELLOW}  使用 sudo 运行 Docker（当前用户不在 docker 组）${NC}"
+else
+  echo -e "${RED}Docker 安装后无法连接。请重新登录后再运行此脚本。${NC}"
+  exit 1
+fi
+
 # Check Docker Compose (plugin or standalone)
-if docker compose version &>/dev/null 2>&1; then
+if $DOCKER_CMD compose version &>/dev/null 2>&1; then
   echo -e "      ✓ Docker Compose (plugin) 可用"
-elif command -v docker-compose &>/dev/null; then
+  COMPOSE_CMD="compose"
+elif command -v docker-compose &>/dev/null && docker-compose version &>/dev/null 2>&1; then
   echo -e "      ✓ Docker Compose (standalone) 可用"
+  COMPOSE_CMD="docker-compose"
 else
   echo "      安装 Docker Compose plugin..."
   DOCKER_CONFIG="${DOCKER_CONFIG:-$HOME/.docker}"
@@ -119,6 +135,7 @@ else
     mkdir -p "$DOCKER_CONFIG/cli-plugins" && curl -fsSL "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-${COMPOSE_ARCH}" -o "$DOCKER_CONFIG/cli-plugins/docker-compose" && chmod +x "$DOCKER_CONFIG/cli-plugins/docker-compose"
   sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose 2>/dev/null || true
   sudo chmod +x /usr/libexec/docker/cli-plugins/docker-compose 2>/dev/null || true
+  COMPOSE_CMD="compose"
   echo -e "      ✓ Docker Compose 安装完成"
 fi
 
@@ -140,15 +157,22 @@ echo -e "${YELLOW}[4/5]${NC} 启动服务..."
 
 cd "$INSTALL_DIR"
 
-# 优先用 docker compose plugin
-if docker compose version &>/dev/null 2>&1; then
-  COMPOSE_CMD="docker compose"
+# Re-detect compose command (handles case where compose was just installed above)
+if [ "${COMPOSE_CMD:-}" = "compose" ]; then
+  $DOCKER_CMD compose pull 2>/dev/null || true
+  $DOCKER_CMD compose up -d
+elif [ "${COMPOSE_CMD:-}" = "docker-compose" ]; then
+  $SUDO docker-compose pull 2>/dev/null || true
+  $SUDO docker-compose up -d
+elif $DOCKER_CMD compose version &>/dev/null 2>&1; then
+  $DOCKER_CMD compose pull 2>/dev/null || true
+  $DOCKER_CMD compose up -d
+  COMPOSE_CMD="compose"
 else
+  $SUDO docker-compose pull 2>/dev/null || true
+  $SUDO docker-compose up -d
   COMPOSE_CMD="docker-compose"
 fi
-
-$COMPOSE_CMD pull 2>/dev/null || true
-$COMPOSE_CMD up -d
 
 echo -e "      ✓ 容器已启动"
 
@@ -189,12 +213,21 @@ echo ""
 echo -e "${YELLOW}--------------------------------------------------------------${NC}"
 echo -e "   常用管理命令:"
 echo -e "     cd ${INSTALL_DIR}"
-echo -e "     ${COMPOSE_CMD} ps             # 查看运行状态"
-echo -e "     ${COMPOSE_CMD} logs -f        # 查看实时日志"
-echo -e "     ${COMPOSE_CMD} restart        # 重启服务"
-echo -e "     ${COMPOSE_CMD} down           # 停止服务"
-echo -e "     ${COMPOSE_CMD} up -d          # 重新启动"
-echo -e "     ${COMPOSE_CMD} pull && ${COMPOSE_CMD} up -d  # 更新到最新版"
+if [ "${COMPOSE_CMD:-}" = "docker-compose" ]; then
+  echo -e "     docker-compose ps             # 查看运行状态"
+  echo -e "     docker-compose logs -f        # 查看实时日志"
+  echo -e "     docker-compose restart        # 重启服务"
+  echo -e "     docker-compose down           # 停止服务"
+  echo -e "     docker-compose up -d          # 重新启动"
+  echo -e "     docker-compose pull && docker-compose up -d  # 更新到最新版"
+else
+  echo -e "     docker compose ps             # 查看运行状态"
+  echo -e "     docker compose logs -f        # 查看实时日志"
+  echo -e "     docker compose restart        # 重启服务"
+  echo -e "     docker compose down           # 停止服务"
+  echo -e "     docker compose up -d          # 重新启动"
+  echo -e "     docker compose pull && docker compose up -d  # 更新到最新版"
+fi
 echo ""
 echo -e "   卸载命令:"
 echo -e "     curl -fsSL ${BASE_URL}/deploy/uninstall.sh | bash -s -- ${TOOL_ID}"
